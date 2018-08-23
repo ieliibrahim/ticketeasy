@@ -5,12 +5,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.MenuItem;
-import java.awt.PopupMenu;
 import java.awt.SystemTray;
 import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -25,7 +24,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
-import com.ieli.tieasy.model.User;
 import com.ieli.tieasy.service.user.IUserService;
 import com.ieli.tieasy.util.CusotmJButton;
 import com.ieli.tieasy.util.CustomTextArea;
@@ -48,14 +46,19 @@ public class TEMainFrame extends JFrame {
 	private CustomTextField ticketTitleTextField;
 	private CusotmJButton btnHelp;
 	private CusotmJButton btnExit;
-	private JLabel lblSavedDrafts;
 
-	@Autowired
 	private IUserService iUserService;
 
 	private JButton btnSubmit;
 
+	private TrayPopupMenu trayPopupMenu;
+
 	public TEMainFrame(final ApplicationContext appContext) {
+		tray = SystemTray.getSystemTray();
+
+		trayIcon = new TrayIcon(StaticData.TRAY_ICON.getImage(), "Ticket Easy");
+		trayIcon.setImageAutoSize(true);
+		trayPopupMenu = new TrayPopupMenu(TEMainFrame.this, tray, trayIcon);
 		setUndecorated(true);
 		setResizable(false);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -89,9 +92,9 @@ public class TEMainFrame extends JFrame {
 		headerPnl.add(helpClosePnl, "cell 1 0,alignx right,growy");
 		helpClosePnl.setLayout(new MigLayout("", "[][][]", "[]"));
 
-		HelpPopupMenu popupMenu = new HelpPopupMenu();
+		HelpPopupMenu helpPopupMenu = new HelpPopupMenu();
 
-		btnHelp = new CusotmJButton(StaticData.ICON_HELP, StaticData.ICON_HELP_HOVER, popupMenu);
+		btnHelp = new CusotmJButton(StaticData.ICON_HELP, StaticData.ICON_HELP_HOVER, helpPopupMenu);
 		btnHelp.setCursor(StaticData.HAND_CURSOR);
 		helpClosePnl.add(btnHelp, "cell 0 0");
 
@@ -144,42 +147,6 @@ public class TEMainFrame extends JFrame {
 		footerPnl.add(savedDraftsPnl, "cell 0 0,alignx left,growy");
 		savedDraftsPnl.setLayout(new MigLayout("", "[]", "[][]"));
 
-		lblSavedDrafts = new JLabel("<html><center>Saved drafts: 4<br>Click here to open</center></html>");
-		lblSavedDrafts.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblSavedDrafts.setCursor(StaticData.HAND_CURSOR);
-		lblSavedDrafts.setForeground(Color.WHITE);
-		lblSavedDrafts.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-
-				User user = iUserService.getUserByCred("imad", "imad123");
-				DraftsDlg draftsDlg = new DraftsDlg(user, appContext);
-				draftsDlg.setVisible(true);
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				lblSavedDrafts.setForeground(Color.WHITE);
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				lblSavedDrafts.setForeground(StaticData.THEME_ORANGE_COLOR);
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-
-			}
-		});
-		savedDraftsPnl.add(lblSavedDrafts, "cell 0 0,alignx center");
-
 		JPanel saveSubmitPnl = new JPanel();
 		saveSubmitPnl.setBackground(StaticData.HEADER_FOOTER_COLOR);
 		footerPnl.add(saveSubmitPnl, "cell 2 0,alignx right,growy");
@@ -229,30 +196,16 @@ public class TEMainFrame extends JFrame {
 
 	private void addToSystemTry() {
 		if (SystemTray.isSupported()) {
-			tray = SystemTray.getSystemTray();
-			PopupMenu popup = new PopupMenu();
-			MenuItem defaultItem = new MenuItem("Exit");
-			defaultItem.addActionListener(new ActionListener() {
 
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					System.exit(0);
+			trayIcon.addMouseListener(new MouseAdapter() {
+				public void mouseReleased(MouseEvent e) {
+					if (e.isPopupTrigger()) {
+						trayPopupMenu.setLocation(e.getX(), e.getY());
+						trayPopupMenu.setInvoker(trayPopupMenu);
+						trayPopupMenu.setVisible(true);
+					}
 				}
 			});
-
-			popup.add(defaultItem);
-			defaultItem = new MenuItem("Show");
-			defaultItem.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					tray.remove(trayIcon);
-					setVisible(true);
-					setExtendedState(JFrame.MAXIMIZED_BOTH);
-				}
-			});
-			popup.add(defaultItem);
-
-			trayIcon = new TrayIcon(StaticData.TRAY_ICON.getImage(), "Ticket Easy", popup);
-			trayIcon.setImageAutoSize(true);
 
 			try {
 				tray.add(trayIcon);
