@@ -55,7 +55,6 @@ public class TEMainFrame extends JFrame {
 
 	public TEMainFrame(final ApplicationContext appContext) {
 		tray = SystemTray.getSystemTray();
-
 		trayIcon = new TrayIcon(StaticData.TRAY_ICON.getImage(), "Ticket Easy");
 		trayIcon.setImageAutoSize(true);
 		trayPopupMenu = new TrayPopupMenu(TEMainFrame.this, tray, trayIcon);
@@ -111,7 +110,7 @@ public class TEMainFrame extends JFrame {
 
 		Image pnlImg = StaticData.BG_IMAGE.getImage();
 
-		ImagePanel ticketsPnl = new ImagePanel(pnlImg);
+		JPanel ticketsPnl = new JPanel();
 		mainPnl.add(ticketsPnl, "cell 0 1,grow");
 		ticketsPnl.setLayout(new MigLayout("", "[grow]", "[][grow,fill]"));
 
