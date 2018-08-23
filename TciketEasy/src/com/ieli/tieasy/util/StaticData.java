@@ -33,12 +33,15 @@ public class StaticData {
 	
 	public static final ImageIcon LOGO_IMG = new ImageIcon(
 			StaticData.class.getResource("/com/ieli/tieasy/ui/images/logo.png"));
+	
+	public static final ImageIcon TRAY_ICON = new ImageIcon(
+			StaticData.class.getResource("/com/ieli/tieasy/ui/images/tryIcon.png"));
 
-	public static final String HELP_INSTC_VIDEO_ITEM = "Instructional video";
+	public static final String HELP_INSTC_VIDEO_ITEM = "<html><u>Instructional video</u></html>";
 
-	public static final String HELP_HELP_ITEM = "Help";
+	public static final String HELP_HELP_ITEM = "<html><u>Help</u></html>";
 
-	public static final String HELP_SETTINGS_ITEM = "Settings";
+	public static final String HELP_SETTINGS_ITEM = "<html><u>Settings</u></html>";
 	
 	public static final Cursor HAND_CURSOR = new Cursor(Cursor.HAND_CURSOR);
 }

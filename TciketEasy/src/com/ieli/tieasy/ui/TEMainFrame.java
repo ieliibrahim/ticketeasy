@@ -1,8 +1,14 @@
 package com.ieli.tieasy.ui;
 
+import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Image;
+import java.awt.MenuItem;
+import java.awt.PopupMenu;
+import java.awt.SystemTray;
+import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -15,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
@@ -25,21 +32,28 @@ import com.ieli.tieasy.util.CustomTextArea;
 import com.ieli.tieasy.util.CustomTextField;
 import com.ieli.tieasy.util.ImagePanel;
 import com.ieli.tieasy.util.ScreenConfig;
+import com.ieli.tieasy.util.StackTraceHandler;
 import com.ieli.tieasy.util.StaticData;
 
 import net.miginfocom.swing.MigLayout;
-import java.awt.Font;
 
 public class TEMainFrame extends JFrame {
+
+	final static Logger logger = Logger.getLogger(TEMainFrame.class);
+
+	private TrayIcon trayIcon;
+	private SystemTray tray;
 
 	private static final long serialVersionUID = 1L;
 	private CustomTextField ticketTitleTextField;
 	private CusotmJButton btnHelp;
 	private CusotmJButton btnExit;
 	private JLabel lblSavedDrafts;
-//
+
 	@Autowired
 	private IUserService iUserService;
+
+	private JButton btnSubmit;
 
 	public TEMainFrame(final ApplicationContext appContext) {
 		setUndecorated(true);
@@ -85,8 +99,10 @@ public class TEMainFrame extends JFrame {
 		btnExit.setCursor(StaticData.HAND_CURSOR);
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+
+				addToSystemTry();
 			}
+
 		});
 		helpClosePnl.add(btnExit, "cell 1 0");
 
@@ -95,7 +111,6 @@ public class TEMainFrame extends JFrame {
 		ImagePanel ticketsPnl = new ImagePanel(pnlImg);
 		mainPnl.add(ticketsPnl, "cell 0 1,grow");
 		ticketsPnl.setLayout(new MigLayout("", "[grow]", "[][grow,fill]"));
-		System.out.println(ticketsPnl.getWidth());
 
 		JPanel ticketInfoPnl = new JPanel();
 		ticketsPnl.add(ticketInfoPnl, "cell 0 0,grow");
@@ -170,22 +185,82 @@ public class TEMainFrame extends JFrame {
 		footerPnl.add(saveSubmitPnl, "cell 2 0,alignx right,growy");
 		saveSubmitPnl.setLayout(new MigLayout("", "[][][]", "[][]"));
 
-		JButton btnSaveAsDraft = new JButton("SAVE AS DRAFT");
-		btnSaveAsDraft.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnSaveAsDraft.setForeground(StaticData.THEME_ORANGE_COLOR);
-		btnSaveAsDraft.setBackground(Color.WHITE);
-		btnSaveAsDraft.setContentAreaFilled(false);
-		btnSaveAsDraft.setOpaque(true);
-
-		saveSubmitPnl.add(btnSaveAsDraft, "cell 0 1");
-
-		JButton btnSubmit = new JButton("SUBMIT");
+		btnSubmit = new JButton("SUBMIT");
 		btnSubmit.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnSubmit.setContentAreaFilled(false);
 		btnSubmit.setOpaque(true);
 		btnSubmit.setForeground(Color.WHITE);
 		btnSubmit.setBackground(StaticData.THEME_ORANGE_COLOR);
-		saveSubmitPnl.add(btnSubmit, "cell 1 1");
+		btnSubmit.setCursor(StaticData.HAND_CURSOR);
 
+		btnSubmit.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnSubmit.setBackground(StaticData.THEME_ORANGE_COLOR);
+				btnSubmit.setForeground(Color.WHITE);
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnSubmit.setForeground(StaticData.THEME_ORANGE_COLOR);
+				btnSubmit.setBackground(Color.WHITE);
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+			}
+		});
+
+		saveSubmitPnl.add(btnSubmit, "cell 0 1");
+
+	}
+
+	private void addToSystemTry() {
+		if (SystemTray.isSupported()) {
+			tray = SystemTray.getSystemTray();
+			PopupMenu popup = new PopupMenu();
+			MenuItem defaultItem = new MenuItem("Exit");
+			defaultItem.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					System.exit(0);
+				}
+			});
+
+			popup.add(defaultItem);
+			defaultItem = new MenuItem("Show");
+			defaultItem.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					tray.remove(trayIcon);
+					setVisible(true);
+					setExtendedState(JFrame.MAXIMIZED_BOTH);
+				}
+			});
+			popup.add(defaultItem);
+
+			trayIcon = new TrayIcon(StaticData.TRAY_ICON.getImage(), "Ticket Easy", popup);
+			trayIcon.setImageAutoSize(true);
+
+			try {
+				tray.add(trayIcon);
+				setVisible(false);
+			} catch (AWTException ex) {
+				logger.error(StackTraceHandler.getErrString(ex));
+			}
+
+		}
 	}
 }
