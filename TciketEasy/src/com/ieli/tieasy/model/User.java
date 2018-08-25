@@ -15,10 +15,10 @@ import javax.persistence.Table;
 public class User implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	private int userId;
+	private Integer userId;
 	private String username;
 	private String password;
-	private int enabled;
+	private Integer enabled;
 
 	public User() {
 
@@ -27,11 +27,11 @@ public class User implements Serializable{
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "user_id", unique = true, nullable = false)
-	public int getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 
@@ -54,11 +54,11 @@ public class User implements Serializable{
 	}
 
 	@Column(name = "enabled")
-	public int getEnabled() {
+	public Integer getEnabled() {
 		return enabled;
 	}
 
-	public void setEnabled(int enabled) {
+	public void setEnabled(Integer enabled) {
 		this.enabled = enabled;
 	}
 

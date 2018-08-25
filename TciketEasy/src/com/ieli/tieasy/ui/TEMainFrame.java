@@ -12,23 +12,32 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.logging.Handler;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.jnativehook.GlobalScreen;
+import org.jnativehook.NativeHookException;
 import org.springframework.context.ApplicationContext;
 
+import com.ieli.tieasy.model.Ticket;
+import com.ieli.tieasy.model.User;
+import com.ieli.tieasy.service.caputre.IKeyboardCapture;
+import com.ieli.tieasy.service.caputre.IMouseCapture;
+import com.ieli.tieasy.service.drafts.IDraftsService;
+import com.ieli.tieasy.service.tickets.ITicketsService;
 import com.ieli.tieasy.service.user.IUserService;
+import com.ieli.tieasy.util.AppUtils;
 import com.ieli.tieasy.util.CusotmJButton;
 import com.ieli.tieasy.util.CustomTextArea;
 import com.ieli.tieasy.util.CustomTextField;
-import com.ieli.tieasy.util.ImagePanel;
 import com.ieli.tieasy.util.ScreenConfig;
 import com.ieli.tieasy.util.StackTraceHandler;
 import com.ieli.tieasy.util.StaticData;
@@ -39,6 +48,7 @@ public class TEMainFrame extends JFrame {
 
 	final static Logger logger = Logger.getLogger(TEMainFrame.class);
 
+	private Ticket dbTicket;
 	private TrayIcon trayIcon;
 	private SystemTray tray;
 
@@ -49,19 +59,28 @@ public class TEMainFrame extends JFrame {
 
 	private IUserService iUserService;
 
+	private IMouseCapture iMouseCaptureService;
+	private IKeyboardCapture iKeyboardCaptureService;
+
+	private ITicketsService iTicketsService;
+
+	private IDraftsService iDraftsService;
+
 	private JButton btnSubmit;
 
 	private TrayPopupMenu trayPopupMenu;
 
+	private CustomTextArea descriptionTextArea;
+
+	private JPanel ticketsCarouselPnl;
+
 	public TEMainFrame(final ApplicationContext appContext) {
-		tray = SystemTray.getSystemTray();
-		trayIcon = new TrayIcon(StaticData.TRAY_ICON.getImage(), "Ticket Easy");
-		trayIcon.setImageAutoSize(true);
-		trayPopupMenu = new TrayPopupMenu(TEMainFrame.this, tray, trayIcon);
+
+		disableNativeHookLogging();
+
 		setUndecorated(true);
 		setResizable(false);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
-		iUserService = (IUserService) appContext.getBean("iUserService");
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Ticket Easy");
@@ -111,6 +130,7 @@ public class TEMainFrame extends JFrame {
 		Image pnlImg = StaticData.BG_IMAGE.getImage();
 
 		JPanel ticketsPnl = new JPanel();
+		ticketsPnl.setBackground(StaticData.HEADER_FOOTER_COLOR);
 		mainPnl.add(ticketsPnl, "cell 0 1,grow");
 		ticketsPnl.setLayout(new MigLayout("", "[grow]", "[][grow,fill]"));
 
@@ -124,17 +144,24 @@ public class TEMainFrame extends JFrame {
 		ticketTitleTextField.setPlaceholder("Please give your ticket a title");
 		ticketInfoPnl.add(ticketTitleTextField, "cell 0 0,growx");
 
-		CustomTextArea textArea = new CustomTextArea();
-		textArea.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		textArea.setBorder(new LineBorder(UIManager.getColor("TextField.light")));
-		textArea.setPlaceholder("Let us know what the issue is...");
-		textArea.setRows(4);
-		ticketInfoPnl.add(textArea, "cell 0 1,grow");
+		descriptionTextArea = new CustomTextArea();
+		descriptionTextArea.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		descriptionTextArea.setBorder(new LineBorder(UIManager.getColor("TextField.light")));
+		descriptionTextArea.setPlaceholder("Let us know what the issue is...");
+		descriptionTextArea.setRows(8);
+		ticketInfoPnl.add(descriptionTextArea, "cell 0 1,grow");
 
-		JPanel ticketsCarouselPnl = new JPanel();
+		ticketsCarouselPnl = new JPanel();
+		ticketsCarouselPnl.setBorder(null);
 		ticketsCarouselPnl.setBackground(StaticData.TRANSPARENT_COLOR);
-		ticketsPnl.add(ticketsCarouselPnl, "cell 0 1,grow");
-		ticketsCarouselPnl.setLayout(new MigLayout("", "[]", "[]"));
+		ticketsCarouselPnl.setLayout(new MigLayout("aligny bottom", "[][]", "[][]"));
+
+		JScrollPane scrollPane = new JScrollPane(ticketsCarouselPnl);
+		scrollPane.setBorder(null);
+		scrollPane.setBackground(StaticData.HEADER_FOOTER_COLOR);
+		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+		ticketsPnl.add(scrollPane, "cell 0 1,growx,aligny bottom");
 
 		JPanel footerPnl = new JPanel();
 		footerPnl.setBackground(StaticData.HEADER_FOOTER_COLOR);
@@ -191,10 +218,62 @@ public class TEMainFrame extends JFrame {
 
 		saveSubmitPnl.add(btnSubmit, "cell 0 1");
 
+		iUserService = (IUserService) appContext.getBean("iUserService");
+		iMouseCaptureService = (IMouseCapture) appContext.getBean("iMouseCaptureService");
+		iKeyboardCaptureService = (IKeyboardCapture) appContext.getBean("iKeyboardCaptureService");
+		iTicketsService = (ITicketsService) appContext.getBean("iTicketsService");
+		iDraftsService = (IDraftsService) appContext.getBean("iDraftsService");
+
+		tray = SystemTray.getSystemTray();
+		trayIcon = new TrayIcon(StaticData.TRAY_ICON.getImage(), "Ticket Easy");
+		trayIcon.setImageAutoSize(true);
+
+		addUserTicket();
+
+		trayPopupMenu = new TrayPopupMenu(TEMainFrame.this, tray, trayIcon, iMouseCaptureService,
+				iKeyboardCaptureService, iDraftsService, dbTicket.getTicketId(), ticketsCarouselPnl);
+
+	}
+
+	private void addUserTicket() {
+
+		User user = iUserService.getUserByCred("imad", "imad123");
+		Ticket ticket = new Ticket();
+		ticket.setDescription(descriptionTextArea.getText());
+		ticket.setEnabled(1);
+		ticket.setTicketDateTime(AppUtils.getCurrentDateTime());
+		ticket.setTitle(ticketTitleTextField.getText());
+		ticket.setUserId(user.getUserId());
+		dbTicket = iTicketsService.saveTicket(ticket);
+		iMouseCaptureService.setTicketId(dbTicket.getTicketId());
+		iMouseCaptureService.setUserId(user.getUserId());
+		iKeyboardCaptureService.setTicketId(dbTicket.getTicketId());
+		iKeyboardCaptureService.setUserId(user.getUserId());
+	}
+
+	private void disableNativeHookLogging() {
+		java.util.logging.Logger glLogger = java.util.logging.Logger
+				.getLogger(GlobalScreen.class.getPackage().getName());
+		glLogger.setLevel(java.util.logging.Level.OFF);
+
+		Handler[] handlers = java.util.logging.Logger.getLogger("").getHandlers();
+		for (int i = 0; i < handlers.length; i++) {
+			handlers[i].setLevel(java.util.logging.Level.OFF);
+		}
 	}
 
 	private void addToSystemTry() {
+
 		if (SystemTray.isSupported()) {
+
+			try {
+				GlobalScreen.registerNativeHook();
+				GlobalScreen.addNativeMouseListener(iMouseCaptureService);
+				GlobalScreen.addNativeKeyListener(iKeyboardCaptureService);
+
+			} catch (NativeHookException e1) {
+				logger.error(StackTraceHandler.getErrString(e1));
+			}
 
 			trayIcon.addMouseListener(new MouseAdapter() {
 				public void mouseReleased(MouseEvent e) {

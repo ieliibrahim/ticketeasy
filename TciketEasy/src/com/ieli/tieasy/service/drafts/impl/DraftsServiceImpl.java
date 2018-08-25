@@ -18,8 +18,8 @@ public class DraftsServiceImpl implements IDraftsService {
 	private IDraftsDao iDraftsDao;
 
 	@Override
-	public List<Draft> getUserDrafts(int userId) {
-		return iDraftsDao.getUserDrafts(userId);
+	public List<Draft> getTicketDrafts(Integer ticketId) {
+		return iDraftsDao.getTicketDrafts(ticketId);
 	}
 
 }

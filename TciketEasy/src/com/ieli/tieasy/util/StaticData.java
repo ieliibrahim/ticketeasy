@@ -32,7 +32,7 @@ public class StaticData {
 			StaticData.class.getResource("/com/ieli/tieasy/ui/images/pop_menu_icon.png"));
 	
 	public static final ImageIcon LOGO_IMG = new ImageIcon(
-			StaticData.class.getResource("/com/ieli/tieasy/ui/images/logo.png"));
+			StaticData.class.getResource("/com/ieli/tieasy/ui/images/Logo.png"));
 	
 	public static final ImageIcon TRAY_ICON = new ImageIcon(
 			StaticData.class.getResource("/com/ieli/tieasy/ui/images/tryIcon.png"));

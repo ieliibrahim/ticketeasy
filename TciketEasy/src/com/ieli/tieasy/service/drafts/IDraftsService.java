@@ -6,5 +6,5 @@ import com.ieli.tieasy.model.Draft;
 
 public interface IDraftsService {
 
-	List<Draft> getUserDrafts(int userId);
+	List<Draft> getTicketDrafts(Integer ticketId);
 }

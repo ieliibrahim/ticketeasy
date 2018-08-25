@@ -6,5 +6,9 @@ import com.ieli.tieasy.model.Draft;
 
 public interface IDraftsDao {
 
-	List<Draft> getUserDrafts(int userId);
+	Integer getLastDraftNumber(Integer ticketId);
+
+	void saveDraft(Draft draft);
+
+	List<Draft> getTicketDrafts(Integer ticketId);
 }
