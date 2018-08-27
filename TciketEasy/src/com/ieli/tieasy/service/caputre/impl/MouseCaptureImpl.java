@@ -18,8 +18,10 @@ public class MouseCaptureImpl implements IMouseCapture {
 
 	@Override
 	public void nativeMouseClicked(NativeMouseEvent arg0) {
-		iDesktopCaptureService.captureDesktop(this.userId, this.ticketId);
 
+		if (arg0.getButton() != NativeMouseEvent.BUTTON2) {
+			iDesktopCaptureService.captureDesktop(this.userId, this.ticketId);
+		}
 	}
 
 	@Override

@@ -18,7 +18,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 
@@ -156,12 +155,8 @@ public class TEMainFrame extends JFrame {
 		ticketsCarouselPnl.setBackground(StaticData.TRANSPARENT_COLOR);
 		ticketsCarouselPnl.setLayout(new MigLayout("aligny bottom", "[][]", "[][]"));
 
-		JScrollPane scrollPane = new JScrollPane(ticketsCarouselPnl);
-		scrollPane.setBorder(null);
-		scrollPane.setBackground(StaticData.HEADER_FOOTER_COLOR);
-		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-		ticketsPnl.add(scrollPane, "cell 0 1,growx,aligny bottom");
+		ticketsCarouselPnl.setBorder(null);
+		ticketsPnl.add(ticketsCarouselPnl, "cell 0 1,growx,aligny bottom");
 
 		JPanel footerPnl = new JPanel();
 		footerPnl.setBackground(StaticData.HEADER_FOOTER_COLOR);
@@ -249,6 +244,13 @@ public class TEMainFrame extends JFrame {
 		iMouseCaptureService.setUserId(user.getUserId());
 		iKeyboardCaptureService.setTicketId(dbTicket.getTicketId());
 		iKeyboardCaptureService.setUserId(user.getUserId());
+		iKeyboardCaptureService.setTrayIcon(trayIcon);
+		iKeyboardCaptureService.setTray(tray);
+		iKeyboardCaptureService.setTeMainFrame(TEMainFrame.this);
+		iKeyboardCaptureService.setiMouseCaptureService(iMouseCaptureService);
+		iKeyboardCaptureService.setiKeyboardCaptureService(iKeyboardCaptureService);
+		iKeyboardCaptureService.setiDraftsService(iDraftsService);
+		iKeyboardCaptureService.setTicketsCarouselPnl(ticketsCarouselPnl);
 	}
 
 	private void disableNativeHookLogging() {
