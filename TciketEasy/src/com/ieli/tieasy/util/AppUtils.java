@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.attribute.FileTime;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -20,8 +21,8 @@ public class AppUtils {
 
 	final static Logger logger = Logger.getLogger(AppUtils.class);
 
-	public static final String NOW_TIME_PATTERN = "yyyy-MM-dd hh:mm";
-
+	public static final String NOW_TIME_PATTERN = "hh:mm:ss";
+	
 	private static boolean openWebpage(URI uri) {
 		Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
 		if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
@@ -29,7 +30,7 @@ public class AppUtils {
 				desktop.browse(uri);
 				return true;
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(StackTraceHandler.getErrString(e));
 			}
 		}
 		return false;
@@ -49,12 +50,16 @@ public class AppUtils {
 		SimpleDateFormat sdf = new SimpleDateFormat(NOW_TIME_PATTERN);
 		return sdf.format(Calendar.getInstance().getTime());
 	}
+	
+	public static String formatTime(FileTime time) {
+
+		SimpleDateFormat sdf = new SimpleDateFormat(NOW_TIME_PATTERN);
+		return sdf.format(time.toMillis());
+	}
 
 	public static BufferedImage imageToThumnail(BufferedImage image, int imageType, int newWidth, int newHeight,
 			String imageExtension) throws IOException {
 
-		// Make sure the aspect ratio is maintained, so the image is not
-		// distorted
 		double thumbRatio = (double) newWidth / (double) newHeight;
 		int imageWidth = image.getWidth(null);
 		int imageHeight = image.getHeight(null);
@@ -77,4 +82,5 @@ public class AppUtils {
 
 		return newImage;
 	}
+
 }

@@ -35,7 +35,7 @@ public class StaticData {
 			StaticData.class.getResource("/com/ieli/tieasy/ui/images/Logo.png"));
 	
 	public static final ImageIcon TRAY_ICON = new ImageIcon(
-			StaticData.class.getResource("/com/ieli/tieasy/ui/images/tryIcon.png"));
+			StaticData.class.getResource("/com/ieli/tieasy/ui/images/Icon.png"));
 
 	public static final String HELP_INSTC_VIDEO_ITEM = "<html><u>Instructional video</u></html>";
 
@@ -44,4 +44,8 @@ public class StaticData {
 	public static final String HELP_SETTINGS_ITEM = "<html><u>Settings</u></html>";
 	
 	public static final Cursor HAND_CURSOR = new Cursor(Cursor.HAND_CURSOR);
+	
+	public static final String OAUTH_API_PATH = "http://localhost:5050/oauth/token";
+	
+	public static final String SUBMIT_TICKET_API_PATH = "http://localhost:5050/api/v1/tickets/submitTicket/";
 }

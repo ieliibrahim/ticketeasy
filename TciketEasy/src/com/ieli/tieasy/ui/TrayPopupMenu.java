@@ -16,7 +16,6 @@ import org.apache.log4j.Logger;
 
 import com.ieli.tieasy.service.caputre.IKeyboardCapture;
 import com.ieli.tieasy.service.caputre.IMouseCapture;
-import com.ieli.tieasy.service.drafts.IDraftsService;
 import com.ieli.tieasy.util.StaticData;
 
 public class TrayPopupMenu extends JPopupMenu {
@@ -29,7 +28,7 @@ public class TrayPopupMenu extends JPopupMenu {
 
 	public TrayPopupMenu(final JFrame teMainFrame, final SystemTray tray, final TrayIcon trayIcon,
 			final IMouseCapture iMouseCaptureService, final IKeyboardCapture iKeyboardCaptureService,
-			final IDraftsService iDraftsService, final Integer ticketId, final JPanel ticketsCarouselPnl) {
+			final JPanel ticketsCarouselPnl) {
 
 		exitItem = new JMenuItem("Exit");
 		exitItem.setOpaque(true);

@@ -36,5 +36,8 @@
 	<classpathentry kind="lib" path="lib/swingx-0.9.0.jar"/>
 	<classpathentry kind="lib" path="lib/xml-apis-1.3.03.jar"/>
 	<classpathentry kind="lib" path="lib/jnativehook-2.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/commons-httpclient-3.1.jar"/>
+	<classpathentry kind="lib" path="lib/gson-2.8.0.jar"/>
+	<classpathentry kind="lib" path="lib/ij-1.51h.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

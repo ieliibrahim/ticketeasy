@@ -1,6 +1,8 @@
 package com.ieli.tieasy.service.caputre;
 
+import javax.swing.JPanel;
+
 public interface ICaptureDesktop {
 
-	void captureDesktop(Integer userId, Integer ticketId);
+	void captureDesktop(JPanel ticketsCarouselPnl);
 }
