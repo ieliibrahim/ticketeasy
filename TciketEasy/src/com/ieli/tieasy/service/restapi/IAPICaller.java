@@ -1,10 +1,13 @@
 package com.ieli.tieasy.service.restapi;
 
-import com.ieli.tieasy.model.api.TokenResponse;
+import java.io.File;
+
+import com.ieli.tieasy.model.api.Incident;
+import com.ieli.tieasy.model.api.Upload;
 
 public interface IAPICaller {
 
-	public TokenResponse getReponseToken();
-	
-	public String submitTicket(String token);
+	public Incident createIncident(String title, String description);
+
+	public Upload uploadFile(File file, String sysId);
 }

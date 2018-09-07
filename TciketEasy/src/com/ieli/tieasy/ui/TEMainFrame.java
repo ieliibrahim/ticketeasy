@@ -12,11 +12,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.logging.Handler;
 
-import javax.swing.JButton;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -24,23 +25,29 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 
+import org.apache.commons.io.comparator.LastModifiedFileComparator;
 import org.apache.log4j.Logger;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
-import org.springframework.context.ApplicationContext;
 
-import com.ieli.tieasy.model.api.TokenResponse;
+import com.ieli.tieasy.model.api.Incident;
+import com.ieli.tieasy.model.api.Upload;
 import com.ieli.tieasy.service.caputre.IKeyboardCapture;
 import com.ieli.tieasy.service.caputre.IMouseCapture;
+import com.ieli.tieasy.service.caputre.impl.KeyboardCaptureImpl;
+import com.ieli.tieasy.service.caputre.impl.MouseCaptureImpl;
 import com.ieli.tieasy.service.restapi.IAPICaller;
+import com.ieli.tieasy.service.restapi.impl.APICallerImpl;
 import com.ieli.tieasy.util.AppUtils;
-import com.ieli.tieasy.util.CusotmJButton;
-import com.ieli.tieasy.util.CustomTextArea;
-import com.ieli.tieasy.util.CustomTextField;
-import com.ieli.tieasy.util.ImagePanel;
-import com.ieli.tieasy.util.ScreenConfig;
 import com.ieli.tieasy.util.StackTraceHandler;
 import com.ieli.tieasy.util.StaticData;
+import com.ieli.tieasy.util.logs.LogPackager;
+import com.ieli.tieasy.util.ui.BackgroundImagePanel;
+import com.ieli.tieasy.util.ui.CusotmJButton;
+import com.ieli.tieasy.util.ui.CustomAppJButton;
+import com.ieli.tieasy.util.ui.CustomTextArea;
+import com.ieli.tieasy.util.ui.CustomTextField;
+import com.ieli.tieasy.util.ui.ScreenConfig;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -56,11 +63,11 @@ public class TEMainFrame extends JFrame {
 	private CusotmJButton btnHelp;
 	private CusotmJButton btnExit;
 
-	private IMouseCapture iMouseCaptureService;
-	private IKeyboardCapture iKeyboardCaptureService;
-	private IAPICaller iAPICallerService;
+	private IMouseCapture iMouseCaptureService = new MouseCaptureImpl();
+	private IKeyboardCapture iKeyboardCaptureService = new KeyboardCaptureImpl();
+	private IAPICaller iAPICallerService = new APICallerImpl();
 
-	private JButton btnSubmit;
+	private CustomAppJButton btnSubmit;
 
 	private TrayPopupMenu trayPopupMenu;
 
@@ -70,7 +77,7 @@ public class TEMainFrame extends JFrame {
 
 	private TimingPanel timingPnl;
 
-	public TEMainFrame(final ApplicationContext appContext) {
+	public TEMainFrame() {
 
 		disableNativeHookLogging();
 		setIconImage(StaticData.TRAY_ICON.getImage());
@@ -123,9 +130,14 @@ public class TEMainFrame extends JFrame {
 		});
 		helpClosePnl.add(btnExit, "cell 1 0");
 
-		Image pnlImg = StaticData.BG_IMAGE.getImage();
+		Image img = null;
+		try {
+			img = ImageIO.read(getClass().getResource(StaticData.BG_IMAGE));
+		} catch (IOException e) {
+			logger.error(StackTraceHandler.getErrString(e));
+		}
 
-		ImagePanel ticketsPnl = new ImagePanel(pnlImg);
+		BackgroundImagePanel ticketsPnl = new BackgroundImagePanel(img);
 		ticketsPnl.setBackground(StaticData.HEADER_FOOTER_COLOR);
 		mainPnl.add(ticketsPnl, "cell 0 1,grow");
 		ticketsPnl.setLayout(new MigLayout("", "[grow]", "[][grow,fill][]"));
@@ -152,81 +164,116 @@ public class TEMainFrame extends JFrame {
 		ticketsCarouselPnl.setBackground(StaticData.TRANSPARENT_COLOR);
 		ticketsCarouselPnl.setLayout(new GridLayout(1, 0, 10, 0));
 
-		ticketsPnl.add(ticketsCarouselPnl, "cell 0 1,growx,aligny bottom");
+		ticketsPnl.add(ticketsCarouselPnl, "cell 0 1,grow");
 
 		JPanel footerPnl = new JPanel();
 		footerPnl.setBackground(StaticData.HEADER_FOOTER_COLOR);
 		mainPnl.add(footerPnl, "cell 0 2,grow");
 		footerPnl.setLayout(new MigLayout("", "[grow][][grow]", "[grow]"));
 
-		JPanel savedDraftsPnl = new JPanel();
-		savedDraftsPnl.setBackground(StaticData.HEADER_FOOTER_COLOR);
-		footerPnl.add(savedDraftsPnl, "cell 0 0,alignx left,growy");
-		savedDraftsPnl.setLayout(new MigLayout("", "[]", "[][]"));
-
 		JPanel saveSubmitPnl = new JPanel();
 		saveSubmitPnl.setBackground(StaticData.HEADER_FOOTER_COLOR);
 		footerPnl.add(saveSubmitPnl, "cell 2 0,alignx right,growy");
 		saveSubmitPnl.setLayout(new MigLayout("", "[][][]", "[][]"));
 
-		iAPICallerService = (IAPICaller) appContext.getBean("iAPICallerService");
-		btnSubmit = new JButton("SUBMIT");
-		btnSubmit.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnSubmit.setContentAreaFilled(false);
-		btnSubmit.setOpaque(true);
-		btnSubmit.setForeground(Color.WHITE);
-		btnSubmit.setBackground(StaticData.THEME_ORANGE_COLOR);
-		btnSubmit.setCursor(StaticData.HAND_CURSOR);
-
-		btnSubmit.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnSubmit.setBackground(StaticData.THEME_ORANGE_COLOR);
-				btnSubmit.setForeground(Color.WHITE);
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnSubmit.setForeground(StaticData.THEME_ORANGE_COLOR);
-				btnSubmit.setBackground(Color.WHITE);
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-
-			}
-		});
+		btnSubmit = new CustomAppJButton("SUBMIT");
 
 		btnSubmit.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				TokenResponse tokenResponse = iAPICallerService.getReponseToken();
-				if (tokenResponse == null) {
-					JOptionPane.showMessageDialog(TEMainFrame.this, "Error authenticating user", "OAuth Error",
-							JOptionPane.ERROR_MESSAGE);
+
+				if (ticketsCarouselPnl.getComponentCount() > 0) {
+
+					if (ticketTitleTextField.getText().isEmpty() || descriptionTextArea.getText().isEmpty()
+							|| descriptionTextArea.getText().equals("Let us know what the issue is...")
+							|| ticketTitleTextField.getText().equals("Please give your ticket a title")) {
+						JOptionPane.showMessageDialog(TEMainFrame.this, "Please add title and description!!!",
+								"Missing title or description", JOptionPane.ERROR_MESSAGE);
+					} else {
+
+						new Thread(new Runnable() {
+
+							@Override
+							public void run() {
+								Incident incident = iAPICallerService.createIncident(ticketTitleTextField.getText(),
+										descriptionTextArea.getText());
+
+								String res = "";
+
+								if (incident != null) {
+
+									res += "Incident created successfuly\n";
+
+									File dir = new File("drafts/");
+									File tempDir = new File("temp/");
+									if (!tempDir.exists()) {
+										tempDir.mkdir();
+									}
+
+									final File[] files = dir.listFiles();
+									Arrays.sort(files, LastModifiedFileComparator.LASTMODIFIED_REVERSE);
+
+									int imageIndex = 10;
+									for (File file : files) {
+										File newFile = new File(tempDir + "/image" + imageIndex + ".png");
+										file.renameTo(newFile);
+										Upload upload = iAPICallerService.uploadFile(newFile,
+												incident.getIncidentResult().getSysId());
+										if (upload != null) {
+											res += "Image(" + newFile.getName() + ") uploaded successfuly\n";
+										} else {
+											res += "Error uploading image(" + newFile.getName() + ")\n";
+										}
+
+										imageIndex--;
+									}
+
+									for (File tempFile : tempDir.listFiles()) {
+										tempFile.delete();
+									}
+
+									LogPackager packager = new LogPackager();
+									try {
+										File temp = File.createTempFile("log_package", ".zip");
+										File logArchive = packager.packageLog(temp.getParent(), temp.getAbsolutePath());
+										Upload upload = iAPICallerService.uploadFile(logArchive,
+												incident.getIncidentResult().getSysId());
+
+										if (upload != null) {
+											res += "Archive(" + temp.getName() + ") uploaded successfuly\n";
+										} else {
+											res += "Error uploading archive(" + temp.getName() + ")\n";
+										}
+
+									} catch (IOException e2) {
+										logger.error(StackTraceHandler.getErrString(e2));
+									}
+
+									logger.info(res);
+								} else {
+									res += "Error creating incident\n";
+								}
+
+							}
+						}).start();
+
+						ticketTitleTextField.setText("");
+						descriptionTextArea.setText("");
+
+						JOptionPane.showMessageDialog(TEMainFrame.this, "Ticket created successfully");
+
+						addToSystemTry();
+					}
 				} else {
-					String response = iAPICallerService.submitTicket(tokenResponse.getAccess_token());
-					JOptionPane.showMessageDialog(TEMainFrame.this, response);
+					JOptionPane.showMessageDialog(TEMainFrame.this, "Please add at least one screen shot!!!",
+							"Missing screen shots", JOptionPane.ERROR_MESSAGE);
 				}
+
 			}
 		});
 
 		saveSubmitPnl.add(btnSubmit, "cell 0 1");
-
-		iMouseCaptureService = (IMouseCapture) appContext.getBean("iMouseCaptureService");
-		iKeyboardCaptureService = (IKeyboardCapture) appContext.getBean("iKeyboardCaptureService");
 
 		tray = SystemTray.getSystemTray();
 		trayIcon = new TrayIcon(StaticData.TRAY_ICON.getImage(), "Ticket Easy");
@@ -264,6 +311,7 @@ public class TEMainFrame extends JFrame {
 		iKeyboardCaptureService.setTrayIcon(trayIcon);
 		iKeyboardCaptureService.setTray(tray);
 		iKeyboardCaptureService.setTeMainFrame(TEMainFrame.this);
+		iMouseCaptureService.setTeMainFrame(TEMainFrame.this);
 		iKeyboardCaptureService.setiMouseCaptureService(iMouseCaptureService);
 		iKeyboardCaptureService.setiKeyboardCaptureService(iKeyboardCaptureService);
 		iKeyboardCaptureService.setTicketsCarouselPnl(ticketsCarouselPnl);
@@ -271,13 +319,6 @@ public class TEMainFrame extends JFrame {
 
 		File draftsDir = new File("drafts/");
 		for (File file : draftsDir.listFiles()) {
-			if (file.exists()) {
-				file.delete();
-			}
-		}
-
-		File thumbsDir = new File("thumbs/");
-		for (File file : thumbsDir.listFiles()) {
 			if (file.exists()) {
 				file.delete();
 			}

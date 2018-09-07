@@ -3,10 +3,6 @@ package com.ieli.tieasy;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-import com.ieli.tieasy.config.AppConfig;
 import com.ieli.tieasy.ui.TEMainFrame;
 
 public class RunTicketEasy {
@@ -25,9 +21,7 @@ public class RunTicketEasy {
 			e1.printStackTrace();
 		}
 
-		ApplicationContext appContext = new AnnotationConfigApplicationContext(AppConfig.class);
-
-		TEMainFrame teMainFrame = new TEMainFrame(appContext);
+		TEMainFrame teMainFrame = new TEMainFrame();
 		teMainFrame.setVisible(true);
 
 	}

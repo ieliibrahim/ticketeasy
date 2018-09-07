@@ -1,63 +1,257 @@
 package com.ieli.tieasy.ui.editor;
 
-import java.awt.FlowLayout;
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
+import javax.imageio.ImageIO;
+import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JScrollPane;
+import javax.swing.border.LineBorder;
 
-import com.ieli.tieasy.util.ScreenConfig;
+import org.apache.log4j.Logger;
+
+import com.ieli.tieasy.ui.SingleDraftPanel;
+import com.ieli.tieasy.ui.editor.tool.ArrowTool;
+import com.ieli.tieasy.ui.editor.tool.ColorTool;
+import com.ieli.tieasy.ui.editor.tool.FreeHandTool;
+import com.ieli.tieasy.ui.editor.tool.LineTool;
+import com.ieli.tieasy.ui.editor.tool.RectangleTool;
+import com.ieli.tieasy.ui.editor.tool.TextTool;
+import com.ieli.tieasy.util.StackTraceHandler;
+import com.ieli.tieasy.util.StaticData;
+import com.ieli.tieasy.util.ui.CustomAppJButton;
+import com.ieli.tieasy.util.ui.ScreenConfig;
 
 import net.miginfocom.swing.MigLayout;
 
 public class EditDraftDlg extends JDialog {
 
-	private static final long serialVersionUID = 1L;
-	private final JPanel contentPanel = new JPanel();
+	final static Logger logger = Logger.getLogger(EditDraftDlg.class);
 
-	/**
-	 * Create the dialog.
-	 */
-	public EditDraftDlg(ImageIcon img, JFrame teMainFrame) {
+	private static final long serialVersionUID = 1L;
+
+	private CusotmDrawingJButton freehandBtn;
+	private CusotmDrawingJButton drawLineBtn;
+	private CusotmDrawingJButton drawArrowBtn;
+
+	private CusotmDrawingJButton drawEmptySquareBtn;
+	private CusotmDrawingJButton inserTextBtn;
+	private CusotmDrawingJButton chooseColorBtn;
+
+	private CusotmDrawingJButton blurBtn;
+	private CusotmDrawingJButton undoBtn;
+
+	private Color drawingColor = Color.BLACK;
+
+	private CustomAppJButton btnSave;
+	private CustomAppJButton btnExit;
+
+	private EditorImagePanel editorImagePanel;
+
+	protected FreeHandTool freeHandTool;
+
+	protected LineTool lineTool;
+
+	protected ArrowTool arrowTool;
+
+	protected RectangleTool rectangleTool;
+
+	protected TextTool textTool;
+
+	protected ColorTool colorTool;
+
+	private BufferedImage mainImg;
+
+	private File imageFile;
+
+	public EditDraftDlg(BufferedImage img, String mainImagePath, JFrame teMainFrame, SingleDraftPanel singleDraftPanel) {
+
+		imageFile = new File(mainImagePath);
+		this.mainImg = img;
 		setModal(true);
-		ScreenConfig.setDialogSizeCustom(this, 200, 200);
+		setIconImage(StaticData.TRAY_ICON.getImage());
+		setUndecorated(true);
+		setResizable(false);
+		ScreenConfig.setDialogSizeCustom(this, 50, 50);
 		ScreenConfig.setDialogPositionCenter(this, teMainFrame);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		getContentPane().setLayout(new MigLayout("", "[434px]", "[229px][33px]"));
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, "cell 0 0,grow");
-		contentPanel.setLayout(new MigLayout("", "[grow]", "[grow]"));
-		{
-			JLabel lblNewLabel = new JLabel(img);
-			contentPanel.add(lblNewLabel, "cell 0 0");
-		}
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, "cell 0 1,growx,aligny top");
-			{
-				JButton okButton = new JButton("OK");
-				okButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						EditDraftDlg.this.dispose();
+
+		getContentPane().setLayout(new MigLayout("", "[434px,grow]", "[229px,grow]"));
+
+		JPanel mainPnl = new JPanel();
+		mainPnl.setBackground(Color.BLACK);
+		getContentPane().add(mainPnl, "cell 0 0,grow");
+		mainPnl.setLayout(new BorderLayout(0, 0));
+
+		JPanel iconsPnl = new JPanel();
+		iconsPnl.setBackground(Color.BLACK);
+		mainPnl.add(iconsPnl, BorderLayout.WEST);
+		iconsPnl.setLayout(new MigLayout("", "[]", "[]"));
+
+		freehandBtn = new CusotmDrawingJButton(StaticData.ICON_FREEHAND, StaticData.ICON_FREEHAND_HOVER,
+				"Draw freehand");
+		iconsPnl.add(freehandBtn, "cell 0 0");
+
+		freehandBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				editorImagePanel.setTool(freeHandTool);
+				freeHandTool.execute(e);
+			}
+		});
+
+		drawLineBtn = new CusotmDrawingJButton(StaticData.ICON_DRAW_LINE, StaticData.ICON_DRAW_LINE_HOVER, "Draw line");
+		iconsPnl.add(drawLineBtn, "cell 0 1");
+
+		drawLineBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				editorImagePanel.setTool(lineTool);
+				lineTool.execute(e);
+			}
+		});
+
+		drawArrowBtn = new CusotmDrawingJButton(StaticData.ICON_DRAW_ARROW, StaticData.ICON_DRAW_ARROW_HOVER,
+				"Draw arrow");
+		iconsPnl.add(drawArrowBtn, "cell 0 2");
+
+		drawArrowBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				editorImagePanel.setTool(arrowTool);
+				arrowTool.execute(e);
+			}
+		});
+
+		drawEmptySquareBtn = new CusotmDrawingJButton(StaticData.ICON_DRAW_EMPTY_SQUARE,
+				StaticData.ICON_DRAW_EMPTY_SQUARE_HOVER, "Draw square");
+		iconsPnl.add(drawEmptySquareBtn, "cell 0 3");
+
+		drawEmptySquareBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				editorImagePanel.setTool(rectangleTool);
+				rectangleTool.execute(e);
+			}
+		});
+
+		inserTextBtn = new CusotmDrawingJButton(StaticData.ICON_DRAW_TEXT, StaticData.ICON_DRAW_TEXT_HOVER,
+				"Draw text");
+		iconsPnl.add(inserTextBtn, "cell 0 5");
+
+		inserTextBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				editorImagePanel.setTool(textTool);
+				textTool.execute(e);
+			}
+		});
+
+		chooseColorBtn = new CusotmDrawingJButton(StaticData.ICON_CHOOSE_COLOR, StaticData.ICON_CHOOSE_COLOR_HOVER,
+				"Choose color");
+		iconsPnl.add(chooseColorBtn, "cell 0 6");
+
+		chooseColorBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				drawingColor = JColorChooser.showDialog(EditDraftDlg.this, "Please select new color", drawingColor);
+				editorImagePanel.setTool(colorTool);
+				colorTool.setColor(drawingColor);
+				colorTool.execute(e);
+			}
+		});
+
+		blurBtn = new CusotmDrawingJButton(StaticData.ICON_BLUR, StaticData.ICON_BLUR_HOVER, "Blur");
+		iconsPnl.add(blurBtn, "cell 0 8");
+
+		blurBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+
+		undoBtn = new CusotmDrawingJButton(StaticData.ICON_UNDO, StaticData.ICON_UNDO_HOVER, "Undo");
+		iconsPnl.add(undoBtn, "cell 0 9");
+
+		undoBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				editorImagePanel.undo();
+			}
+		});
+
+		editorImagePanel = new EditorImagePanel();
+		editorImagePanel.setImage(mainImg);
+		editorImagePanel.setBorder(new LineBorder(Color.WHITE));
+		JScrollPane ticketsPanelPane = new JScrollPane(editorImagePanel);
+		mainPnl.add(ticketsPanelPane, BorderLayout.CENTER);
+
+		JPanel actionPnl = new JPanel();
+		actionPnl.setBackground(Color.BLACK);
+		mainPnl.add(actionPnl, BorderLayout.SOUTH);
+		actionPnl.setLayout(new MigLayout("", "[grow][]", "[]"));
+
+		btnSave = new CustomAppJButton("SAVE");
+		btnSave.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				if (imageFile.exists()) {
+					imageFile.delete();
+					try {
+						editorImagePanel.save(editorImagePanel.getImage());
+						ImageIO.write(editorImagePanel.getImage(), "png", imageFile.getAbsoluteFile());
+						singleDraftPanel.updateImage(editorImagePanel.getImage());
+
+					} catch (IOException e1) {
+						logger.error(StackTraceHandler.getErrString(e1));
 					}
-				});
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
+				}
+				dispose();
 			}
-			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
+		});
+
+		btnExit = new CustomAppJButton("Exit");
+		btnExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
 			}
-		}
+		});
+
+		actionPnl.add(btnExit, "cell 0 0,alignx right");
+		actionPnl.add(btnSave, "cell 1 0,alignx right");
+
+		initTools();
+
+	}
+
+	private void initTools() {
+
+		freeHandTool = new FreeHandTool(editorImagePanel);
+		lineTool = new LineTool(editorImagePanel);
+		arrowTool = new ArrowTool(editorImagePanel);
+		rectangleTool = new RectangleTool(editorImagePanel);
+		textTool = new TextTool(editorImagePanel);
+		colorTool = new ColorTool(editorImagePanel);
+		colorTool.setColor(drawingColor);
+
 	}
 
 }

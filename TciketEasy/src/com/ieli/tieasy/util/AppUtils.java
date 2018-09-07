@@ -2,6 +2,7 @@ package com.ieli.tieasy.util;
 
 import java.awt.Desktop;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -15,6 +16,7 @@ import java.util.Calendar;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 
 public class AppUtils {
@@ -22,7 +24,7 @@ public class AppUtils {
 	final static Logger logger = Logger.getLogger(AppUtils.class);
 
 	public static final String NOW_TIME_PATTERN = "hh:mm:ss";
-	
+
 	private static boolean openWebpage(URI uri) {
 		Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
 		if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
@@ -50,7 +52,7 @@ public class AppUtils {
 		SimpleDateFormat sdf = new SimpleDateFormat(NOW_TIME_PATTERN);
 		return sdf.format(Calendar.getInstance().getTime());
 	}
-	
+
 	public static String formatTime(FileTime time) {
 
 		SimpleDateFormat sdf = new SimpleDateFormat(NOW_TIME_PATTERN);
@@ -83,4 +85,26 @@ public class AppUtils {
 		return newImage;
 	}
 
+	public static BufferedImage toBufferedImage(Image img) {
+		if (img instanceof BufferedImage) {
+			return (BufferedImage) img;
+		}
+
+		// Create a buffered image with transparency
+		BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+
+		// Draw the image on to the buffered image
+		Graphics2D bGr = bimage.createGraphics();
+		bGr.drawImage(img, 0, 0, null);
+		bGr.dispose();
+
+		// Return the buffered image
+		return bimage;
+	}
+
+	public static String encodeBasic(String username, String password) {
+		Base64 b = new Base64();
+		String encoding = b.encodeAsString(new String(username + ":" + password).getBytes());
+		return new String("Basic " + encoding);
+	}
 }
