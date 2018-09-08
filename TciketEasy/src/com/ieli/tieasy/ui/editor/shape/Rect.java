@@ -5,7 +5,6 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 public class Rect extends Drawing {
-
 	private Rectangle rectangle;
 
 	public Rect(Color foreground, Rectangle rectangle) {
@@ -13,10 +12,8 @@ public class Rect extends Drawing {
 		this.rectangle = rectangle;
 	}
 
-	@Override
 	public void draw(Graphics g) {
 		g.setColor(this.foreground);
 		g.drawRect(this.rectangle.x, this.rectangle.y, this.rectangle.width, this.rectangle.height);
 	}
-
 }

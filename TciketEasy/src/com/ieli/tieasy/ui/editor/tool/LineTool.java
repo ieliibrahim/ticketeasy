@@ -51,6 +51,7 @@ public class LineTool extends ToolAdapter {
 			Graphics2D g2d = (Graphics2D) g;
 			g2d.setColor(g.getColor());
 			g2d.draw(line);
+			g2d.dispose();
 		}
 	}
 }

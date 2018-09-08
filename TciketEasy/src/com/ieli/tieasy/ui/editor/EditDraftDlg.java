@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 
 import com.ieli.tieasy.ui.SingleDraftPanel;
 import com.ieli.tieasy.ui.editor.tool.ArrowTool;
+import com.ieli.tieasy.ui.editor.tool.BlurTool;
 import com.ieli.tieasy.ui.editor.tool.ColorTool;
 import com.ieli.tieasy.ui.editor.tool.FreeHandTool;
 import com.ieli.tieasy.ui.editor.tool.LineTool;
@@ -68,14 +69,18 @@ public class EditDraftDlg extends JDialog {
 
 	protected ColorTool colorTool;
 
+	protected BlurTool blurTool;
+
 	private BufferedImage mainImg;
 
 	private File imageFile;
 
-	public EditDraftDlg(BufferedImage img, String mainImagePath, JFrame teMainFrame, SingleDraftPanel singleDraftPanel) {
+	public EditDraftDlg(BufferedImage img, String mainImagePath, JFrame teMainFrame,
+			SingleDraftPanel singleDraftPanel) {
 
 		imageFile = new File(mainImagePath);
 		this.mainImg = img;
+
 		setModal(true);
 		setIconImage(StaticData.TRAY_ICON.getImage());
 		setUndecorated(true);
@@ -182,6 +187,8 @@ public class EditDraftDlg extends JDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				editorImagePanel.setTool(blurTool);
+				blurTool.execute(e);
 			}
 		});
 
@@ -249,6 +256,7 @@ public class EditDraftDlg extends JDialog {
 		arrowTool = new ArrowTool(editorImagePanel);
 		rectangleTool = new RectangleTool(editorImagePanel);
 		textTool = new TextTool(editorImagePanel);
+		blurTool = new BlurTool(editorImagePanel);
 		colorTool = new ColorTool(editorImagePanel);
 		colorTool.setColor(drawingColor);
 

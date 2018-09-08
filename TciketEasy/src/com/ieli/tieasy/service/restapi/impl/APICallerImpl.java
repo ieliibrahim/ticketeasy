@@ -31,8 +31,8 @@ import com.ieli.tieasy.model.api.Incident;
 import com.ieli.tieasy.model.api.IncidentInput;
 import com.ieli.tieasy.model.api.Upload;
 import com.ieli.tieasy.service.restapi.IAPICaller;
-import com.ieli.tieasy.service.util.IPropertyService;
-import com.ieli.tieasy.service.util.impl.PropertyServiceImpl;
+import com.ieli.tieasy.service.util.IUtilityService;
+import com.ieli.tieasy.service.util.impl.UtilityServiceImpl;
 import com.ieli.tieasy.util.AppUtils;
 import com.ieli.tieasy.util.ImportUtil;
 import com.ieli.tieasy.util.StackTraceHandler;
@@ -41,7 +41,7 @@ public class APICallerImpl implements IAPICaller {
 
 	final static Logger logger = Logger.getLogger(APICallerImpl.class);
 
-	private IPropertyService iPropertyService = new PropertyServiceImpl();
+	private IUtilityService iPropertyService = new UtilityServiceImpl();
 
 	private IncidentInput incidentInput;
 

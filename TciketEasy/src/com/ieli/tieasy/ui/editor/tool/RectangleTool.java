@@ -1,6 +1,5 @@
 package com.ieli.tieasy.ui.editor.tool;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -15,7 +14,6 @@ public class RectangleTool extends ToolAdapter {
 	private Point startPoint;
 
 	private Rectangle shape;
-
 
 	public RectangleTool(EditorImagePanel area) {
 		super(area);
@@ -68,6 +66,7 @@ public class RectangleTool extends ToolAdapter {
 			Graphics2D g2d = (Graphics2D) g;
 			g2d.setColor(g.getColor());
 			g2d.draw(shape);
+			g2d.dispose();
 		}
 	}
 

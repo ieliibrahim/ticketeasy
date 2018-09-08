@@ -36,5 +36,6 @@ public class FreeHandTool extends ToolAdapter {
 		if (this.line != null) {
 			this.line.draw(g);
 		}
+		g.dispose();
 	}
 }

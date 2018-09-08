@@ -12,7 +12,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.logging.Handler;
@@ -38,6 +40,8 @@ import com.ieli.tieasy.service.caputre.impl.KeyboardCaptureImpl;
 import com.ieli.tieasy.service.caputre.impl.MouseCaptureImpl;
 import com.ieli.tieasy.service.restapi.IAPICaller;
 import com.ieli.tieasy.service.restapi.impl.APICallerImpl;
+import com.ieli.tieasy.service.util.IUtilityService;
+import com.ieli.tieasy.service.util.impl.UtilityServiceImpl;
 import com.ieli.tieasy.util.AppUtils;
 import com.ieli.tieasy.util.StackTraceHandler;
 import com.ieli.tieasy.util.StaticData;
@@ -66,6 +70,7 @@ public class TEMainFrame extends JFrame {
 	private IMouseCapture iMouseCaptureService = new MouseCaptureImpl();
 	private IKeyboardCapture iKeyboardCaptureService = new KeyboardCaptureImpl();
 	private IAPICaller iAPICallerService = new APICallerImpl();
+	private IUtilityService iUtilityService = new UtilityServiceImpl();
 
 	private CustomAppJButton btnSubmit;
 
@@ -163,7 +168,7 @@ public class TEMainFrame extends JFrame {
 		ticketsCarouselPnl.setBorder(null);
 		ticketsCarouselPnl.setBackground(StaticData.TRANSPARENT_COLOR);
 		ticketsCarouselPnl.setLayout(new GridLayout(1, 0, 10, 0));
-
+		
 		ticketsPnl.add(ticketsCarouselPnl, "cell 0 1,grow");
 
 		JPanel footerPnl = new JPanel();
@@ -206,12 +211,21 @@ public class TEMainFrame extends JFrame {
 									res += "Incident created successfuly\n";
 
 									File dir = new File("drafts/");
+									File tempDrafts = new File("tempDrafts/");
+									if (!tempDrafts.exists()) {
+										tempDrafts.mkdirs();
+									}
+
+									for (File orgFile : dir.listFiles()) {
+										File newTempFile = new File(tempDrafts + "/" + orgFile.getName());
+										orgFile.renameTo(newTempFile);
+									}
 									File tempDir = new File("temp/");
 									if (!tempDir.exists()) {
 										tempDir.mkdir();
 									}
 
-									final File[] files = dir.listFiles();
+									final File[] files = tempDrafts.listFiles();
 									Arrays.sort(files, LastModifiedFileComparator.LASTMODIFIED_REVERSE);
 
 									int imageIndex = 10;
@@ -229,9 +243,8 @@ public class TEMainFrame extends JFrame {
 										imageIndex--;
 									}
 
-									for (File tempFile : tempDir.listFiles()) {
-										tempFile.delete();
-									}
+									tempDir.delete();
+									tempDrafts.delete();
 
 									LogPackager packager = new LogPackager();
 									try {
@@ -248,6 +261,34 @@ public class TEMainFrame extends JFrame {
 
 									} catch (IOException e2) {
 										logger.error(StackTraceHandler.getErrString(e2));
+									}
+
+									BufferedWriter writer = null;
+									try {
+										File tempSystemFile = File.createTempFile("systemInfo", ".txt");
+										writer = new BufferedWriter(new FileWriter(tempSystemFile));
+										writer.write(iUtilityService.getUserOSData().toString());
+										writer.close();
+										Upload upload = iAPICallerService.uploadFile(tempSystemFile,
+												incident.getIncidentResult().getSysId());
+
+										if (upload != null) {
+											res += "System Info(" + tempSystemFile.getName()
+													+ ") uploaded successfuly\n";
+										} else {
+											res += "Error uploading system info(" + tempSystemFile.getName() + ")\n";
+										}
+
+									} catch (IOException e2) {
+										logger.error(StackTraceHandler.getErrString(e2));
+									} finally {
+										if (writer != null) {
+											try {
+												writer.close();
+											} catch (IOException e) {
+												logger.error(StackTraceHandler.getErrString(e));
+											}
+										}
 									}
 
 									logger.info(res);

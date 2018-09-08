@@ -13,6 +13,8 @@ public class StaticData {
 
 	public static final Color TRANSPARENT_COLOR = new Color(0, 0, 0, 0);
 
+	public static final Color BLUR_COLOR = new Color(1f, 1f, 1f, .98f);
+
 	public static final ImageIcon ICON_EXIT = new ImageIcon(
 			StaticData.class.getResource("/com/ieli/tieasy/ui/images/exit.png"));
 
