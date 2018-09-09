@@ -33,9 +33,11 @@ public class SingleDraftPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private BufferedImage img;
+	private String mainImagePathFile;
 
 	public SingleDraftPanel(final BufferedImage img, final String mainImagePath, final JPanel ticketsCarouselPnl,
 			final JFrame teMainFrame) {
+		this.mainImagePathFile = mainImagePath;
 		this.img = img;
 		setBorder(new LineBorder(Color.WHITE, 2));
 		setLayout(new MigLayout("", "[grow]", "[grow][grow]"));
@@ -59,7 +61,7 @@ public class SingleDraftPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				int answer = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this image?",
+				int answer = CustomOptionPane.showConfirmDialog(null, "Are you sure you want to delete this image?",
 						"Delete Image", JOptionPane.YES_NO_OPTION);
 				if (answer == JOptionPane.YES_OPTION) {
 
@@ -154,4 +156,9 @@ public class SingleDraftPanel extends JPanel {
 		repaint();
 		updateUI();
 	}
+
+	public String getMainImagePathFile() {
+		return mainImagePathFile;
+	}
+
 }

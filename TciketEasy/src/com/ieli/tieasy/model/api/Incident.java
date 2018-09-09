@@ -11,6 +11,8 @@ public class Incident implements Serializable {
 	@SerializedName("result")
 	private IncidentResult incidentResult;
 
+	private String number;
+
 	public Incident() {
 
 	}
@@ -21,6 +23,14 @@ public class Incident implements Serializable {
 
 	public void setIncidentResult(IncidentResult incidentResult) {
 		this.incidentResult = incidentResult;
+	}
+
+	public String getNumber() {
+		return number;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
 	}
 
 }

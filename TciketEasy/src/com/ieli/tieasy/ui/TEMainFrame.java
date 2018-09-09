@@ -168,7 +168,7 @@ public class TEMainFrame extends JFrame {
 		ticketsCarouselPnl.setBorder(null);
 		ticketsCarouselPnl.setBackground(StaticData.TRANSPARENT_COLOR);
 		ticketsCarouselPnl.setLayout(new GridLayout(1, 0, 10, 0));
-		
+
 		ticketsPnl.add(ticketsCarouselPnl, "cell 0 1,grow");
 
 		JPanel footerPnl = new JPanel();
@@ -193,9 +193,24 @@ public class TEMainFrame extends JFrame {
 					if (ticketTitleTextField.getText().isEmpty() || descriptionTextArea.getText().isEmpty()
 							|| descriptionTextArea.getText().equals("Let us know what the issue is...")
 							|| ticketTitleTextField.getText().equals("Please give your ticket a title")) {
-						JOptionPane.showMessageDialog(TEMainFrame.this, "Please add title and description!!!",
+						CustomOptionPane.showMessageDialog(TEMainFrame.this, "Please add title and description!!!",
 								"Missing title or description", JOptionPane.ERROR_MESSAGE);
 					} else {
+
+						File dir = new File("drafts/");
+
+						File tempDir = new File("temp/");
+						if (!tempDir.exists()) {
+							tempDir.mkdir();
+						}
+
+						for (File orgFile : dir.listFiles()) {
+							File newTempFile = new File(tempDir + "/" + orgFile.getName());
+							orgFile.renameTo(newTempFile);
+						}
+
+						final File[] files = tempDir.listFiles();
+						Arrays.sort(files, LastModifiedFileComparator.LASTMODIFIED_REVERSE);
 
 						new Thread(new Runnable() {
 
@@ -208,25 +223,7 @@ public class TEMainFrame extends JFrame {
 
 								if (incident != null) {
 
-									res += "Incident created successfuly\n";
-
-									File dir = new File("drafts/");
-									File tempDrafts = new File("tempDrafts/");
-									if (!tempDrafts.exists()) {
-										tempDrafts.mkdirs();
-									}
-
-									for (File orgFile : dir.listFiles()) {
-										File newTempFile = new File(tempDrafts + "/" + orgFile.getName());
-										orgFile.renameTo(newTempFile);
-									}
-									File tempDir = new File("temp/");
-									if (!tempDir.exists()) {
-										tempDir.mkdir();
-									}
-
-									final File[] files = tempDrafts.listFiles();
-									Arrays.sort(files, LastModifiedFileComparator.LASTMODIFIED_REVERSE);
+									res += "Incident: " + incident.getNumber() + ", created successfuly\n";
 
 									int imageIndex = 10;
 									for (File file : files) {
@@ -242,9 +239,6 @@ public class TEMainFrame extends JFrame {
 
 										imageIndex--;
 									}
-
-									tempDir.delete();
-									tempDrafts.delete();
 
 									LogPackager packager = new LogPackager();
 									try {
@@ -295,19 +289,21 @@ public class TEMainFrame extends JFrame {
 								} else {
 									res += "Error creating incident\n";
 								}
-
+								emptyTemp();
+								ticketTitleTextField.setText("Please give your ticket a title");
+								descriptionTextArea.setText("Let us know what the issue is...");
+								ticketTitleTextField.setPlaceholder("Please give your ticket a title");
+								descriptionTextArea.setPlaceholder("Let us know what the issue is...");
 							}
 						}).start();
 
-						ticketTitleTextField.setText("");
-						descriptionTextArea.setText("");
 
-						JOptionPane.showMessageDialog(TEMainFrame.this, "Ticket created successfully");
+						CustomOptionPane.showMessageDialog(TEMainFrame.this, "Ticket created successfully");
 
 						addToSystemTry();
 					}
 				} else {
-					JOptionPane.showMessageDialog(TEMainFrame.this, "Please add at least one screen shot!!!",
+					CustomOptionPane.showMessageDialog(TEMainFrame.this, "Please add at least one screen shot!!!",
 							"Missing screen shots", JOptionPane.ERROR_MESSAGE);
 				}
 
@@ -358,6 +354,26 @@ public class TEMainFrame extends JFrame {
 		iKeyboardCaptureService.setTicketsCarouselPnl(ticketsCarouselPnl);
 		iMouseCaptureService.setTicketsCarouselPnl(ticketsCarouselPnl);
 
+		emptyDrafts();
+
+		emptyTemp();
+	}
+
+	private void emptyTemp() {
+		File tempDir = new File("temp/");
+		if(tempDir != null) {
+			if(tempDir.listFiles() != null) {
+				
+				for (File file : tempDir.listFiles()) {
+					if (file.exists()) {
+						file.delete();
+					}
+				}
+			}
+		}
+	}
+
+	private void emptyDrafts() {
 		File draftsDir = new File("drafts/");
 		for (File file : draftsDir.listFiles()) {
 			if (file.exists()) {
@@ -377,7 +393,7 @@ public class TEMainFrame extends JFrame {
 		}
 	}
 
-	private void addToSystemTry() {
+	public void addToSystemTry() {
 
 		if (SystemTray.isSupported()) {
 

@@ -8,8 +8,6 @@ import com.ieli.tieasy.ui.editor.shape.Arrow;
 
 public class ArrowTool extends LineTool {
 
-
-
 	public ArrowTool(EditorImagePanel area) {
 		super(area);
 	}

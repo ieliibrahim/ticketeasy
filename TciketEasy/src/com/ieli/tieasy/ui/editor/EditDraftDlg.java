@@ -2,6 +2,8 @@ package com.ieli.tieasy.ui.editor;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -9,9 +11,10 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JColorChooser;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
@@ -50,6 +53,8 @@ public class EditDraftDlg extends JDialog {
 	private CusotmDrawingJButton blurBtn;
 	private CusotmDrawingJButton undoBtn;
 
+	private JComboBox<Integer> fontSizeCBox;
+
 	private Color drawingColor = Color.BLACK;
 
 	private CustomAppJButton btnSave;
@@ -75,6 +80,7 @@ public class EditDraftDlg extends JDialog {
 
 	private File imageFile;
 
+	@SuppressWarnings("unchecked")
 	public EditDraftDlg(BufferedImage img, String mainImagePath, JFrame teMainFrame,
 			SingleDraftPanel singleDraftPanel) {
 
@@ -173,7 +179,8 @@ public class EditDraftDlg extends JDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				drawingColor = JColorChooser.showDialog(EditDraftDlg.this, "Please select new color", drawingColor);
+				ColorPicker colorPicker = new ColorPicker(EditDraftDlg.this);
+				colorPicker.setVisible(true);
 				editorImagePanel.setTool(colorTool);
 				colorTool.setColor(drawingColor);
 				colorTool.execute(e);
@@ -200,6 +207,27 @@ public class EditDraftDlg extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				editorImagePanel.undo();
+			}
+		});
+
+		fontSizeCBox = new JComboBox<Integer>(new Integer[] { 12, 14, 16, 18, 20 });
+		ComboBoxRenderer renderer = new ComboBoxRenderer();
+		fontSizeCBox.setRenderer(renderer);
+		fontSizeCBox.setBackground(StaticData.THEME_ORANGE_COLOR);
+
+		fontSizeCBox.setToolTipText("Font size");
+		fontSizeCBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
+
+		iconsPnl.add(fontSizeCBox, "cell 0 10");
+		fontSizeCBox.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Integer fontSize = fontSizeCBox.getItemAt(fontSizeCBox.getSelectedIndex());
+				if (textTool != null) {
+					textTool.setFontSize(fontSize);
+				}
+
 			}
 		});
 
@@ -255,11 +283,34 @@ public class EditDraftDlg extends JDialog {
 		lineTool = new LineTool(editorImagePanel);
 		arrowTool = new ArrowTool(editorImagePanel);
 		rectangleTool = new RectangleTool(editorImagePanel);
-		textTool = new TextTool(editorImagePanel);
+		textTool = new TextTool(editorImagePanel, 14);
 		blurTool = new BlurTool(editorImagePanel);
 		colorTool = new ColorTool(editorImagePanel);
 		colorTool.setColor(drawingColor);
 
+	}
+
+	class ComboBoxRenderer extends javax.swing.plaf.basic.BasicComboBoxRenderer {
+		private static final long serialVersionUID = 1L;
+
+		public ComboBoxRenderer() {
+			super();
+			setOpaque(true);
+		}
+
+		public Component getListCellRendererComponent(@SuppressWarnings("rawtypes") JList list, Object value, int index,
+				boolean isSelected, boolean cellHasFocus) {
+			setText(value.toString());
+			if (isSelected)
+				setBackground(Color.WHITE);
+			else
+				setBackground(StaticData.THEME_ORANGE_COLOR);
+			return this;
+		}
+	}
+
+	public void setDrawingColor(Color drawingColor) {
+		this.drawingColor = drawingColor;
 	}
 
 }

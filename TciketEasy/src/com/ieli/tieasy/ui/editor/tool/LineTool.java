@@ -15,7 +15,6 @@ public class LineTool extends ToolAdapter {
 
 	protected Line2D line;
 
-
 	public LineTool(EditorImagePanel area) {
 		super(area);
 	}
@@ -54,4 +53,5 @@ public class LineTool extends ToolAdapter {
 			g2d.dispose();
 		}
 	}
+
 }

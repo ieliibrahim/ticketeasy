@@ -17,7 +17,15 @@ public class TextListener extends KeyAdapter {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		this.text = this.text.substring(0, this.text.length() - 1).concat(String.valueOf(e.getKeyChar())).concat("|");
+
+		String pressedValue = String.valueOf(e.getKeyChar());
+
+		if (e.getKeyChar() == '\b') {
+			this.text = this.text.substring(0, this.text.length() - 2).concat("").concat("|");
+		} else {
+			this.text = this.text.substring(0, this.text.length() - 1).concat(pressedValue).concat("|");
+		}
+
 		this.area.repaint();
 	}
 

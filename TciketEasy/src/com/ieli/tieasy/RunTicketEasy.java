@@ -1,10 +1,11 @@
 package com.ieli.tieasy;
 
-import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import com.ieli.tieasy.ui.CustomOptionPane;
 import com.ieli.tieasy.ui.TEMainFrame;
+import com.ieli.tieasy.util.StaticData;
 
 import it.sauronsoftware.junique.AlreadyLockedException;
 import it.sauronsoftware.junique.JUnique;
@@ -34,10 +35,13 @@ public class RunTicketEasy {
 		}
 		if (!alreadyRunning) {
 
+			UIManager.put("ComboBox.selectionBackground",
+					new javax.swing.plaf.ColorUIResource(StaticData.THEME_ORANGE_COLOR));
 			TEMainFrame teMainFrame = new TEMainFrame();
-			teMainFrame.setVisible(true);
+			teMainFrame.addToSystemTry();
+
 		} else {
-			JOptionPane.showMessageDialog(null, "The application is already running!!!");
+			CustomOptionPane.showMessageDialog(null, "The application is already running!!!");
 		}
 
 	}
