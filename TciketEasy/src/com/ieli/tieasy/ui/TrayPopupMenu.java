@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
 import org.apache.log4j.Logger;
+import org.jnativehook.GlobalScreen;
 
 import com.ieli.tieasy.service.caputre.IKeyboardCapture;
 import com.ieli.tieasy.service.caputre.IMouseCapture;
@@ -25,12 +26,13 @@ public class TrayPopupMenu extends JPopupMenu {
 	private static final long serialVersionUID = 1L;
 
 	JMenuItem exitItem;
+	JMenuItem showItem;
 
 	public TrayPopupMenu(final JFrame teMainFrame, final SystemTray tray, final TrayIcon trayIcon,
 			final IMouseCapture iMouseCaptureService, final IKeyboardCapture iKeyboardCaptureService,
 			final JPanel ticketsCarouselPnl) {
 
-		exitItem = new JMenuItem("Exit");
+		exitItem = new JMenuItem("Close");
 		exitItem.setOpaque(true);
 		exitItem.setBackground(Color.WHITE);
 		exitItem.setForeground(StaticData.THEME_ORANGE_COLOR);
@@ -46,6 +48,24 @@ public class TrayPopupMenu extends JPopupMenu {
 		});
 
 		add(exitItem);
+
+		showItem = new JMenuItem("Show");
+		showItem.setOpaque(true);
+		showItem.setBackground(Color.WHITE);
+		showItem.setForeground(StaticData.THEME_ORANGE_COLOR);
+		showItem.setIcon(StaticData.ICON_MENU);
+		showItem.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		showItem.setCursor(StaticData.HAND_CURSOR);
+		showItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tray.remove(trayIcon);
+				teMainFrame.setVisible(true);
+				teMainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+				GlobalScreen.removeNativeMouseListener(iMouseCaptureService);
+				GlobalScreen.removeNativeKeyListener(iKeyboardCaptureService);
+			}
+		});
+		add(showItem);
 
 	}
 

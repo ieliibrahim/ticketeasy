@@ -20,5 +20,6 @@
 	<classpathentry kind="lib" path="lib/oshi-core-3.4.4.jar"/>
 	<classpathentry kind="lib" path="lib/jna-platform-4.4.0.jar"/>
 	<classpathentry kind="lib" path="lib/threetenbp-1.3.5.jar"/>
+	<classpathentry kind="lib" path="lib/json-simple-1.1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

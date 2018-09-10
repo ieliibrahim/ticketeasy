@@ -27,6 +27,7 @@ import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 
 import com.google.gson.Gson;
+import com.ieli.tieasy.model.api.CreateIncidentInput;
 import com.ieli.tieasy.model.api.Incident;
 import com.ieli.tieasy.model.api.IncidentInput;
 import com.ieli.tieasy.model.api.Upload;
@@ -50,7 +51,7 @@ public class APICallerImpl implements IAPICaller {
 	}
 
 	@Override
-	public Incident createIncident(String title, String description) {
+	public Incident createIncident(CreateIncidentInput createIncidentInput) {
 		Incident incident = null;
 		try {
 			HttpClient httpClient = HttpClientBuilder.create().build();
@@ -58,11 +59,15 @@ public class APICallerImpl implements IAPICaller {
 			String basicAuth = AppUtils.encodeBasic(incidentInput.getUsername(), incidentInput.getPassword());
 
 			HttpPost httpPost = new HttpPost(incidentInput.getCreateIncidentPath());
-
 			Header authHeader = new BasicHeader("Authorization", basicAuth);
+		
 			httpPost.addHeader(authHeader);
-			StringEntity requestEntity = new StringEntity("{\"caller_id\":\"" + incidentInput.getEmail()
-					+ "\",\"short_description\":\"" + title + "\",\"description\":\"" + description + "\"}");
+			
+			createIncidentInput.setCallerId( incidentInput.getEmail());
+			
+			String jsonString = new Gson().toJson(createIncidentInput);
+			
+			StringEntity requestEntity = new StringEntity(jsonString);
 			requestEntity.setChunked(true);
 			requestEntity.setContentEncoding("UTF-8");
 

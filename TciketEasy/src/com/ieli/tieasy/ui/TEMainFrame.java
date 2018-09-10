@@ -31,6 +31,7 @@ import org.apache.log4j.Logger;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 
+import com.ieli.tieasy.model.api.CreateIncidentInput;
 import com.ieli.tieasy.model.api.Incident;
 import com.ieli.tieasy.model.api.Upload;
 import com.ieli.tieasy.service.caputre.IKeyboardCapture;
@@ -218,8 +219,15 @@ public class TEMainFrame extends JFrame {
 
 							@Override
 							public void run() {
-								Incident incident = iAPICallerService.createIncident(ticketTitleTextField.getText(),
-										descriptionTextArea.getText());
+
+								String title = ticketTitleTextField.getText();
+								String desc = descriptionTextArea.getText();
+								
+								CreateIncidentInput createIncidentInput = new CreateIncidentInput();
+								createIncidentInput.setTitle(title);
+								createIncidentInput.setDescription(desc);
+								
+								Incident incident = iAPICallerService.createIncident(createIncidentInput);
 
 								String res = "";
 
@@ -292,15 +300,19 @@ public class TEMainFrame extends JFrame {
 									res += "Error creating incident\n";
 								}
 								emptyTemp();
-								ticketTitleTextField.setText("Please give your ticket a title");
-								descriptionTextArea.setText("Let us know what the issue is...");
-								ticketTitleTextField.setPlaceholder("Please give your ticket a title");
-								descriptionTextArea.setPlaceholder("Let us know what the issue is...");
+
 							}
 						}).start();
 
 						CustomOptionPane.showMessageDialog(TEMainFrame.this, "Ticket created successfully");
-
+						ticketTitleTextField.setText("Please give your ticket a title");
+						descriptionTextArea.setText("Let us know what the issue is...");
+						ticketTitleTextField.setPlaceholder("Please give your ticket a title");
+						descriptionTextArea.setPlaceholder("Let us know what the issue is...");
+						ticketsCarouselPnl.removeAll();
+						ticketsCarouselPnl.invalidate();
+						ticketsCarouselPnl.repaint();
+						ticketsCarouselPnl.updateUI();
 						addToSystemTry();
 					}
 				} else {
@@ -317,11 +329,13 @@ public class TEMainFrame extends JFrame {
 		trayIcon = new TrayIcon(StaticData.TRAY_ICON.getImage(), "Ticket Easy");
 		trayIcon.setImageAutoSize(true);
 
-		initSystemProperties();
-
 		trayPopupMenu = new TrayPopupMenu(TEMainFrame.this, tray, trayIcon, iMouseCaptureService,
 				iKeyboardCaptureService, ticketsCarouselPnl);
-		ticketsCarouselPnl.setLayout(new MigLayout("", "[250px][250px][250px][250px][250px][250px][250px][250px][250px][250px]", "[250px]"));
+
+		initSystemProperties();
+
+		ticketsCarouselPnl.setLayout(
+				new MigLayout("", "[250px][250px][250px][250px][250px][250px][250px][250px][250px][250px]", "[250px]"));
 
 		timingPnl = new TimingPanel();
 		timingPnl.setBackground(StaticData.TRANSPARENT_COLOR);
@@ -365,6 +379,7 @@ public class TEMainFrame extends JFrame {
 		iKeyboardCaptureService.setiKeyboardCaptureService(iKeyboardCaptureService);
 		iKeyboardCaptureService.setTicketsCarouselPnl(ticketsCarouselPnl);
 		iMouseCaptureService.setTicketsCarouselPnl(ticketsCarouselPnl);
+		iMouseCaptureService.setTrayPopupMenu(trayPopupMenu);
 
 		emptyDrafts();
 
@@ -426,6 +441,7 @@ public class TEMainFrame extends JFrame {
 						trayPopupMenu.setVisible(true);
 					}
 				}
+
 			});
 
 			try {

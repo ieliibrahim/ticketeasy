@@ -7,6 +7,7 @@ import org.jnativehook.mouse.NativeMouseEvent;
 import com.ieli.tieasy.service.caputre.ICaptureDesktop;
 import com.ieli.tieasy.service.caputre.IMouseCapture;
 import com.ieli.tieasy.ui.TEMainFrame;
+import com.ieli.tieasy.ui.TrayPopupMenu;
 
 public class MouseCaptureImpl implements IMouseCapture {
 
@@ -16,11 +17,19 @@ public class MouseCaptureImpl implements IMouseCapture {
 
 	private TEMainFrame teMainFrame;
 
+	private TrayPopupMenu trayPopupMenu;
+
 	@Override
 	public void nativeMouseClicked(NativeMouseEvent arg0) {
 
 		if (arg0.getButton() != NativeMouseEvent.BUTTON2) {
 			iDesktopCaptureService.captureDesktop(ticketsCarouselPnl, teMainFrame);
+			if (trayPopupMenu != null) {
+				if (trayPopupMenu.isVisible()) {
+					trayPopupMenu.setInvoker(null);
+					trayPopupMenu.setVisible(false);
+				}
+			}
 		}
 	}
 
@@ -52,6 +61,11 @@ public class MouseCaptureImpl implements IMouseCapture {
 	@Override
 	public void setTeMainFrame(TEMainFrame teMainFrame) {
 		this.teMainFrame = teMainFrame;
+	}
+
+	@Override
+	public void setTrayPopupMenu(TrayPopupMenu trayPopupMenu) {
+		this.trayPopupMenu = trayPopupMenu;
 	}
 
 }
