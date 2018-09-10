@@ -152,7 +152,8 @@ public class TEMainFrame extends JFrame {
 		JPanel ticketInfoPnl = new JPanel();
 		ticketsPnl.add(ticketInfoPnl, "cell 0 0,grow");
 		ticketInfoPnl.setBackground(StaticData.TRANSPARENT_COLOR);
-		ticketInfoPnl.setLayout(new MigLayout("", "[grow]", "[30.00][grow][grow]"));
+		ticketInfoPnl
+				.setLayout(new MigLayout("", "[" + ScreenConfig.getScreenWidth() / 2 + "px]", "[30.00][grow][grow]"));
 
 		ticketTitleTextField = new CustomTextField(10);
 		ticketTitleTextField.setFont(new Font("Tahoma", Font.PLAIN, 14));
