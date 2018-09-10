@@ -4,7 +4,6 @@ import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.SystemTray;
 import java.awt.TrayIcon;
@@ -171,7 +170,6 @@ public class TEMainFrame extends JFrame {
 		ticketsCarouselPnl.setName("tcpnl222");
 		ticketsCarouselPnl.setBorder(null);
 		ticketsCarouselPnl.setBackground(StaticData.TRANSPARENT_COLOR);
-		ticketsCarouselPnl.setLayout(new GridLayout(1, 0, 10, 0));
 
 		ticketsPnl.add(ticketsCarouselPnl, "cell 0 1,aligny bottom");
 
@@ -323,6 +321,7 @@ public class TEMainFrame extends JFrame {
 
 		trayPopupMenu = new TrayPopupMenu(TEMainFrame.this, tray, trayIcon, iMouseCaptureService,
 				iKeyboardCaptureService, ticketsCarouselPnl);
+		ticketsCarouselPnl.setLayout(new MigLayout("", "[250px][250px][250px][250px][250px][250px][250px][250px][250px][250px]", "[250px]"));
 
 		timingPnl = new TimingPanel();
 		timingPnl.setBackground(StaticData.TRANSPARENT_COLOR);

@@ -39,7 +39,7 @@ public class SingleDraftPanel extends JPanel {
 			final TEMainFrame teMainFrame) {
 		this.mainImagePathFile = mainImagePath;
 		this.img = img;
-		setPreferredSize(new Dimension(250, teMainFrame.getThumbHeight()));
+		setPreferredSize(new Dimension(100, 100));
 		setBorder(new LineBorder(Color.WHITE, 2));
 		setLayout(new MigLayout("", "[grow]", "[grow][grow]"));
 
