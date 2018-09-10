@@ -82,6 +82,8 @@ public class TEMainFrame extends JFrame {
 
 	private TimingPanel timingPnl;
 
+	private int thumbHeight;
+
 	public TEMainFrame() {
 
 		disableNativeHookLogging();
@@ -145,7 +147,7 @@ public class TEMainFrame extends JFrame {
 		BackgroundImagePanel ticketsPnl = new BackgroundImagePanel(img);
 		ticketsPnl.setBackground(StaticData.HEADER_FOOTER_COLOR);
 		mainPnl.add(ticketsPnl, "cell 0 1,grow");
-		ticketsPnl.setLayout(new MigLayout("", "[grow]", "[][grow,fill][]"));
+		ticketsPnl.setLayout(new MigLayout("", "[grow]", "[][grow,baseline][]"));
 
 		JPanel ticketInfoPnl = new JPanel();
 		ticketsPnl.add(ticketInfoPnl, "cell 0 0,grow");
@@ -165,11 +167,12 @@ public class TEMainFrame extends JFrame {
 		ticketInfoPnl.add(descriptionTextArea, "cell 0 1,grow");
 
 		ticketsCarouselPnl = new JPanel();
+		ticketsCarouselPnl.setName("tcpnl222");
 		ticketsCarouselPnl.setBorder(null);
 		ticketsCarouselPnl.setBackground(StaticData.TRANSPARENT_COLOR);
 		ticketsCarouselPnl.setLayout(new GridLayout(1, 0, 10, 0));
 
-		ticketsPnl.add(ticketsCarouselPnl, "cell 0 1,grow");
+		ticketsPnl.add(ticketsCarouselPnl, "cell 0 1,aligny bottom");
 
 		JPanel footerPnl = new JPanel();
 		footerPnl.setBackground(StaticData.HEADER_FOOTER_COLOR);
@@ -297,7 +300,6 @@ public class TEMainFrame extends JFrame {
 							}
 						}).start();
 
-
 						CustomOptionPane.showMessageDialog(TEMainFrame.this, "Ticket created successfully");
 
 						addToSystemTry();
@@ -340,6 +342,16 @@ public class TEMainFrame extends JFrame {
 		timingPnl.add(newestLbl, BorderLayout.WEST);
 
 		timingPnl.setVisible(false);
+		pack();
+
+		for (int i = 0; i < ticketsPnl.getComponentCount(); i++) {
+
+			if (ticketsPnl.getComponent(i).getName() != null) {
+				if (ticketsPnl.getComponent(i).getName().equals("tcpnl222")) {
+					thumbHeight = ticketsPnl.getHeight() / 4;
+				}
+			}
+		}
 
 	}
 
@@ -361,9 +373,9 @@ public class TEMainFrame extends JFrame {
 
 	private void emptyTemp() {
 		File tempDir = new File("temp/");
-		if(tempDir != null) {
-			if(tempDir.listFiles() != null) {
-				
+		if (tempDir != null) {
+			if (tempDir.listFiles() != null) {
+
 				for (File file : tempDir.listFiles()) {
 					if (file.exists()) {
 						file.delete();
@@ -425,4 +437,9 @@ public class TEMainFrame extends JFrame {
 
 		}
 	}
+
+	public int getThumbHeight() {
+		return thumbHeight;
+	}
+
 }

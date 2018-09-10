@@ -2,10 +2,8 @@ package com.ieli.tieasy.ui.editor;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -16,7 +14,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import com.ieli.tieasy.util.StaticData;
-import com.ieli.tieasy.util.ui.CustomAppJButton;
 import com.ieli.tieasy.util.ui.ScreenConfig;
 
 public class ColorPicker extends JDialog {
@@ -29,7 +26,7 @@ public class ColorPicker extends JDialog {
 	public ColorPicker(EditDraftDlg editDraftDlg) {
 		setUndecorated(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		ScreenConfig.setDialogSizeCustom(this, 500, 500);
+		setSize(new Dimension(ScreenConfig.getScreenWidth() / 4, ScreenConfig.getScreenHeight() / 4));
 		ScreenConfig.setDialogPositionCenter(this, editDraftDlg);
 		getContentPane().setBackground(StaticData.HEADER_FOOTER_COLOR);
 		contentPanel.setBackground(StaticData.HEADER_FOOTER_COLOR);
@@ -44,6 +41,7 @@ public class ColorPicker extends JDialog {
 			lblColor.setBackground(color);
 			lblColor.setOpaque(true);
 			lblColor.setBorder(new LineBorder(Color.WHITE, 2));
+			lblColor.setCursor(StaticData.HAND_CURSOR);
 			contentPanel.add(lblColor);
 			lblColor.addMouseListener(new MouseListener() {
 
@@ -55,6 +53,8 @@ public class ColorPicker extends JDialog {
 				@Override
 				public void mousePressed(MouseEvent e) {
 					drawingColor = lblColor.getBackground();
+					editDraftDlg.setDrawingColor(drawingColor);
+					dispose();
 				}
 
 				@Override
@@ -70,34 +70,13 @@ public class ColorPicker extends JDialog {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					drawingColor = lblColor.getBackground();
+					editDraftDlg.setDrawingColor(drawingColor);
+					dispose();
 
 				}
 			});
 		}
 
-		JPanel buttonPane = new JPanel();
-		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		getContentPane().add(buttonPane, BorderLayout.SOUTH);
-		CustomAppJButton okButton = new CustomAppJButton("OK");
-		okButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				editDraftDlg.setDrawingColor(drawingColor);
-				dispose();
-			}
-		});
-		okButton.setActionCommand("OK");
-		buttonPane.add(okButton);
-		getRootPane().setDefaultButton(okButton);
-		CustomAppJButton cancelButton = new CustomAppJButton("Cancel");
-		cancelButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-
-			}
-		});
-		cancelButton.setActionCommand("Cancel");
-		buttonPane.add(cancelButton);
-		buttonPane.setBackground(StaticData.HEADER_FOOTER_COLOR);
 	}
 
 }

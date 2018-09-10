@@ -3,6 +3,7 @@ package com.ieli.tieasy.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,7 +30,7 @@ public class CustomOptionPane extends JDialog {
 	public CustomOptionPane(Component component, Object html, String title, int messageType, String type) {
 		setUndecorated(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		ScreenConfig.setDialogSizeCustom(this, 500, 500);
+		setSize(new Dimension(ScreenConfig.getScreenWidth() / 4, ScreenConfig.getScreenHeight() / 4));
 		ScreenConfig.setDialogPositionCenter(this, component);
 		getContentPane().setBackground(StaticData.HEADER_FOOTER_COLOR);
 		contentPanel.setBackground(StaticData.HEADER_FOOTER_COLOR);

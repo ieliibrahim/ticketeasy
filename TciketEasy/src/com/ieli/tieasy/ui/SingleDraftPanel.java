@@ -2,6 +2,7 @@ package com.ieli.tieasy.ui;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,7 +13,6 @@ import java.nio.file.Files;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Arrays;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -36,9 +36,10 @@ public class SingleDraftPanel extends JPanel {
 	private String mainImagePathFile;
 
 	public SingleDraftPanel(final BufferedImage img, final String mainImagePath, final JPanel ticketsCarouselPnl,
-			final JFrame teMainFrame) {
+			final TEMainFrame teMainFrame) {
 		this.mainImagePathFile = mainImagePath;
 		this.img = img;
+		setPreferredSize(new Dimension(250, teMainFrame.getThumbHeight()));
 		setBorder(new LineBorder(Color.WHITE, 2));
 		setLayout(new MigLayout("", "[grow]", "[grow][grow]"));
 
