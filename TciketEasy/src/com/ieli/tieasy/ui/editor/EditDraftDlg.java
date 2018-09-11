@@ -117,6 +117,7 @@ public class EditDraftDlg extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				editorImagePanel.setTool(freeHandTool);
 				freeHandTool.execute(e);
+				fontSizeCBox.setVisible(false);
 			}
 		});
 
@@ -129,6 +130,7 @@ public class EditDraftDlg extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				editorImagePanel.setTool(lineTool);
 				lineTool.execute(e);
+				fontSizeCBox.setVisible(false);
 			}
 		});
 
@@ -142,6 +144,7 @@ public class EditDraftDlg extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				editorImagePanel.setTool(arrowTool);
 				arrowTool.execute(e);
+				fontSizeCBox.setVisible(false);
 			}
 		});
 
@@ -155,6 +158,7 @@ public class EditDraftDlg extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				editorImagePanel.setTool(rectangleTool);
 				rectangleTool.execute(e);
+				fontSizeCBox.setVisible(false);
 			}
 		});
 
@@ -168,6 +172,7 @@ public class EditDraftDlg extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				editorImagePanel.setTool(textTool);
 				textTool.execute(e);
+				fontSizeCBox.setVisible(true);
 			}
 		});
 
@@ -196,6 +201,7 @@ public class EditDraftDlg extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				editorImagePanel.setTool(blurTool);
 				blurTool.execute(e);
+				fontSizeCBox.setVisible(false);
 			}
 		});
 
@@ -231,6 +237,8 @@ public class EditDraftDlg extends JDialog {
 			}
 		});
 
+		fontSizeCBox.setVisible(false);
+		
 		editorImagePanel = new EditorImagePanel();
 		editorImagePanel.setImage(mainImg);
 		editorImagePanel.setBorder(new LineBorder(Color.WHITE));

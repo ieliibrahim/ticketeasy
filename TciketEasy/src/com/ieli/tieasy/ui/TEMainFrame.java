@@ -150,7 +150,7 @@ public class TEMainFrame extends JFrame {
 		ticketsPnl.setLayout(new MigLayout("", "[grow]", "[][grow,baseline][]"));
 
 		JPanel ticketInfoPnl = new JPanel();
-		ticketsPnl.add(ticketInfoPnl, "cell 0 0,grow");
+		ticketsPnl.add(ticketInfoPnl, "cell 0 0,alignx center,growy");
 		ticketInfoPnl.setBackground(StaticData.TRANSPARENT_COLOR);
 		ticketInfoPnl
 				.setLayout(new MigLayout("", "[" + ScreenConfig.getScreenWidth() / 2 + "px]", "[30.00][grow][grow]"));
