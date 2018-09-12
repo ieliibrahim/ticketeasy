@@ -22,8 +22,8 @@ public abstract class ToolAdapter extends MouseAdapter {
 	}
 
 	protected Point limitBounds(Point p) {
-		int width = area.getImage().getWidth();
-		int height = area.getImage().getHeight();
+		int width = area.getDrawing().getWidth();
+		int height = area.getDrawing().getHeight();
 		int x = (int) (p.x < 0 ? 0 : p.x > width ? width : p.x);
 		int y = (int) (p.y < 0 ? 0 : p.y > height ? height : p.y);
 		return new Point(x, y);

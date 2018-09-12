@@ -13,7 +13,7 @@ public class RectangleTool extends ToolAdapter {
 
 	private Point startPoint;
 
-	private Rectangle shape;
+	protected Rectangle shape;
 
 	public RectangleTool(EditorImagePanel area) {
 		super(area);
@@ -35,8 +35,8 @@ public class RectangleTool extends ToolAdapter {
 		int limitWidth = x + width;
 		int limitHeight = y + height;
 
-		int w = this.area.getImage().getWidth();
-		int h = this.area.getImage().getHeight();
+		int w = this.area.getDrawing().getWidth();
+		int h = this.area.getDrawing().getHeight();
 
 		if (limitWidth > w) {
 			width -= limitWidth - w;
@@ -66,7 +66,6 @@ public class RectangleTool extends ToolAdapter {
 			Graphics2D g2d = (Graphics2D) g;
 			g2d.setColor(g.getColor());
 			g2d.draw(shape);
-			g2d.dispose();
 		}
 	}
 

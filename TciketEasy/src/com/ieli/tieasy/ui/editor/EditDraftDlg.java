@@ -25,6 +25,7 @@ import com.ieli.tieasy.ui.SingleDraftPanel;
 import com.ieli.tieasy.ui.editor.tool.ArrowTool;
 import com.ieli.tieasy.ui.editor.tool.BlurTool;
 import com.ieli.tieasy.ui.editor.tool.ColorTool;
+import com.ieli.tieasy.ui.editor.tool.CropTool;
 import com.ieli.tieasy.ui.editor.tool.FreeHandTool;
 import com.ieli.tieasy.ui.editor.tool.LineTool;
 import com.ieli.tieasy.ui.editor.tool.RectangleTool;
@@ -50,6 +51,7 @@ public class EditDraftDlg extends JDialog {
 	private CusotmDrawingJButton inserTextBtn;
 	private CusotmDrawingJButton chooseColorBtn;
 
+	private CusotmDrawingJButton cropBtn;
 	private CusotmDrawingJButton blurBtn;
 	private CusotmDrawingJButton undoBtn;
 
@@ -75,6 +77,8 @@ public class EditDraftDlg extends JDialog {
 	protected ColorTool colorTool;
 
 	protected BlurTool blurTool;
+
+	protected CropTool cropTool;
 
 	private BufferedImage mainImg;
 
@@ -192,6 +196,19 @@ public class EditDraftDlg extends JDialog {
 			}
 		});
 
+		cropBtn = new CusotmDrawingJButton(StaticData.ICON_CROP, StaticData.ICON_CROP_HOVER, "Crop");
+		iconsPnl.add(cropBtn, "cell 0 7");
+
+		cropBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				editorImagePanel.setTool(cropTool);
+				cropTool.execute(e);
+				fontSizeCBox.setVisible(false);
+			}
+		});
+
 		blurBtn = new CusotmDrawingJButton(StaticData.ICON_BLUR, StaticData.ICON_BLUR_HOVER, "Blur");
 		iconsPnl.add(blurBtn, "cell 0 8");
 
@@ -238,9 +255,8 @@ public class EditDraftDlg extends JDialog {
 		});
 
 		fontSizeCBox.setVisible(false);
-		
-		editorImagePanel = new EditorImagePanel();
-		editorImagePanel.setImage(mainImg);
+
+		editorImagePanel = new EditorImagePanel(mainImg);
 		editorImagePanel.setBorder(new LineBorder(Color.WHITE));
 		JScrollPane ticketsPanelPane = new JScrollPane(editorImagePanel);
 		mainPnl.add(ticketsPanelPane, BorderLayout.CENTER);
@@ -259,9 +275,9 @@ public class EditDraftDlg extends JDialog {
 				if (imageFile.exists()) {
 					imageFile.delete();
 					try {
-						editorImagePanel.save(editorImagePanel.getImage());
-						ImageIO.write(editorImagePanel.getImage(), "png", imageFile.getAbsoluteFile());
-						singleDraftPanel.updateImage(editorImagePanel.getImage());
+						editorImagePanel.save(editorImagePanel.getDrawing().getImage());
+						ImageIO.write(editorImagePanel.getDrawing().getImage(), "png", imageFile.getAbsoluteFile());
+						singleDraftPanel.updateImage(editorImagePanel.getDrawing().getImage());
 
 					} catch (IOException e1) {
 						logger.error(StackTraceHandler.getErrString(e1));
@@ -293,6 +309,7 @@ public class EditDraftDlg extends JDialog {
 		rectangleTool = new RectangleTool(editorImagePanel);
 		textTool = new TextTool(editorImagePanel, 14);
 		blurTool = new BlurTool(editorImagePanel);
+		cropTool = new CropTool(editorImagePanel);
 		colorTool = new ColorTool(editorImagePanel);
 		colorTool.setColor(drawingColor);
 

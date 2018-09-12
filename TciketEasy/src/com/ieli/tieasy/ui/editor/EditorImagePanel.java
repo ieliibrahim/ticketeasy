@@ -6,10 +6,10 @@ import java.awt.Graphics;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
-import java.util.Stack;
 
 import javax.swing.JPanel;
 
+import com.ieli.tieasy.ui.editor.domain.ImageDrawing;
 import com.ieli.tieasy.ui.editor.shape.Drawable;
 import com.ieli.tieasy.ui.editor.tool.ColorTool;
 import com.ieli.tieasy.ui.editor.tool.LineTool;
@@ -20,14 +20,16 @@ public class EditorImagePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	private Stack<Drawable> shapes = new Stack<>();
-	private BufferedImage image;
+	private ImageDrawing drawing = new ImageDrawing();
 	private ToolAdapter tool;
 	private Color color = Color.BLACK;
 
-	public EditorImagePanel() {
+	public EditorImagePanel(BufferedImage image) {
+		this.drawing.setImage(image);
+		this.setBackground(Color.WHITE);
 		this.setTool(new LineTool(this));
 		this.setFocusable(true);
+		this.setPreferredSize(new Dimension(image.getWidth(), image.getHeight()));
 	}
 
 	@Override
@@ -36,9 +38,16 @@ public class EditorImagePanel extends JPanel {
 		this.setColor(color);
 		this.setBackground(new Color(0, 0, 0, 255));
 		super.paintComponent(g);
-		g.drawImage(image, 0, 0, this);
 
-		for (Drawable d : shapes) {
+		BufferedImage tmp = new BufferedImage(this.drawing.getWidth(), this.drawing.getHeight(),
+				this.drawing.getType());
+		Graphics gd = tmp.getGraphics();
+		gd.drawImage(this.drawing.getImage(), 0, 0, null);
+		gd.dispose();
+
+		g.drawImage(tmp, 0, 0, this);
+
+		for (Drawable d : this.drawing.getShapes()) {
 			d.draw(g);
 		}
 
@@ -62,29 +71,25 @@ public class EditorImagePanel extends JPanel {
 	}
 
 	public void addShape(Drawable shape) {
-		shapes.add(shape);
+		this.drawing.add(shape);
 		this.repaint();
 	}
 
 	public void undo() {
-		if (this.shapes != null && !this.shapes.isEmpty()) {
-			this.shapes.pop();
+		if (this.drawing.hasShapes()) {
+			Drawable pop = this.drawing.pop();
+			ImageDrawing undo = pop.undo();
+			if (undo != null) {
+				this.drawing = undo;
+			}
 			this.repaint();
 		}
 	}
 
-	public void setImage(BufferedImage image) {
-		this.save(this.image);
-		this.image = image;
-		this.shapes = new Stack<>();
-		this.setPreferredSize(new Dimension(image.getWidth(), image.getHeight()));
-		this.repaint();
-	}
-
 	public void save(BufferedImage image) {
-		if (this.shapes != null && !this.shapes.isEmpty()) {
+		if (this.drawing.hasShapes()) {
 			Graphics g = image.getGraphics();
-			for (Drawable shape : shapes) {
+			for (Drawable shape : this.drawing.getShapes()) {
 				shape.draw(g);
 			}
 			g.dispose();
@@ -92,7 +97,7 @@ public class EditorImagePanel extends JPanel {
 	}
 
 	public void clear() {
-		shapes.clear();
+		this.drawing.clear();
 		this.repaint();
 	}
 
@@ -100,8 +105,17 @@ public class EditorImagePanel extends JPanel {
 		this.color = color;
 		this.setForeground(color);
 	}
-
-	public BufferedImage getImage() {
-		return image;
+	
+	public Color getColor() {
+		return this.color;
 	}
+
+	public ImageDrawing getDrawing() {
+		return this.drawing;
+	}
+
+	public void setDrawing(ImageDrawing drawing) {
+		this.drawing = drawing;
+	}
+
 }
