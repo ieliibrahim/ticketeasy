@@ -27,6 +27,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 
@@ -169,7 +170,11 @@ public class TEMainFrame extends JFrame {
 		descriptionTextArea.setBorder(new LineBorder(UIManager.getColor("TextField.light")));
 		descriptionTextArea.setPlaceholder("Let us know what the issue is...");
 		descriptionTextArea.setRows(8);
-		ticketInfoPnl.add(descriptionTextArea, "cell 0 1,grow");
+		descriptionTextArea.setWrapStyleWord(true);
+		descriptionTextArea.setLineWrap(true);
+		
+		JScrollPane areaPane = new JScrollPane(descriptionTextArea);
+		ticketInfoPnl.add(areaPane, "cell 0 1,grow");
 
 		ticketsCarouselPnl = new JPanel();
 		ticketsCarouselPnl.setName("tcpnl222");
