@@ -107,7 +107,7 @@ public class StaticData {
 			StaticData.class.getResource("/com/ieli/tieasy/ui/images/drawing_icons/undoHover.png"));
 
 	public static final Color[] PRIMARY_COLORS = new Color[] { new Color(255, 255, 255), new Color(255, 0, 0),
-			new Color(0, 255, 0), new Color(0, 0, 255), new Color(255, 255, 0), new Color(0, 255, 255),
+			new Color(0, 255, 0), new Color(0, 0, 255), new Color(255, 255, 0), new Color(0, 0, 0),
 			new Color(255, 0, 255), new Color(192, 192, 192), new Color(128, 128, 128), new Color(128, 0, 0),
 			new Color(128, 128, 0), new Color(0, 128, 0), new Color(128, 0, 128), new Color(0, 128, 128),
 			new Color(0, 0, 128) };
