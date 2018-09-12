@@ -87,15 +87,11 @@ public class EditDraftDlg extends JDialog {
 	private File imageFile;
 
 	@SuppressWarnings("unchecked")
-	public EditDraftDlg(String mainImagePath, JFrame teMainFrame, SingleDraftPanel singleDraftPanel) {
+	public EditDraftDlg(BufferedImage mainImg, String mainImagePath, JFrame teMainFrame,
+			SingleDraftPanel singleDraftPanel) {
 
 		imageFile = new File(mainImagePath);
-		try {
-			this.mainImg = ImageIO.read(imageFile);
-		} catch (IOException e1) {
-			logger.error(StackTraceHandler.getErrString(e1));
-		}
-
+		this.mainImg = mainImg;
 		setModal(true);
 		setIconImage(StaticData.TRAY_ICON.getImage());
 		setUndecorated(true);
@@ -261,7 +257,7 @@ public class EditDraftDlg extends JDialog {
 
 		fontSizeCBox.setVisible(false);
 
-		editorImagePanel = new EditorImagePanel(mainImg);
+		editorImagePanel = new EditorImagePanel(this.mainImg);
 		editorImagePanel.setBorder(new LineBorder(Color.WHITE));
 		JScrollPane ticketsPanelPane = new JScrollPane(editorImagePanel);
 		mainPnl.add(ticketsPanelPane, BorderLayout.CENTER);
@@ -309,11 +305,9 @@ public class EditDraftDlg extends JDialog {
 	private void saveAndUpdateImg(SingleDraftPanel singleDraftPanel) {
 		try {
 
-			editorImagePanel.save(EditDraftDlg.this.mainImg);
+			editorImagePanel.save(editorImagePanel.getDrawing().getImage());
 			ImageIO.write(editorImagePanel.getDrawing().getImage(), "png", imageFile.getAbsoluteFile());
-			EditDraftDlg.this.mainImg = ImageIO.read(new File(imageFile.getAbsolutePath()));
-			singleDraftPanel.setImg(EditDraftDlg.this.mainImg);
-			singleDraftPanel.repaint();
+			singleDraftPanel.updateImage(editorImagePanel.getDrawing().getImage());
 
 		} catch (IOException e1) {
 			logger.error(StackTraceHandler.getErrString(e1));

@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.SystemTray;
 import java.awt.TrayIcon;
@@ -174,7 +175,8 @@ public class TEMainFrame extends JFrame {
 		ticketsCarouselPnl.setName("tcpnl222");
 		ticketsCarouselPnl.setBorder(null);
 		ticketsCarouselPnl.setBackground(StaticData.TRANSPARENT_COLOR);
-
+		ticketsCarouselPnl.setLayout(new GridLayout(1, 10, 10, 0));
+		
 		ticketsPnl.add(ticketsCarouselPnl, "cell 0 1,aligny bottom");
 
 		JPanel footerPnl = new JPanel();
@@ -341,9 +343,6 @@ public class TEMainFrame extends JFrame {
 				iKeyboardCaptureService, ticketsCarouselPnl);
 
 		initSystemProperties();
-
-		ticketsCarouselPnl.setLayout(
-				new MigLayout("", "[250px][250px][250px][250px][250px][250px][250px][250px][250px][250px]", "[250px]"));
 
 		timingPnl = new TimingPanel();
 		timingPnl.setBackground(StaticData.TRANSPARENT_COLOR);

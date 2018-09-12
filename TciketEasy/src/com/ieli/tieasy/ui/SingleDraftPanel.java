@@ -25,6 +25,7 @@ import com.ieli.tieasy.ui.editor.EditDraftDlg;
 import com.ieli.tieasy.util.AppUtils;
 import com.ieli.tieasy.util.StackTraceHandler;
 import com.ieli.tieasy.util.ui.CusotmImageJButton;
+import com.ieli.tieasy.util.ui.ScreenConfig;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -36,10 +37,11 @@ public class SingleDraftPanel extends JPanel {
 	private BufferedImage img;
 	private String mainImagePathFile;
 
-	public SingleDraftPanel(final String mainImagePath, final JPanel ticketsCarouselPnl,
+	public SingleDraftPanel(BufferedImage img, final String mainImagePath, final JPanel ticketsCarouselPnl,
 			final TEMainFrame teMainFrame) {
 		this.mainImagePathFile = mainImagePath;
-		setPreferredSize(new Dimension(100, 100));
+		this.img = img;
+		setPreferredSize(new Dimension(ScreenConfig.getScreenWidth() / 12, ScreenConfig.getScreenHeight() / 8));
 		setBorder(new LineBorder(Color.WHITE, 2));
 		setLayout(new MigLayout("", "[grow]", "[grow][grow]"));
 
@@ -50,7 +52,8 @@ public class SingleDraftPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				EditDraftDlg editDraftDlg = new EditDraftDlg(mainImagePath, teMainFrame, SingleDraftPanel.this);
+				EditDraftDlg editDraftDlg = new EditDraftDlg(SingleDraftPanel.this.img, mainImagePath, teMainFrame,
+						SingleDraftPanel.this);
 				editDraftDlg.setVisible(true);
 			}
 		});
@@ -68,7 +71,7 @@ public class SingleDraftPanel extends JPanel {
 
 					File imageToDelete = new File(mainImagePath);
 					imageToDelete.delete();
-
+					ticketsCarouselPnl.remove(SingleDraftPanel.this);
 					try {
 						updateTimeLine(ticketsCarouselPnl);
 					} catch (IOException e1) {
@@ -87,8 +90,6 @@ public class SingleDraftPanel extends JPanel {
 		File draftsDir = new File("drafts/");
 		File[] newDraftFiles = draftsDir.listFiles();
 		File[] oldDraftFiles = draftsDir.listFiles();
-
-		ticketsCarouselPnl.remove(this);
 
 		String newest = "";
 		Arrays.sort(newDraftFiles, LastModifiedFileComparator.LASTMODIFIED_REVERSE);
@@ -154,8 +155,12 @@ public class SingleDraftPanel extends JPanel {
 		return mainImagePathFile;
 	}
 
-	public void setImg(BufferedImage img) {
+	public void updateImage(BufferedImage img) {
 		this.img = img;
+		getGraphics().drawImage(img, 0, 0, getWidth(), getHeight(), null);
+		invalidate();
+		repaint();
+		updateUI();
 	}
 
 }
