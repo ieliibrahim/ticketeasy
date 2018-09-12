@@ -15,12 +15,14 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
 
 import org.apache.log4j.Logger;
 
+import com.ieli.tieasy.ui.CustomOptionPane;
 import com.ieli.tieasy.ui.SingleDraftPanel;
 import com.ieli.tieasy.ui.editor.tool.ArrowTool;
 import com.ieli.tieasy.ui.editor.tool.BlurTool;
@@ -85,11 +87,14 @@ public class EditDraftDlg extends JDialog {
 	private File imageFile;
 
 	@SuppressWarnings("unchecked")
-	public EditDraftDlg(BufferedImage img, String mainImagePath, JFrame teMainFrame,
-			SingleDraftPanel singleDraftPanel) {
+	public EditDraftDlg(String mainImagePath, JFrame teMainFrame, SingleDraftPanel singleDraftPanel) {
 
 		imageFile = new File(mainImagePath);
-		this.mainImg = img;
+		try {
+			this.mainImg = ImageIO.read(imageFile);
+		} catch (IOException e1) {
+			logger.error(StackTraceHandler.getErrString(e1));
+		}
 
 		setModal(true);
 		setIconImage(StaticData.TRAY_ICON.getImage());
@@ -272,25 +277,25 @@ public class EditDraftDlg extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if (imageFile.exists()) {
-					imageFile.delete();
-					try {
-						editorImagePanel.save(editorImagePanel.getDrawing().getImage());
-						ImageIO.write(editorImagePanel.getDrawing().getImage(), "png", imageFile.getAbsoluteFile());
-						singleDraftPanel.updateImage(editorImagePanel.getDrawing().getImage());
-
-					} catch (IOException e1) {
-						logger.error(StackTraceHandler.getErrString(e1));
-					}
-				}
+				saveAndUpdateImg(singleDraftPanel);
 				dispose();
 			}
+
 		});
 
 		btnExit = new CustomAppJButton("Exit");
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+
+				int confirmed = CustomOptionPane.showConfirmDialog(null, "Do you want to <br> save image before exit?",
+						"Save progress", JOptionPane.YES_NO_OPTION);
+				if (confirmed == JOptionPane.YES_OPTION) {
+					saveAndUpdateImg(singleDraftPanel);
+					dispose();
+				} else if (confirmed == JOptionPane.NO_OPTION) {
+					dispose();
+				}
+
 			}
 		});
 
@@ -299,6 +304,20 @@ public class EditDraftDlg extends JDialog {
 
 		initTools();
 
+	}
+
+	private void saveAndUpdateImg(SingleDraftPanel singleDraftPanel) {
+		try {
+
+			editorImagePanel.save(EditDraftDlg.this.mainImg);
+			ImageIO.write(editorImagePanel.getDrawing().getImage(), "png", imageFile.getAbsoluteFile());
+			EditDraftDlg.this.mainImg = ImageIO.read(new File(imageFile.getAbsolutePath()));
+			singleDraftPanel.setImg(EditDraftDlg.this.mainImg);
+			singleDraftPanel.repaint();
+
+		} catch (IOException e1) {
+			logger.error(StackTraceHandler.getErrString(e1));
+		}
 	}
 
 	private void initTools() {

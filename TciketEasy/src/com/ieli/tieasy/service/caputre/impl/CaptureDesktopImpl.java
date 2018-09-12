@@ -72,8 +72,8 @@ public class CaptureDesktopImpl implements ICaptureDesktop {
 			final String imagePath = dir + "/image" + lastImgNumber + ".png";
 			ImageIO.write(capture, "png", new File(imagePath));
 
-			final SingleDraftPanel singleDraftPanel = new SingleDraftPanel(capture, imagePath, ticketsCarouselPnl,
-					teMainFrame);
+			final SingleDraftPanel singleDraftPanel = new SingleDraftPanel(imagePath, ticketsCarouselPnl, teMainFrame);
+			singleDraftPanel.setImg(capture);
 			ticketsCarouselPnl.add(singleDraftPanel);
 
 			updateTimeLine(ticketsCarouselPnl);

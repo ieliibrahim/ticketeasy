@@ -3,6 +3,7 @@ package com.ieli.tieasy.ui;
 import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.SystemTray;
@@ -15,6 +16,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Arrays;
 import java.util.logging.Handler;
 
@@ -222,11 +225,11 @@ public class TEMainFrame extends JFrame {
 
 								String title = ticketTitleTextField.getText();
 								String desc = descriptionTextArea.getText();
-								
+
 								CreateIncidentInput createIncidentInput = new CreateIncidentInput();
 								createIncidentInput.setTitle(title);
 								createIncidentInput.setDescription(desc);
-								
+
 								Incident incident = iAPICallerService.createIncident(createIncidentInput);
 
 								String res = "";
@@ -314,6 +317,11 @@ public class TEMainFrame extends JFrame {
 						ticketsCarouselPnl.repaint();
 						ticketsCarouselPnl.updateUI();
 						addToSystemTry();
+						try {
+							updateTimeLine();
+						} catch (IOException e1) {
+							logger.error(StackTraceHandler.getErrString(e1));
+						}
 					}
 				} else {
 					CustomOptionPane.showMessageDialog(TEMainFrame.this, "Please add at least one screen shot!!!",
@@ -369,6 +377,67 @@ public class TEMainFrame extends JFrame {
 
 	}
 
+	private void updateTimeLine() throws IOException {
+
+		File draftsDir = new File("drafts/");
+		File[] newDraftFiles = draftsDir.listFiles();
+		File[] oldDraftFiles = draftsDir.listFiles();
+
+		String newest = "";
+		Arrays.sort(newDraftFiles, LastModifiedFileComparator.LASTMODIFIED_REVERSE);
+		for (File draftFile : newDraftFiles) {
+			BasicFileAttributes attr = Files.readAttributes(draftFile.toPath(), BasicFileAttributes.class);
+			newest = AppUtils.formatTime(attr.lastModifiedTime());
+			break;
+		}
+
+		String oldest = "";
+		Arrays.sort(oldDraftFiles, LastModifiedFileComparator.LASTMODIFIED_COMPARATOR);
+		for (File draftFile : oldDraftFiles) {
+			BasicFileAttributes attr = Files.readAttributes(draftFile.toPath(), BasicFileAttributes.class);
+			oldest = AppUtils.formatTime(attr.lastModifiedTime());
+			break;
+		}
+
+		ticketsCarouselPnl.invalidate();
+		ticketsCarouselPnl.repaint();
+		ticketsCarouselPnl.updateUI();
+
+		JPanel ticketsPnl = (JPanel) ticketsCarouselPnl.getParent();
+		ticketsPnl.invalidate();
+		ticketsPnl.repaint();
+		ticketsPnl.updateUI();
+
+		for (int i = 0; i < ticketsPnl.getComponentCount(); i++) {
+			Component comp = ticketsPnl.getComponent(i);
+			if (comp instanceof TimingPanel) {
+				TimingPanel tp = (TimingPanel) comp;
+				for (int m = 0; m < tp.getComponentCount(); m++) {
+					Component tpComp = tp.getComponent(m);
+
+					if (tpComp instanceof JLabel) {
+						JLabel lbl = (JLabel) tpComp;
+						if (lbl.getName().equals("oldtime")) {
+							lbl.setText("<html><center>Newest</center><br /><center>" + newest + "</center>");
+						}
+						if (lbl.getName().equals("newtime")) {
+							lbl.setText("<html><center>Oldest</center><br /><center>" + oldest + "</center>");
+						}
+					}
+				}
+				tp.setVisible(true);
+				tp.invalidate();
+				tp.repaint();
+				tp.updateUI();
+			}
+		}
+
+		JPanel mainPanel = (JPanel) ticketsPnl.getParent();
+		mainPanel.invalidate();
+		mainPanel.repaint();
+		mainPanel.updateUI();
+	}
+
 	private void initSystemProperties() {
 
 		iKeyboardCaptureService.setTrayIcon(trayIcon);
@@ -402,6 +471,9 @@ public class TEMainFrame extends JFrame {
 
 	private void emptyDrafts() {
 		File draftsDir = new File("drafts/");
+		if (!draftsDir.exists()) {
+			draftsDir.mkdir();
+		}
 		for (File file : draftsDir.listFiles()) {
 			if (file.exists()) {
 				file.delete();
@@ -439,6 +511,16 @@ public class TEMainFrame extends JFrame {
 						trayPopupMenu.setLocation(e.getX(), e.getY());
 						trayPopupMenu.setInvoker(trayPopupMenu);
 						trayPopupMenu.setVisible(true);
+					}
+				}
+
+				public void mousePressed(MouseEvent e) {
+					if (e.getClickCount() >= 2) {
+						tray.remove(trayIcon);
+						setVisible(true);
+						setExtendedState(JFrame.MAXIMIZED_BOTH);
+						GlobalScreen.removeNativeMouseListener(iMouseCaptureService);
+						GlobalScreen.removeNativeKeyListener(iKeyboardCaptureService);
 					}
 				}
 
