@@ -32,7 +32,7 @@ public class UtilityServiceImpl implements IUtilityService {
 		IncidentInput incidentInput = new IncidentInput();
 		try {
 
-			prop.load(new FileInputStream(new File("./api.properties")));
+			prop.load(new FileInputStream(new File("./config.properties")));
 
 			incidentInput.setUsername(prop.getProperty("username"));
 			incidentInput.setPassword(prop.getProperty("password"));
@@ -84,5 +84,6 @@ public class UtilityServiceImpl implements IUtilityService {
 
 		return userOSData;
 	}
+
 
 }

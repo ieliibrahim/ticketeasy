@@ -8,4 +8,5 @@ public interface IUtilityService {
 	IncidentInput getIncidentInput(String propFilePath);
 
 	UserOSData getUserOSData();
+
 }

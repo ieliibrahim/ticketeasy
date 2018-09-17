@@ -47,7 +47,7 @@ public class APICallerImpl implements IAPICaller {
 	private IncidentInput incidentInput;
 
 	public APICallerImpl() {
-		incidentInput = iPropertyService.getIncidentInput("api.properties");
+		incidentInput = iPropertyService.getIncidentInput("config.properties");
 	}
 
 	@Override

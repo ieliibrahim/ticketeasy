@@ -2,6 +2,12 @@ package com.ieli.tieasy.service.caputre.impl;
 
 import java.awt.AWTException;
 import java.awt.Component;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.MouseInfo;
+import java.awt.Point;
+import java.awt.PointerInfo;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
@@ -37,8 +43,12 @@ public class CaptureDesktopImpl implements ICaptureDesktop {
 	public void captureDesktop(final JPanel ticketsCarouselPnl, final TEMainFrame teMainFrame) {
 		try {
 
+			PointerInfo a = MouseInfo.getPointerInfo();
+			GraphicsDevice screen = getActiveScreen(a.getLocation());
+
 			Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
-			BufferedImage capture = new Robot().createScreenCapture(screenRect);
+			BufferedImage capture = new Robot(screen).createScreenCapture(screenRect);
+
 			File dir = new File("drafts/");
 			if (!dir.exists()) {
 				dir.mkdirs();
@@ -72,7 +82,8 @@ public class CaptureDesktopImpl implements ICaptureDesktop {
 			final String imagePath = dir + "/image" + lastImgNumber + ".png";
 			ImageIO.write(capture, "png", new File(imagePath));
 
-			final SingleDraftPanel singleDraftPanel = new SingleDraftPanel(capture, imagePath, ticketsCarouselPnl, teMainFrame);
+			final SingleDraftPanel singleDraftPanel = new SingleDraftPanel(capture, imagePath, ticketsCarouselPnl,
+					teMainFrame);
 			ticketsCarouselPnl.add(singleDraftPanel);
 
 			updateTimeLine(ticketsCarouselPnl);
@@ -82,6 +93,30 @@ public class CaptureDesktopImpl implements ICaptureDesktop {
 		} catch (AWTException e) {
 			logger.error(StackTraceHandler.getErrString(e));
 		}
+	}
+
+	/**
+	 * Indicates whether the given point is inside the screen boundaries.
+	 * 
+	 * @param p
+	 *            the point to verify.
+	 * @return <code>true</code> if the point is inside the screen boundaries;
+	 *         <code>false</code> otherwise.
+	 * @since 1.2
+	 */
+	public static GraphicsDevice getActiveScreen(Point p) {
+
+		GraphicsDevice activeScreen = null;
+		GraphicsDevice[] screens = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices();
+		for (GraphicsDevice device : screens) {
+			for (GraphicsConfiguration config : device.getConfigurations()) {
+				if (config.getBounds().contains(p)) {
+					activeScreen = device;
+					break;
+				}
+			}
+		}
+		return activeScreen;
 	}
 
 	private void updateTimeLine(JPanel ticketsCarouselPnl) throws IOException {

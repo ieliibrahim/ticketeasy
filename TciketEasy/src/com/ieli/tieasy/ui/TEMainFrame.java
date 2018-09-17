@@ -27,7 +27,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 
@@ -54,6 +53,7 @@ import com.ieli.tieasy.util.logs.LogPackager;
 import com.ieli.tieasy.util.ui.BackgroundImagePanel;
 import com.ieli.tieasy.util.ui.CusotmJButton;
 import com.ieli.tieasy.util.ui.CustomAppJButton;
+import com.ieli.tieasy.util.ui.CustomScrollPane;
 import com.ieli.tieasy.util.ui.CustomTextArea;
 import com.ieli.tieasy.util.ui.CustomTextField;
 import com.ieli.tieasy.util.ui.ScreenConfig;
@@ -88,6 +88,7 @@ public class TEMainFrame extends JFrame {
 	private TimingPanel timingPnl;
 
 	private int thumbHeight;
+
 
 	public TEMainFrame() {
 
@@ -152,37 +153,36 @@ public class TEMainFrame extends JFrame {
 		BackgroundImagePanel ticketsPnl = new BackgroundImagePanel(img);
 		ticketsPnl.setBackground(StaticData.HEADER_FOOTER_COLOR);
 		mainPnl.add(ticketsPnl, "cell 0 1,grow");
-		ticketsPnl.setLayout(new MigLayout("", "[grow]", "[][grow,baseline][]"));
+		ticketsPnl.setLayout(new MigLayout("", "[][grow,fill][]", "[][grow,baseline][]"));
 
 		JPanel ticketInfoPnl = new JPanel();
-		ticketsPnl.add(ticketInfoPnl, "cell 0 0,alignx center,growy");
+		ticketsPnl.add(ticketInfoPnl, "cell 1 0,grow");
 		ticketInfoPnl.setBackground(StaticData.TRANSPARENT_COLOR);
-		ticketInfoPnl
-				.setLayout(new MigLayout("", "[" + ScreenConfig.getScreenWidth() / 2 + "px]", "[30.00][grow][grow]"));
+		ticketInfoPnl.setLayout(new MigLayout("", "[100px][grow][100px]", "[30.00][grow][grow]"));
 
 		ticketTitleTextField = new CustomTextField(10);
 		ticketTitleTextField.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		ticketTitleTextField.setPlaceholder("Please give your ticket a title");
-		ticketInfoPnl.add(ticketTitleTextField, "cell 0 0,growx");
+		ticketInfoPnl.add(ticketTitleTextField, "cell 1 0,growx");
 
 		descriptionTextArea = new CustomTextArea();
 		descriptionTextArea.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		descriptionTextArea.setBorder(new LineBorder(UIManager.getColor("TextField.light")));
 		descriptionTextArea.setPlaceholder("Let us know what the issue is...");
-		descriptionTextArea.setRows(8);
+		descriptionTextArea.setRows(15);
 		descriptionTextArea.setWrapStyleWord(true);
 		descriptionTextArea.setLineWrap(true);
-		
-		JScrollPane areaPane = new JScrollPane(descriptionTextArea);
-		ticketInfoPnl.add(areaPane, "cell 0 1,grow");
+
+		CustomScrollPane areaPane = new CustomScrollPane(descriptionTextArea);
+		ticketInfoPnl.add(areaPane, "cell 1 1,grow");
 
 		ticketsCarouselPnl = new JPanel();
 		ticketsCarouselPnl.setName("tcpnl222");
 		ticketsCarouselPnl.setBorder(null);
 		ticketsCarouselPnl.setBackground(StaticData.TRANSPARENT_COLOR);
 		ticketsCarouselPnl.setLayout(new GridLayout(1, 10, 10, 0));
-		
-		ticketsPnl.add(ticketsCarouselPnl, "cell 0 1,aligny bottom");
+
+		ticketsPnl.add(ticketsCarouselPnl, "cell 1 1,aligny bottom");
 
 		JPanel footerPnl = new JPanel();
 		footerPnl.setBackground(StaticData.HEADER_FOOTER_COLOR);
@@ -351,7 +351,7 @@ public class TEMainFrame extends JFrame {
 
 		timingPnl = new TimingPanel();
 		timingPnl.setBackground(StaticData.TRANSPARENT_COLOR);
-		ticketsPnl.add(timingPnl, "cell 0 2,growx,aligny top");
+		ticketsPnl.add(timingPnl, "cell 1 2,growx,aligny top");
 		timingPnl.setLayout(new BorderLayout(0, 0));
 		JLabel oldestLbl = new JLabel(
 				"<html><center>Oldest</center><br /><center>" + AppUtils.getCurrentDateTime() + "</center>");
@@ -543,5 +543,4 @@ public class TEMainFrame extends JFrame {
 	public int getThumbHeight() {
 		return thumbHeight;
 	}
-
 }
