@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -14,6 +15,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -23,6 +25,7 @@ import javax.swing.border.LineBorder;
 import org.apache.log4j.Logger;
 
 import com.ieli.tieasy.ui.CustomOptionPane;
+import com.ieli.tieasy.ui.HelpPopupMenu;
 import com.ieli.tieasy.ui.SingleDraftPanel;
 import com.ieli.tieasy.ui.editor.tool.ArrowTool;
 import com.ieli.tieasy.ui.editor.tool.BlurTool;
@@ -34,6 +37,8 @@ import com.ieli.tieasy.ui.editor.tool.RectangleTool;
 import com.ieli.tieasy.ui.editor.tool.TextTool;
 import com.ieli.tieasy.util.StackTraceHandler;
 import com.ieli.tieasy.util.StaticData;
+import com.ieli.tieasy.util.ui.BackgroundImagePanel;
+import com.ieli.tieasy.util.ui.CusotmJButton;
 import com.ieli.tieasy.util.ui.CustomAppJButton;
 import com.ieli.tieasy.util.ui.ScreenConfig;
 
@@ -57,7 +62,8 @@ public class EditDraftDlg extends JDialog {
 	private CusotmDrawingJButton blurBtn;
 	private CusotmDrawingJButton undoBtn;
 
-	private JComboBox<Integer> fontSizeCBox;
+	@SuppressWarnings("rawtypes")
+	private JComboBox fontSizeCBox;
 
 	private Color drawingColor = Color.BLACK;
 
@@ -86,7 +92,7 @@ public class EditDraftDlg extends JDialog {
 
 	private File imageFile;
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public EditDraftDlg(BufferedImage mainImg, String mainImagePath, JFrame teMainFrame,
 			SingleDraftPanel singleDraftPanel) {
 
@@ -96,21 +102,72 @@ public class EditDraftDlg extends JDialog {
 		setIconImage(StaticData.TRAY_ICON.getImage());
 		setUndecorated(true);
 		setResizable(false);
-		ScreenConfig.setDialogSizeCustom(this, 50, 50);
+		ScreenConfig.setDialogSizeCustom(this, 0, 0);
 		ScreenConfig.setDialogPositionCenter(this, teMainFrame);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
-		getContentPane().setLayout(new MigLayout("", "[434px,grow]", "[229px,grow]"));
+		getContentPane().setLayout(new BorderLayout());
 
-		JPanel mainPnl = new JPanel();
-		mainPnl.setBackground(Color.BLACK);
-		getContentPane().add(mainPnl, "cell 0 0,grow");
-		mainPnl.setLayout(new BorderLayout(0, 0));
+		Image img = null;
+		try {
+			img = ImageIO.read(getClass().getResource(StaticData.BG_IMAGE));
+		} catch (IOException e) {
+			logger.error(StackTraceHandler.getErrString(e));
+		}
+
+		BackgroundImagePanel mainPnl = new BackgroundImagePanel(img);
+		mainPnl.setBackground(StaticData.HEADER_FOOTER_COLOR);
+		getContentPane().add(mainPnl, BorderLayout.CENTER);
+		mainPnl.setLayout(new BorderLayout(50, 50));
+
+		JPanel headerPnl = new JPanel();
+		headerPnl.setBackground(StaticData.HEADER_FOOTER_COLOR);
+		headerPnl.setLayout(new MigLayout("insets 0, wrap", "[grow][grow]", "[]"));
+
+		JPanel titlePnl = new JPanel();
+		headerPnl.add(titlePnl, "cell 0 0,alignx left,aligny top");
+		titlePnl.setBackground(StaticData.HEADER_FOOTER_COLOR);
+		titlePnl.setLayout(new MigLayout("", "[]", "[]"));
+
+		JLabel lblEasy = new JLabel("");
+		lblEasy.setIcon(StaticData.LOGO_IMG);
+		titlePnl.add(lblEasy, "cell 0 0,alignx left");
+
+		JPanel helpClosePnl = new JPanel();
+		helpClosePnl.setBackground(StaticData.HEADER_FOOTER_COLOR);
+		headerPnl.add(helpClosePnl, "cell 1 0,alignx right,aligny top");
+		helpClosePnl.setLayout(new MigLayout("", "[]30px[][]", "[]"));
+
+		HelpPopupMenu helpPopupMenu = new HelpPopupMenu();
+
+		CusotmJButton btnHelp = new CusotmJButton(StaticData.ICON_HELP, StaticData.ICON_HELP_HOVER, helpPopupMenu);
+		btnHelp.setCursor(StaticData.HAND_CURSOR);
+		helpClosePnl.add(btnHelp, "cell 0 0");
+
+		CusotmJButton btnExitEditor = new CusotmJButton(StaticData.ICON_EXIT, StaticData.ICON_EXIT_HOVER, null);
+		btnExitEditor.setCursor(StaticData.HAND_CURSOR);
+		btnExitEditor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				confirm(singleDraftPanel);
+			}
+
+		});
+		helpClosePnl.add(btnExitEditor, "cell 1 0");
+
+		mainPnl.add(headerPnl, BorderLayout.NORTH);
 
 		JPanel iconsPnl = new JPanel();
-		iconsPnl.setBackground(Color.BLACK);
+		iconsPnl.setOpaque(false);
+		iconsPnl.setBackground(StaticData.TRANSPARENT_COLOR);
 		mainPnl.add(iconsPnl, BorderLayout.WEST);
 		iconsPnl.setLayout(new MigLayout("", "[]", "[]"));
+
+		JPanel emptyPnl = new JPanel();
+		emptyPnl.setOpaque(false);
+		emptyPnl.setBackground(StaticData.TRANSPARENT_COLOR);
+		emptyPnl.setLayout(new MigLayout("", "[50]", "[]"));
+		mainPnl.add(emptyPnl, BorderLayout.EAST);
 
 		freehandBtn = new CusotmDrawingJButton(StaticData.ICON_FREEHAND, StaticData.ICON_FREEHAND_HOVER,
 				"Draw freehand");
@@ -234,7 +291,7 @@ public class EditDraftDlg extends JDialog {
 			}
 		});
 
-		fontSizeCBox = new JComboBox<Integer>(new Integer[] { 12, 14, 16, 18, 20 });
+		fontSizeCBox = new JComboBox(new Integer[] { 12, 14, 16, 18, 20 });
 		ComboBoxRenderer renderer = new ComboBoxRenderer();
 		fontSizeCBox.setRenderer(renderer);
 		fontSizeCBox.setBackground(StaticData.THEME_ORANGE_COLOR);
@@ -247,7 +304,7 @@ public class EditDraftDlg extends JDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Integer fontSize = fontSizeCBox.getItemAt(fontSizeCBox.getSelectedIndex());
+				Integer fontSize = (Integer) fontSizeCBox.getItemAt(fontSizeCBox.getSelectedIndex());
 				if (textTool != null) {
 					textTool.setFontSize(fontSize);
 				}
@@ -283,16 +340,10 @@ public class EditDraftDlg extends JDialog {
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				int confirmed = CustomOptionPane.showConfirmDialog(null, "Do you want to <br> save image before exit?",
-						"Save progress", JOptionPane.YES_NO_OPTION);
-				if (confirmed == JOptionPane.YES_OPTION) {
-					saveAndUpdateImg(singleDraftPanel);
-					dispose();
-				} else if (confirmed == JOptionPane.NO_OPTION) {
-					dispose();
-				}
+				confirm(singleDraftPanel);
 
 			}
+
 		});
 
 		actionPnl.add(btnExit, "cell 0 0,alignx right");
@@ -300,6 +351,17 @@ public class EditDraftDlg extends JDialog {
 
 		initTools();
 
+	}
+
+	private void confirm(SingleDraftPanel singleDraftPanel) {
+		int confirmed = CustomOptionPane.showConfirmDialog(null, "Do you want to <br> save image before exit?",
+				"Save progress", JOptionPane.YES_NO_OPTION);
+		if (confirmed == JOptionPane.YES_OPTION) {
+			saveAndUpdateImg(singleDraftPanel);
+			dispose();
+		} else if (confirmed == JOptionPane.NO_OPTION) {
+			dispose();
+		}
 	}
 
 	private void saveAndUpdateImg(SingleDraftPanel singleDraftPanel) {

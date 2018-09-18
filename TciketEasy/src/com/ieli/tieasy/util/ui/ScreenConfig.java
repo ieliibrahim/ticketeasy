@@ -20,6 +20,10 @@ public class ScreenConfig {
 		frame.setPreferredSize(ScreenConfig.screenSize);
 	}
 
+	public static void setDialogSizeMax(JDialog dialog) {
+		dialog.setPreferredSize(ScreenConfig.screenSize);
+	}
+
 	public static void setFrameSizeCustom(JFrame frame, int paddLeft, int paddTop) {
 		frame.setSize(ScreenConfig.screenWidth - paddLeft, ScreenConfig.screenHeight - paddTop);
 	}
