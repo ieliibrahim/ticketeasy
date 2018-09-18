@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
+import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 
 import javax.swing.JPanel;
@@ -26,7 +27,7 @@ public class TimingPanel extends JPanel {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		int w = getWidth();
 		int h = getHeight();
-		Point sw = new Point(w / 16, h  / 2);
+		Point sw = new Point(w / 16, h / 2);
 		Point ne = new Point(w * 15 / 16, h / 2);
 		Line2D line = new Line2D.Double(sw, ne);
 		g2.draw(line);
@@ -38,14 +39,21 @@ public class TimingPanel extends JPanel {
 		double dy = tip.y - tail.y;
 		double dx = tip.x - tail.x;
 		double theta = Math.atan2(dy, dx);
-		double phi = Math.toRadians(20);
+		double phi = Math.toRadians(25);
 		double barb = 10;
 		double x, y, rho = theta + phi;
+
+		GeneralPath path = new GeneralPath();
+		path.moveTo(tip.x, tip.y);
+
 		for (int j = 0; j < 2; j++) {
 			x = tip.x - barb * Math.cos(rho);
 			y = tip.y - barb * Math.sin(rho);
-			g2.draw(new Line2D.Double(tip.x, tip.y, x, y));
+			path.lineTo(x, y);
 			rho = theta - phi;
 		}
+		path.lineTo(tip.x, tip.y);
+		path.closePath();
+		g2.fill(path);
 	}
 }

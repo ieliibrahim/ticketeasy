@@ -23,8 +23,9 @@ public class CusotmImageJButton extends JButton {
 		setContentAreaFilled(false);
 		setOpaque(true);
 		setForeground(StaticData.THEME_ORANGE_COLOR);
-		setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(StaticData.THEME_ORANGE_COLOR, 2),
-				BorderFactory.createLineBorder(Color.WHITE, 5)));
+		setBorder(BorderFactory.createCompoundBorder(
+				BorderFactory.createLineBorder(StaticData.THEME_ORANGE_COLOR, 2, true),
+				BorderFactory.createLineBorder(Color.WHITE, 5, true)));
 		setBackground(Color.WHITE);
 		setCursor(StaticData.HAND_CURSOR);
 
@@ -44,16 +45,16 @@ public class CusotmImageJButton extends JButton {
 			public void mouseExited(MouseEvent e) {
 				setBackground(Color.WHITE);
 				setBorder(BorderFactory.createCompoundBorder(
-						BorderFactory.createLineBorder(StaticData.THEME_ORANGE_COLOR, 2),
-						BorderFactory.createLineBorder(Color.WHITE, 5)));
+						BorderFactory.createLineBorder(StaticData.THEME_ORANGE_COLOR, 2, true),
+						BorderFactory.createLineBorder(Color.WHITE, 5, true)));
 				setForeground(StaticData.THEME_ORANGE_COLOR);
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				setForeground(Color.WHITE);
-				setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.WHITE, 2),
-						BorderFactory.createLineBorder(StaticData.THEME_ORANGE_COLOR, 5)));
+				setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.WHITE, 2, true),
+						BorderFactory.createLineBorder(StaticData.THEME_ORANGE_COLOR, 5, true)));
 				setBackground(StaticData.THEME_ORANGE_COLOR);
 			}
 

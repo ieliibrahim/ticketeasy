@@ -2,11 +2,14 @@ package com.ieli.tieasy.util;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Font;
 
 import javax.swing.ImageIcon;
 
 public class StaticData {
 
+	public static final Font MAIN_FONT = new Font("Tahoma", Font.PLAIN, 14);
+	
 	public static final Color THEME_ORANGE_COLOR = new Color(242, 152, 50);
 
 	public static final Color HEADER_FOOTER_COLOR = new Color(13, 13, 13);

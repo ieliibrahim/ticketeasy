@@ -22,7 +22,7 @@ public class CustomAppJButton extends JButton {
 	public CustomAppJButton(String text) {
 		super(text);
 
-		setFont(new Font("Tahoma", Font.BOLD, 18));
+		setFont(new Font("Tahoma", Font.BOLD, 16));
 		setContentAreaFilled(false);
 		setOpaque(false);
 		setForeground(Color.WHITE);

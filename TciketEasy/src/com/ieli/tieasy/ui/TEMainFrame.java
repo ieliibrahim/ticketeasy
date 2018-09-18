@@ -150,7 +150,7 @@ public class TEMainFrame extends JFrame {
 		BackgroundImagePanel ticketsPnl = new BackgroundImagePanel(img);
 		ticketsPnl.setBackground(StaticData.HEADER_FOOTER_COLOR);
 		mainPnl.add(ticketsPnl, "cell 0 1,grow");
-		ticketsPnl.setLayout(new MigLayout("", "[][grow,fill][]", "[][grow,baseline][]"));
+		ticketsPnl.setLayout(new MigLayout("", "[][grow,fill][]", "[][grow,baseline]20px[]"));
 
 		JPanel ticketInfoPnl = new JPanel();
 		ticketInfoPnl.setOpaque(false);
@@ -159,7 +159,7 @@ public class TEMainFrame extends JFrame {
 		ticketsPnl.add(ticketInfoPnl, "cell 1 0,grow");
 
 		ticketTitleTextField = new CustomTextField(10);
-		ticketTitleTextField.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		ticketTitleTextField.setFont(StaticData.MAIN_FONT);
 		ticketTitleTextField.setPlaceholder("Please give your ticket a title");
 		ticketInfoPnl.add(ticketTitleTextField, "cell 1 0,growx");
 
@@ -183,15 +183,11 @@ public class TEMainFrame extends JFrame {
 
 		JPanel footerPnl = new JPanel();
 		footerPnl.setBackground(StaticData.HEADER_FOOTER_COLOR);
-		mainPnl.add(footerPnl, "cell 0 2,grow");
-		footerPnl.setLayout(new MigLayout("", "[grow][][grow]", "[grow]"));
-
-		JPanel saveSubmitPnl = new JPanel();
-		saveSubmitPnl.setBackground(StaticData.HEADER_FOOTER_COLOR);
-		footerPnl.add(saveSubmitPnl, "cell 2 0,alignx right,growy");
-		saveSubmitPnl.setLayout(new MigLayout("", "[][][]", "[][]"));
+		mainPnl.add(footerPnl, "cell 0 2,alignx right,growy");
+		footerPnl.setLayout(new MigLayout("", "[97px]", "[29px]"));
 
 		btnSubmit = new CustomAppJButton("SUBMIT");
+		footerPnl.add(btnSubmit, "cell 0 0,alignx left,aligny top");
 
 		btnSubmit.addActionListener(new ActionListener() {
 
@@ -335,8 +331,6 @@ public class TEMainFrame extends JFrame {
 			}
 		});
 
-		saveSubmitPnl.add(btnSubmit, "cell 0 1");
-
 		tray = SystemTray.getSystemTray();
 		trayIcon = new TrayIcon(StaticData.TRAY_ICON.getImage(), "Ticket Easy");
 		trayIcon.setImageAutoSize(true);
@@ -355,11 +349,13 @@ public class TEMainFrame extends JFrame {
 		oldestLbl.setBackground(Color.BLACK);
 		oldestLbl.setForeground(Color.WHITE);
 		oldestLbl.setName("oldtime");
+		oldestLbl.setFont(StaticData.MAIN_FONT);
 		timingPnl.add(oldestLbl, BorderLayout.EAST);
 
 		JLabel newestLbl = new JLabel(
 				"<html><center>Newest</center><br /><center>" + AppUtils.getCurrentDateTime() + "</center>");
 		newestLbl.setBackground(Color.BLACK);
+		newestLbl.setFont(StaticData.MAIN_FONT);
 		newestLbl.setForeground(Color.WHITE);
 		newestLbl.setName("newtime");
 		timingPnl.add(newestLbl, BorderLayout.WEST);
