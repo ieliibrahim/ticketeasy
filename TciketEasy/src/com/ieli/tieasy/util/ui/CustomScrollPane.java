@@ -13,7 +13,7 @@ public class CustomScrollPane extends JScrollPane {
 
 	private static final long serialVersionUID = 1L;
 	private Shape shape;
-	private static final int RADIUS = 20;
+	private static final int RADIUS = 50;
 
 	public CustomScrollPane(JTextArea jTextArea) {
 		super(jTextArea);

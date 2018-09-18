@@ -3,12 +3,14 @@ package com.ieli.tieasy.util.ui;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Shape;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.geom.RoundRectangle2D;
 
+import javax.swing.BorderFactory;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -22,15 +24,11 @@ public class CustomTextField extends JTextField {
 	private Color placeholderForeground = Color.BLACK;
 	private boolean textWrittenIn;
 
-	private Shape shape;
-	private static final int RADIUS = 7;
-
 	/**
 	 * You can insert all constructors. I inserted only this one.*
 	 */
 	public CustomTextField(int columns) {
 		super(columns);
-		setOpaque(false);
 	}
 
 	@Override
@@ -126,21 +124,26 @@ public class CustomTextField extends JTextField {
 		setTextWrittenIn(false);
 	}
 
+	@Override
 	protected void paintComponent(Graphics g) {
-		g.setColor(getBackground());
-		g.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, RADIUS, RADIUS);
+		if (!isOpaque()) {
+			int w = getWidth() - 1;
+			int h = getHeight() - 1;
+			Graphics2D g2 = (Graphics2D) g.create();
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			g2.setPaint(UIManager.getColor("TextField.background"));
+			g2.fillRoundRect(0, 0, w, h, 10, 10);
+			g2.setPaint(Color.GRAY);
+			g2.drawRoundRect(0, 0, w, h, 10, 10);
+			g2.dispose();
+		}
 		super.paintComponent(g);
 	}
 
-	protected void paintBorder(Graphics g) {
-		g.setColor(getForeground());
-		g.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, RADIUS, RADIUS);
-	}
-
-	public boolean contains(int x, int y) {
-		if (shape == null || !shape.getBounds().equals(getBounds())) {
-			shape = new RoundRectangle2D.Float(0, 0, getWidth() - 1, getHeight() - 1, RADIUS, RADIUS);
-		}
-		return shape.contains(x, y);
+	@Override
+	public void updateUI() {
+		super.updateUI();
+		setOpaque(false);
+		setBorder(BorderFactory.createEmptyBorder(10, 18, 10, 18));
 	}
 }

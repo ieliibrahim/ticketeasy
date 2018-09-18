@@ -1,18 +1,22 @@
 package com.ieli.tieasy.util.ui;
 
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.geom.RoundRectangle2D;
+
+import javax.swing.BorderFactory;
+import javax.swing.JTextArea;
+import javax.swing.UIManager;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 public class CustomTextArea extends JTextArea {
 
 	private static final long serialVersionUID = 1L;
-	private Shape shape;
-	private static final int RADIUS = 12;
 
 	private Font originalFont;
 	private Color originalForeground;
@@ -123,21 +127,26 @@ public class CustomTextArea extends JTextArea {
 		setTextWrittenIn(false);
 	}
 
+	@Override
 	protected void paintComponent(Graphics g) {
-		g.setColor(getBackground());
-		g.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, RADIUS, RADIUS);
+		if (!isOpaque()) {
+			int w = getWidth() - 1;
+			int h = getHeight() - 1;
+			Graphics2D g2 = (Graphics2D) g.create();
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			g2.setPaint(UIManager.getColor("TextField.background"));
+			g2.fillRoundRect(0, 0, w, h, 30, 30);
+			g2.setPaint(Color.GRAY);
+			g2.drawRoundRect(0, 0, w, h, 30, 30);
+			g2.dispose();
+		}
 		super.paintComponent(g);
 	}
 
-	protected void paintBorder(Graphics g) {
-		g.setColor(getForeground());
-		g.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, RADIUS, RADIUS);
-	}
-
-	public boolean contains(int x, int y) {
-		if (shape == null || !shape.getBounds().equals(getBounds())) {
-			shape = new RoundRectangle2D.Float(0, 0, getWidth() - 1, getHeight() - 1, RADIUS, RADIUS);
-		}
-		return shape.contains(x, y);
+	@Override
+	public void updateUI() {
+		super.updateUI();
+		setOpaque(false);
+		setBorder(BorderFactory.createEmptyBorder(10, 18, 10, 18));
 	}
 }

@@ -27,8 +27,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
-import javax.swing.border.LineBorder;
 
 import org.apache.commons.io.comparator.LastModifiedFileComparator;
 import org.apache.log4j.Logger;
@@ -68,7 +66,6 @@ public class TEMainFrame extends JFrame {
 	private SystemTray tray;
 
 	private static final long serialVersionUID = 1L;
-	private CustomTextField ticketTitleTextField;
 	private CusotmJButton btnHelp;
 	private CusotmJButton btnExit;
 
@@ -81,6 +78,7 @@ public class TEMainFrame extends JFrame {
 
 	private TrayPopupMenu trayPopupMenu;
 
+	private CustomTextField ticketTitleTextField;
 	private CustomTextArea descriptionTextArea;
 
 	private JPanel ticketsCarouselPnl;
@@ -88,7 +86,6 @@ public class TEMainFrame extends JFrame {
 	private TimingPanel timingPnl;
 
 	private int thumbHeight;
-
 
 	public TEMainFrame() {
 
@@ -109,22 +106,22 @@ public class TEMainFrame extends JFrame {
 
 		JPanel headerPnl = new JPanel();
 		headerPnl.setBackground(StaticData.HEADER_FOOTER_COLOR);
-		mainPnl.add(headerPnl, "cell 0 0,grow");
-		headerPnl.setLayout(new MigLayout("", "[grow][grow]", "[grow]"));
+		mainPnl.add(headerPnl, "cell 0 0,growx,aligny top");
+		headerPnl.setLayout(new MigLayout("insets 0, wrap", "[grow][grow]", "[]"));
 
 		JPanel titlePnl = new JPanel();
-		headerPnl.add(titlePnl, "cell 0 0,alignx left,growy");
+		headerPnl.add(titlePnl, "cell 0 0,alignx left,aligny top");
 		titlePnl.setBackground(StaticData.HEADER_FOOTER_COLOR);
 		titlePnl.setLayout(new MigLayout("", "[]", "[]"));
 
-		JLabel lblEasy = new JLabel("Easy");
+		JLabel lblEasy = new JLabel("");
 		lblEasy.setIcon(StaticData.LOGO_IMG);
 		titlePnl.add(lblEasy, "cell 0 0,alignx left");
 
 		JPanel helpClosePnl = new JPanel();
 		helpClosePnl.setBackground(StaticData.HEADER_FOOTER_COLOR);
-		headerPnl.add(helpClosePnl, "cell 1 0,alignx right,growy");
-		helpClosePnl.setLayout(new MigLayout("", "[][][]", "[]"));
+		headerPnl.add(helpClosePnl, "cell 1 0,alignx right,aligny top");
+		helpClosePnl.setLayout(new MigLayout("", "[]30px[][]", "[]"));
 
 		HelpPopupMenu helpPopupMenu = new HelpPopupMenu();
 
@@ -156,9 +153,10 @@ public class TEMainFrame extends JFrame {
 		ticketsPnl.setLayout(new MigLayout("", "[][grow,fill][]", "[][grow,baseline][]"));
 
 		JPanel ticketInfoPnl = new JPanel();
-		ticketsPnl.add(ticketInfoPnl, "cell 1 0,grow");
+		ticketInfoPnl.setOpaque(false);
 		ticketInfoPnl.setBackground(StaticData.TRANSPARENT_COLOR);
-		ticketInfoPnl.setLayout(new MigLayout("", "[100px][grow][100px]", "[30.00][grow][grow]"));
+		ticketInfoPnl.setLayout(new MigLayout("", "[100px][grow][100px]", "[80.00][grow][grow]"));
+		ticketsPnl.add(ticketInfoPnl, "cell 1 0,grow");
 
 		ticketTitleTextField = new CustomTextField(10);
 		ticketTitleTextField.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -167,14 +165,13 @@ public class TEMainFrame extends JFrame {
 
 		descriptionTextArea = new CustomTextArea();
 		descriptionTextArea.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		descriptionTextArea.setBorder(new LineBorder(UIManager.getColor("TextField.light")));
 		descriptionTextArea.setPlaceholder("Let us know what the issue is...");
 		descriptionTextArea.setRows(15);
 		descriptionTextArea.setWrapStyleWord(true);
 		descriptionTextArea.setLineWrap(true);
 
-		CustomScrollPane areaPane = new CustomScrollPane(descriptionTextArea);
-		ticketInfoPnl.add(areaPane, "cell 1 1,grow");
+		CustomScrollPane scrollPane = new CustomScrollPane(descriptionTextArea);
+		ticketInfoPnl.add(scrollPane, "cell 1 1,grow");
 
 		ticketsCarouselPnl = new JPanel();
 		ticketsCarouselPnl.setName("tcpnl222");
