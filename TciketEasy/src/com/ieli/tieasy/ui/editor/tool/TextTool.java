@@ -50,7 +50,11 @@ public class TextTool extends ToolAdapter {
 			g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 			g2d.setColor(this.foreground);
 			g2d.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-			g2d.drawString(this.listener.getText(), this.startPoint.x, this.startPoint.y);
+			if (this.listener != null) {
+				if (this.listener.getText() != null) {
+					g2d.drawString(this.listener.getText(), this.startPoint.x, this.startPoint.y);
+				}
+			}
 			g2d.dispose();
 		}
 	}

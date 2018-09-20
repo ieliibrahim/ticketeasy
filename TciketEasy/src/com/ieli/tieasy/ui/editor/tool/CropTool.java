@@ -8,7 +8,8 @@ import com.ieli.tieasy.ui.editor.shape.Crop;
 public class CropTool extends RectangleTool {
 
 	public CropTool(EditorImagePanel area) {
-		super(area);	}
+		super(area);
+	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
