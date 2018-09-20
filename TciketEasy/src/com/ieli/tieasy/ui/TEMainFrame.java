@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Handler;
 
 import javax.imageio.ImageIO;
@@ -55,6 +56,8 @@ import com.ieli.tieasy.util.ui.CustomScrollPane;
 import com.ieli.tieasy.util.ui.CustomTextArea;
 import com.ieli.tieasy.util.ui.CustomTextField;
 import com.ieli.tieasy.util.ui.ScreenConfig;
+import com.jcabi.aspects.Loggable;
+import com.jcabi.aspects.RetryOnFailure;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -218,94 +221,7 @@ public class TEMainFrame extends JFrame {
 						final File[] files = tempDir.listFiles();
 						Arrays.sort(files, LastModifiedFileComparator.LASTMODIFIED_REVERSE);
 
-						new Thread(new Runnable() {
-
-							@Override
-							public void run() {
-
-								String title = ticketTitleTextField.getText();
-								String desc = descriptionTextArea.getText();
-
-								CreateIncidentInput createIncidentInput = new CreateIncidentInput();
-								createIncidentInput.setTitle(title);
-								createIncidentInput.setDescription(desc);
-
-								Incident incident = iAPICallerService.createIncident(createIncidentInput);
-
-								String res = "";
-
-								if (incident != null) {
-
-									res += "Incident: " + incident.getNumber() + ", created successfuly\n";
-
-									int imageIndex = files.length;
-									for (File file : files) {
-										File newFile = new File(tempDir + "/image" + imageIndex + ".png");
-										file.renameTo(newFile);
-										Upload upload = iAPICallerService.uploadFile(newFile,
-												incident.getIncidentResult().getSysId());
-										if (upload != null) {
-											res += "Image(" + newFile.getName() + ") uploaded successfuly\n";
-										} else {
-											res += "Error uploading image(" + newFile.getName() + ")\n";
-										}
-
-										imageIndex--;
-									}
-
-									LogPackager packager = new LogPackager();
-									try {
-										File temp = File.createTempFile("log_package", ".zip");
-										File logArchive = packager.packageLog(temp.getParent(), temp.getAbsolutePath());
-										Upload upload = iAPICallerService.uploadFile(logArchive,
-												incident.getIncidentResult().getSysId());
-
-										if (upload != null) {
-											res += "Archive(" + temp.getName() + ") uploaded successfuly\n";
-										} else {
-											res += "Error uploading archive(" + temp.getName() + ")\n";
-										}
-
-									} catch (IOException e2) {
-										logger.error(StackTraceHandler.getErrString(e2));
-									}
-
-									BufferedWriter writer = null;
-									try {
-										File tempSystemFile = File.createTempFile("systemInfo", ".txt");
-										writer = new BufferedWriter(new FileWriter(tempSystemFile));
-										writer.write(iUtilityService.getUserOSData().toString());
-										writer.close();
-										Upload upload = iAPICallerService.uploadFile(tempSystemFile,
-												incident.getIncidentResult().getSysId());
-
-										if (upload != null) {
-											res += "System Info(" + tempSystemFile.getName()
-													+ ") uploaded successfuly\n";
-										} else {
-											res += "Error uploading system info(" + tempSystemFile.getName() + ")\n";
-										}
-
-									} catch (IOException e2) {
-										logger.error(StackTraceHandler.getErrString(e2));
-									} finally {
-										if (writer != null) {
-											try {
-												writer.close();
-											} catch (IOException e) {
-												logger.error(StackTraceHandler.getErrString(e));
-											}
-										}
-									}
-
-									logger.info(res);
-								} else {
-									res += "Error creating incident\n";
-								}
-								emptyTemp();
-
-							}
-						}).start();
+						runAPI(files, tempDir);
 
 						CustomOptionPane.showMessageDialog(TEMainFrame.this, "Ticket created successfully");
 						ticketTitleTextField.setText("Please give your ticket a title");
@@ -372,6 +288,97 @@ public class TEMainFrame extends JFrame {
 			}
 		}
 
+	}
+
+	@RetryOnFailure(attempts = 3, delay = 5, unit = TimeUnit.MINUTES)
+	@Loggable(Loggable.DEBUG)
+	private void runAPI(File[] files, File tempDir) {
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+
+				String title = ticketTitleTextField.getText();
+				String desc = descriptionTextArea.getText();
+
+				CreateIncidentInput createIncidentInput = new CreateIncidentInput();
+				createIncidentInput.setTitle(title);
+				createIncidentInput.setDescription(desc);
+
+				Incident incident = iAPICallerService.createIncident(createIncidentInput);
+
+				String res = "";
+
+				if (incident != null) {
+
+					res += "Incident: " + incident.getNumber() + ", created successfuly\n";
+
+					int imageIndex = files.length;
+					for (File file : files) {
+						File newFile = new File(tempDir + "/image" + imageIndex + ".png");
+						file.renameTo(newFile);
+						Upload upload = iAPICallerService.uploadFile(newFile, incident.getIncidentResult().getSysId());
+						if (upload != null) {
+							res += "Image(" + newFile.getName() + ") uploaded successfuly\n";
+						} else {
+							res += "Error uploading image(" + newFile.getName() + ")\n";
+						}
+
+						imageIndex--;
+					}
+
+					LogPackager packager = new LogPackager();
+					try {
+						File temp = File.createTempFile("log_package", ".zip");
+						File logArchive = packager.packageLog(temp.getParent(), temp.getAbsolutePath());
+						Upload upload = iAPICallerService.uploadFile(logArchive,
+								incident.getIncidentResult().getSysId());
+
+						if (upload != null) {
+							res += "Archive(" + temp.getName() + ") uploaded successfuly\n";
+						} else {
+							res += "Error uploading archive(" + temp.getName() + ")\n";
+						}
+
+					} catch (IOException e2) {
+						logger.error(StackTraceHandler.getErrString(e2));
+					}
+
+					BufferedWriter writer = null;
+					try {
+						File tempSystemFile = File.createTempFile("systemInfo", ".txt");
+						writer = new BufferedWriter(new FileWriter(tempSystemFile));
+						writer.write(iUtilityService.getUserOSData().toString());
+						writer.close();
+						Upload upload = iAPICallerService.uploadFile(tempSystemFile,
+								incident.getIncidentResult().getSysId());
+
+						if (upload != null) {
+							res += "System Info(" + tempSystemFile.getName() + ") uploaded successfuly\n";
+						} else {
+							res += "Error uploading system info(" + tempSystemFile.getName() + ")\n";
+						}
+
+					} catch (IOException e2) {
+						logger.error(StackTraceHandler.getErrString(e2));
+					} finally {
+						if (writer != null) {
+							try {
+								writer.close();
+							} catch (IOException e) {
+								logger.error(StackTraceHandler.getErrString(e));
+							}
+						}
+					}
+
+					logger.info(res);
+				} else {
+					res += "Error creating incident\n";
+				}
+				emptyTemp();
+
+			}
+		}).start();
 	}
 
 	private void updateTimeLine() throws IOException {

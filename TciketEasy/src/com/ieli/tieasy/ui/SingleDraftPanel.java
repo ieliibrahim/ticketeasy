@@ -22,8 +22,8 @@ import org.apache.commons.io.comparator.LastModifiedFileComparator;
 import org.apache.log4j.Logger;
 
 import com.ieli.tieasy.ui.editor.EditDraftDlg;
-import com.ieli.tieasy.util.AppUtils;
 import com.ieli.tieasy.util.StackTraceHandler;
+import com.ieli.tieasy.util.AppUtils;
 import com.ieli.tieasy.util.ui.CusotmImageJButton;
 import com.ieli.tieasy.util.ui.ScreenConfig;
 

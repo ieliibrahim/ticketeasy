@@ -31,8 +31,8 @@ import com.ieli.tieasy.service.caputre.ICaptureDesktop;
 import com.ieli.tieasy.ui.SingleDraftPanel;
 import com.ieli.tieasy.ui.TEMainFrame;
 import com.ieli.tieasy.ui.TimingPanel;
-import com.ieli.tieasy.util.AppUtils;
 import com.ieli.tieasy.util.StackTraceHandler;
+import com.ieli.tieasy.util.AppUtils;
 
 public class CaptureDesktopImpl implements ICaptureDesktop {
 

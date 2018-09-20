@@ -1,0 +1,306 @@
+2018-09-20 15:18:32 INFO  APIScheduler:32 - start trigger fireAfterEvery5SecondsRepeatThrice
+2018-09-20 15:18:42 INFO  APIScheduler:46 - start trigger fireOnce20SecondsFromNow
+2018-09-20 15:19:20 INFO  APIScheduler:32 - start trigger fireAfterEvery5SecondsRepeatThrice
+2018-09-20 15:19:26 INFO  APIScheduler:46 - start trigger fireOnce20SecondsFromNow
+2018-09-20 15:25:26 INFO  APIScheduler:34 - start trigger fireAfterEvery5SecondsRepeatThrice
+2018-09-20 15:26:43 INFO  APIScheduler:34 - start trigger fireAfterEvery5SecondsRepeatThrice
+2018-09-20 15:27:17 INFO  APIScheduler:34 - start trigger fireAfterEvery5SecondsRepeatThrice
+2018-09-20 15:27:41 INFO  APIScheduler:34 - start trigger fireAfterEvery5SecondsRepeatThrice
+2018-09-20 15:29:04 INFO  APIScheduler:34 - start trigger fireAfterEvery5SecondsRepeatThrice
+2018-09-20 15:37:54 INFO  APIScheduler:34 - start trigger fireAfterEvery5SecondsRepeatThrice
+2018-09-20 15:38:47 INFO  APIScheduler:34 - start trigger fireAfterEvery5SecondsRepeatThrice
+2018-09-20 15:40:39 INFO  APIScheduler:34 - start trigger fireAfterEvery5SecondsRepeatThrice
+2018-09-20 16:05:20 DEBUG RequestAddCookies:123 - CookieSpec selected: default
+2018-09-20 16:05:20 DEBUG RequestAuthCache:77 - Auth cache not set in the context
+2018-09-20 16:05:20 DEBUG PoolingHttpClientConnectionManager:255 - Connection request: [route: {s}->https://businessnowdemo4.service-now.com:443][total kept alive: 0; route allocated: 0 of 2; total allocated: 0 of 20]
+2018-09-20 16:05:20 DEBUG PoolingHttpClientConnectionManager:288 - Connection leased: [id: 0][route: {s}->https://businessnowdemo4.service-now.com:443][total kept alive: 0; route allocated: 1 of 2; total allocated: 1 of 20]
+2018-09-20 16:05:20 DEBUG MainClientExec:235 - Opening connection {s}->https://businessnowdemo4.service-now.com:443
+2018-09-20 16:05:20 DEBUG DefaultHttpClientConnectionOperator:139 - Connecting to businessnowdemo4.service-now.com/149.96.32.10:443
+2018-09-20 16:05:20 DEBUG SSLConnectionSocketFactory:337 - Connecting socket to businessnowdemo4.service-now.com/149.96.32.10:443 with timeout 0
+2018-09-20 16:05:21 DEBUG SSLConnectionSocketFactory:390 - Enabled protocols: [TLSv1, TLSv1.1, TLSv1.2]
+2018-09-20 16:05:21 DEBUG SSLConnectionSocketFactory:391 - Enabled cipher suites:[TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384, TLS_RSA_WITH_AES_256_CBC_SHA256, TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDH_RSA_WITH_AES_256_CBC_SHA384, TLS_DHE_RSA_WITH_AES_256_CBC_SHA256, TLS_DHE_DSS_WITH_AES_256_CBC_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_RSA_WITH_AES_256_CBC_SHA, TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDH_RSA_WITH_AES_256_CBC_SHA, TLS_DHE_RSA_WITH_AES_256_CBC_SHA, TLS_DHE_DSS_WITH_AES_256_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA256, TLS_ECDH_RSA_WITH_AES_128_CBC_SHA256, TLS_DHE_RSA_WITH_AES_128_CBC_SHA256, TLS_DHE_DSS_WITH_AES_128_CBC_SHA256, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA, TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDH_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_DSS_WITH_AES_128_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDH_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDH_RSA_WITH_AES_256_GCM_SHA384, TLS_DHE_RSA_WITH_AES_256_GCM_SHA384, TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDH_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256, TLS_DHE_RSA_WITH_AES_128_GCM_SHA256, TLS_DHE_DSS_WITH_AES_128_GCM_SHA256, TLS_EMPTY_RENEGOTIATION_INFO_SCSV]
+2018-09-20 16:05:21 DEBUG SSLConnectionSocketFactory:395 - Starting handshake
+2018-09-20 16:05:22 DEBUG SSLConnectionSocketFactory:425 - Secure session established
+2018-09-20 16:05:22 DEBUG SSLConnectionSocketFactory:426 -  negotiated protocol: TLSv1.2
+2018-09-20 16:05:22 DEBUG SSLConnectionSocketFactory:427 -  negotiated cipher suite: TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+2018-09-20 16:05:22 DEBUG SSLConnectionSocketFactory:435 -  peer principal: CN=*.service-now.com, O=ServiceNow, L=San Diego, ST=California, C=US
+2018-09-20 16:05:22 DEBUG SSLConnectionSocketFactory:444 -  peer alternative names: [*.service-now.com, service-now.com]
+2018-09-20 16:05:22 DEBUG SSLConnectionSocketFactory:448 -  issuer principal: CN=Entrust Certification Authority - L1K, OU="(c) 2012 Entrust, Inc. - for authorized use only", OU=See www.entrust.net/legal-terms, O="Entrust, Inc.", C=US
+2018-09-20 16:05:22 DEBUG DefaultHttpClientConnectionOperator:146 - Connection established 192.168.5.8:50233<->149.96.32.10:443
+2018-09-20 16:05:22 DEBUG MainClientExec:256 - Executing request POST /api/now/table/incident HTTP/1.1
+2018-09-20 16:05:22 DEBUG MainClientExec:267 - Proxy auth state: UNCHALLENGED
+2018-09-20 16:05:22 DEBUG headers:133 - http-outgoing-0 >> POST /api/now/table/incident HTTP/1.1
+2018-09-20 16:05:22 DEBUG headers:136 - http-outgoing-0 >> Authorization: Basic aGVscDpoZWxw
+2018-09-20 16:05:22 DEBUG headers:136 - http-outgoing-0 >> Accept: application/json
+2018-09-20 16:05:22 DEBUG headers:136 - http-outgoing-0 >> Content-Type: application/json
+2018-09-20 16:05:22 DEBUG headers:136 - http-outgoing-0 >> Transfer-Encoding: chunked
+2018-09-20 16:05:22 DEBUG headers:136 - http-outgoing-0 >> Content-Encoding: UTF-8
+2018-09-20 16:05:22 DEBUG headers:136 - http-outgoing-0 >> Host: businessnowdemo4.service-now.com
+2018-09-20 16:05:22 DEBUG headers:136 - http-outgoing-0 >> Connection: Keep-Alive
+2018-09-20 16:05:22 DEBUG headers:136 - http-outgoing-0 >> User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_181)
+2018-09-20 16:05:22 DEBUG headers:136 - http-outgoing-0 >> Accept-Encoding: gzip,deflate
+2018-09-20 16:05:23 DEBUG headers:122 - http-outgoing-0 << HTTP/1.1 201 Created
+2018-09-20 16:05:23 DEBUG headers:125 - http-outgoing-0 << Set-Cookie: JSESSIONID=78221D6828E68C7E9E08A430E6E46C76; Path=/; HttpOnly;Secure
+2018-09-20 16:05:23 DEBUG headers:125 - http-outgoing-0 << Content-Encoding: gzip
+2018-09-20 16:05:23 DEBUG headers:125 - http-outgoing-0 << Set-Cookie: glide_user=""; Expires=Thu, 01-Jan-1970 00:00:10 GMT; Path=/; HttpOnly;Secure
+2018-09-20 16:05:23 DEBUG headers:125 - http-outgoing-0 << Set-Cookie: glide_user_session=""; Expires=Thu, 01-Jan-1970 00:00:10 GMT; Path=/; HttpOnly;Secure
+2018-09-20 16:05:23 DEBUG headers:125 - http-outgoing-0 << Set-Cookie: glide_user_route=glide.8c07784000dd7d2785d44c0415e45c2c; Expires=Tue, 08-Oct-2086 16:19:21 GMT; Path=/; HttpOnly;Secure
+2018-09-20 16:05:23 DEBUG headers:125 - http-outgoing-0 << X-Is-Logged-In: true
+2018-09-20 16:05:23 DEBUG headers:125 - http-outgoing-0 << X-Transaction-ID: 277d0027dbac
+2018-09-20 16:05:23 DEBUG headers:125 - http-outgoing-0 << Set-Cookie: glide_session_store=2F7D0027DBAC6BC06841F1351D96196C; Expires=Thu, 20-Sep-2018 13:35:14 GMT; Path=/; HttpOnly;Secure
+2018-09-20 16:05:23 DEBUG headers:125 - http-outgoing-0 << Location: https://businessnowdemo4.service-now.com/api/now/table/incident/f37dcca3dbac6bc06841f1351d961934
+2018-09-20 16:05:23 DEBUG headers:125 - http-outgoing-0 << Pragma: no-store,no-cache
+2018-09-20 16:05:23 DEBUG headers:125 - http-outgoing-0 << Cache-control: no-cache,no-store,must-revalidate,max-age=-1
+2018-09-20 16:05:23 DEBUG headers:125 - http-outgoing-0 << Expires: 0
+2018-09-20 16:05:23 DEBUG headers:125 - http-outgoing-0 << Content-Type: application/json;charset=UTF-8
+2018-09-20 16:05:23 DEBUG headers:125 - http-outgoing-0 << Transfer-Encoding: chunked
+2018-09-20 16:05:23 DEBUG headers:125 - http-outgoing-0 << Date: Thu, 20 Sep 2018 13:05:15 GMT
+2018-09-20 16:05:23 DEBUG headers:125 - http-outgoing-0 << Server: ServiceNow
+2018-09-20 16:05:23 DEBUG headers:125 - http-outgoing-0 << Set-Cookie: BIGipServerpool_businessnowdemo4=209789194.62016.0000; path=/; Httponly; Secure
+2018-09-20 16:05:23 DEBUG headers:125 - http-outgoing-0 << Strict-Transport-Security: max-age=63072000; includeSubDomains
+2018-09-20 16:05:23 DEBUG MainClientExec:285 - Connection can be kept alive indefinitely
+2018-09-20 16:05:23 DEBUG ResponseProcessCookies:119 - Cookie accepted [JSESSIONID="78221D6828E68C7E9E08A430E6E46C76", version:0, domain:businessnowdemo4.service-now.com, path:/, expiry:null]
+2018-09-20 16:05:24 DEBUG ResponseProcessCookies:119 - Cookie accepted [glide_user="""", version:0, domain:businessnowdemo4.service-now.com, path:/, expiry:Thu Jan 01 03:00:10 AST 1970]
+2018-09-20 16:05:24 DEBUG ResponseProcessCookies:119 - Cookie accepted [glide_user_session="""", version:0, domain:businessnowdemo4.service-now.com, path:/, expiry:Thu Jan 01 03:00:10 AST 1970]
+2018-09-20 16:05:24 DEBUG ResponseProcessCookies:119 - Cookie accepted [glide_user_route="glide.8c07784000dd7d2785d44c0415e45c2c", version:0, domain:businessnowdemo4.service-now.com, path:/, expiry:Tue Oct 08 19:19:21 AST 2086]
+2018-09-20 16:05:24 DEBUG ResponseProcessCookies:119 - Cookie accepted [glide_session_store="2F7D0027DBAC6BC06841F1351D96196C", version:0, domain:businessnowdemo4.service-now.com, path:/, expiry:Thu Sep 20 16:35:14 AST 2018]
+2018-09-20 16:05:24 DEBUG ResponseProcessCookies:119 - Cookie accepted [BIGipServerpool_businessnowdemo4="209789194.62016.0000", version:0, domain:businessnowdemo4.service-now.com, path:/, expiry:null]
+2018-09-20 16:05:24 DEBUG PoolingHttpClientConnectionManager:320 - Connection [id: 0][route: {s}->https://businessnowdemo4.service-now.com:443] can be kept alive indefinitely
+2018-09-20 16:05:24 DEBUG PoolingHttpClientConnectionManager:326 - Connection released: [id: 0][route: {s}->https://businessnowdemo4.service-now.com:443][total kept alive: 1; route allocated: 1 of 2; total allocated: 1 of 20]
+2018-09-20 16:05:24 DEBUG RequestAddCookies:123 - CookieSpec selected: default
+2018-09-20 16:05:24 DEBUG RequestAuthCache:77 - Auth cache not set in the context
+2018-09-20 16:05:24 DEBUG PoolingHttpClientConnectionManager:255 - Connection request: [route: {s}->https://businessnowdemo4.service-now.com:443][total kept alive: 0; route allocated: 0 of 2; total allocated: 0 of 20]
+2018-09-20 16:05:24 DEBUG PoolingHttpClientConnectionManager:288 - Connection leased: [id: 1][route: {s}->https://businessnowdemo4.service-now.com:443][total kept alive: 0; route allocated: 1 of 2; total allocated: 1 of 20]
+2018-09-20 16:05:24 DEBUG MainClientExec:235 - Opening connection {s}->https://businessnowdemo4.service-now.com:443
+2018-09-20 16:05:24 DEBUG DefaultHttpClientConnectionOperator:139 - Connecting to businessnowdemo4.service-now.com/149.96.32.10:443
+2018-09-20 16:05:24 DEBUG SSLConnectionSocketFactory:337 - Connecting socket to businessnowdemo4.service-now.com/149.96.32.10:443 with timeout 0
+2018-09-20 16:05:24 DEBUG SSLConnectionSocketFactory:390 - Enabled protocols: [TLSv1, TLSv1.1, TLSv1.2]
+2018-09-20 16:05:24 DEBUG SSLConnectionSocketFactory:391 - Enabled cipher suites:[TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384, TLS_RSA_WITH_AES_256_CBC_SHA256, TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDH_RSA_WITH_AES_256_CBC_SHA384, TLS_DHE_RSA_WITH_AES_256_CBC_SHA256, TLS_DHE_DSS_WITH_AES_256_CBC_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_RSA_WITH_AES_256_CBC_SHA, TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDH_RSA_WITH_AES_256_CBC_SHA, TLS_DHE_RSA_WITH_AES_256_CBC_SHA, TLS_DHE_DSS_WITH_AES_256_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA256, TLS_ECDH_RSA_WITH_AES_128_CBC_SHA256, TLS_DHE_RSA_WITH_AES_128_CBC_SHA256, TLS_DHE_DSS_WITH_AES_128_CBC_SHA256, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA, TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDH_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_DSS_WITH_AES_128_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDH_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDH_RSA_WITH_AES_256_GCM_SHA384, TLS_DHE_RSA_WITH_AES_256_GCM_SHA384, TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDH_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256, TLS_DHE_RSA_WITH_AES_128_GCM_SHA256, TLS_DHE_DSS_WITH_AES_128_GCM_SHA256, TLS_EMPTY_RENEGOTIATION_INFO_SCSV]
+2018-09-20 16:05:24 DEBUG SSLConnectionSocketFactory:395 - Starting handshake
+2018-09-20 16:05:26 DEBUG SSLConnectionSocketFactory:425 - Secure session established
+2018-09-20 16:05:26 DEBUG SSLConnectionSocketFactory:426 -  negotiated protocol: TLSv1.2
+2018-09-20 16:05:26 DEBUG SSLConnectionSocketFactory:427 -  negotiated cipher suite: TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+2018-09-20 16:05:26 DEBUG SSLConnectionSocketFactory:435 -  peer principal: CN=*.service-now.com, O=ServiceNow, L=San Diego, ST=California, C=US
+2018-09-20 16:05:26 DEBUG SSLConnectionSocketFactory:444 -  peer alternative names: [*.service-now.com, service-now.com]
+2018-09-20 16:05:26 DEBUG SSLConnectionSocketFactory:448 -  issuer principal: CN=Entrust Certification Authority - L1K, OU="(c) 2012 Entrust, Inc. - for authorized use only", OU=See www.entrust.net/legal-terms, O="Entrust, Inc.", C=US
+2018-09-20 16:05:26 DEBUG DefaultHttpClientConnectionOperator:146 - Connection established 192.168.5.8:50236<->149.96.32.10:443
+2018-09-20 16:05:26 DEBUG MainClientExec:256 - Executing request POST /api/now/attachment/upload HTTP/1.1
+2018-09-20 16:05:26 DEBUG MainClientExec:261 - Target auth state: UNCHALLENGED
+2018-09-20 16:05:26 DEBUG MainClientExec:267 - Proxy auth state: UNCHALLENGED
+2018-09-20 16:05:26 DEBUG headers:133 - http-outgoing-1 >> POST /api/now/attachment/upload HTTP/1.1
+2018-09-20 16:05:26 DEBUG headers:136 - http-outgoing-1 >> Content-Length: 131410
+2018-09-20 16:05:26 DEBUG headers:136 - http-outgoing-1 >> Content-Type: multipart/form-data; boundary=567467cf8G3Zd6YvQMVFMPkZiXj_1eu8S
+2018-09-20 16:05:26 DEBUG headers:136 - http-outgoing-1 >> Host: businessnowdemo4.service-now.com
+2018-09-20 16:05:26 DEBUG headers:136 - http-outgoing-1 >> Connection: Keep-Alive
+2018-09-20 16:05:26 DEBUG headers:136 - http-outgoing-1 >> User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_181)
+2018-09-20 16:05:26 DEBUG headers:136 - http-outgoing-1 >> Accept-Encoding: gzip,deflate
+2018-09-20 16:06:28 DEBUG DefaultManagedHttpClientConnection:79 - http-outgoing-1: Close connection
+2018-09-20 16:06:28 DEBUG DefaultManagedHttpClientConnection:96 - http-outgoing-1: Shutdown connection
+2018-09-20 16:06:28 DEBUG MainClientExec:129 - Connection discarded
+2018-09-20 16:06:28 DEBUG PoolingHttpClientConnectionManager:326 - Connection released: [id: 1][route: {s}->https://businessnowdemo4.service-now.com:443][total kept alive: 0; route allocated: 0 of 2; total allocated: 0 of 20]
+2018-09-20 16:06:28 INFO  RetryExec:97 - I/O exception (java.net.SocketException) caught when processing request to {s}->https://businessnowdemo4.service-now.com:443: Connection reset by peer: socket write error
+2018-09-20 16:06:28 DEBUG RetryExec:104 - Connection reset by peer: socket write error
+java.net.SocketException: Connection reset by peer: socket write error
+	at java.net.SocketOutputStream.socketWrite0(Native Method)
+	at java.net.SocketOutputStream.socketWrite(SocketOutputStream.java:111)
+	at java.net.SocketOutputStream.write(SocketOutputStream.java:155)
+	at sun.security.ssl.OutputRecord.writeBuffer(OutputRecord.java:431)
+	at sun.security.ssl.OutputRecord.write(OutputRecord.java:417)
+	at sun.security.ssl.SSLSocketImpl.writeRecordInternal(SSLSocketImpl.java:886)
+	at sun.security.ssl.SSLSocketImpl.writeRecord(SSLSocketImpl.java:857)
+	at sun.security.ssl.AppOutputStream.write(AppOutputStream.java:123)
+	at org.apache.http.impl.io.SessionOutputBufferImpl.streamWrite(SessionOutputBufferImpl.java:124)
+	at org.apache.http.impl.io.SessionOutputBufferImpl.flushBuffer(SessionOutputBufferImpl.java:136)
+	at org.apache.http.impl.io.SessionOutputBufferImpl.write(SessionOutputBufferImpl.java:167)
+	at org.apache.http.impl.io.ContentLengthOutputStream.write(ContentLengthOutputStream.java:113)
+	at org.apache.http.entity.mime.content.FileBody.writeTo(FileBody.java:121)
+	at org.apache.http.entity.mime.AbstractMultipartForm.doWriteTo(AbstractMultipartForm.java:134)
+	at org.apache.http.entity.mime.AbstractMultipartForm.writeTo(AbstractMultipartForm.java:157)
+	at org.apache.http.entity.mime.MultipartFormEntity.writeTo(MultipartFormEntity.java:113)
+	at org.apache.http.impl.DefaultBHttpClientConnection.sendRequestEntity(DefaultBHttpClientConnection.java:156)
+	at org.apache.http.impl.conn.CPoolProxy.sendRequestEntity(CPoolProxy.java:160)
+	at org.apache.http.protocol.HttpRequestExecutor.doSendRequest(HttpRequestExecutor.java:238)
+	at org.apache.http.protocol.HttpRequestExecutor.execute(HttpRequestExecutor.java:123)
+	at org.apache.http.impl.execchain.MainClientExec.execute(MainClientExec.java:272)
+	at org.apache.http.impl.execchain.ProtocolExec.execute(ProtocolExec.java:185)
+	at org.apache.http.impl.execchain.RetryExec.execute(RetryExec.java:89)
+	at org.apache.http.impl.execchain.RedirectExec.execute(RedirectExec.java:111)
+	at org.apache.http.impl.client.InternalHttpClient.doExecute(InternalHttpClient.java:185)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:83)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:108)
+	at com.ieli.tieasy.service.restapi.impl.APICallerImpl.uploadFile(APICallerImpl.java:132)
+	at com.ieli.tieasy.ui.TEMainFrame$3.run(TEMainFrame.java:318)
+	at java.lang.Thread.run(Thread.java:748)
+2018-09-20 16:06:28 INFO  RetryExec:113 - Retrying request to {s}->https://businessnowdemo4.service-now.com:443
+2018-09-20 16:06:28 DEBUG RequestAddCookies:123 - CookieSpec selected: default
+2018-09-20 16:06:28 DEBUG RequestAuthCache:77 - Auth cache not set in the context
+2018-09-20 16:06:28 DEBUG PoolingHttpClientConnectionManager:255 - Connection request: [route: {s}->https://businessnowdemo4.service-now.com:443][total kept alive: 0; route allocated: 0 of 2; total allocated: 0 of 20]
+2018-09-20 16:06:28 DEBUG PoolingHttpClientConnectionManager:288 - Connection leased: [id: 2][route: {s}->https://businessnowdemo4.service-now.com:443][total kept alive: 0; route allocated: 1 of 2; total allocated: 1 of 20]
+2018-09-20 16:06:28 DEBUG MainClientExec:235 - Opening connection {s}->https://businessnowdemo4.service-now.com:443
+2018-09-20 16:06:28 DEBUG DefaultManagedHttpClientConnection:96 - http-outgoing-2: Shutdown connection
+2018-09-20 16:06:28 DEBUG MainClientExec:129 - Connection discarded
+2018-09-20 16:06:28 DEBUG PoolingHttpClientConnectionManager:326 - Connection released: [id: 2][route: {s}->https://businessnowdemo4.service-now.com:443][total kept alive: 0; route allocated: 0 of 2; total allocated: 0 of 20]
+2018-09-20 16:06:28 ERROR APICallerImpl:148 - java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+java.net.InetAddress$2.lookupAllHostAddr(InetAddress.java:928)
+java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1323)
+java.net.InetAddress.getAllByName0(InetAddress.java:1276)
+java.net.InetAddress.getAllByName(InetAddress.java:1192)
+java.net.InetAddress.getAllByName(InetAddress.java:1126)
+org.apache.http.impl.conn.SystemDefaultDnsResolver.resolve(SystemDefaultDnsResolver.java:45)
+org.apache.http.impl.conn.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:112)
+org.apache.http.impl.conn.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:359)
+org.apache.http.impl.execchain.MainClientExec.establishRoute(MainClientExec.java:381)
+org.apache.http.impl.execchain.MainClientExec.execute(MainClientExec.java:237)
+org.apache.http.impl.execchain.ProtocolExec.execute(ProtocolExec.java:185)
+org.apache.http.impl.execchain.RetryExec.execute(RetryExec.java:89)
+org.apache.http.impl.execchain.RedirectExec.execute(RedirectExec.java:111)
+org.apache.http.impl.client.InternalHttpClient.doExecute(InternalHttpClient.java:185)
+org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:83)
+org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:108)
+com.ieli.tieasy.service.restapi.impl.APICallerImpl.uploadFile(APICallerImpl.java:132)
+com.ieli.tieasy.ui.TEMainFrame$3.run(TEMainFrame.java:318)
+java.lang.Thread.run(Thread.java:748)
+
+2018-09-20 16:06:28 DEBUG PoolingHttpClientConnectionManager:394 - Connection manager is shutting down
+2018-09-20 16:06:28 DEBUG PoolingHttpClientConnectionManager:400 - Connection manager shut down
+2018-09-20 16:06:31 DEBUG RequestAddCookies:123 - CookieSpec selected: default
+2018-09-20 16:06:31 DEBUG RequestAuthCache:77 - Auth cache not set in the context
+2018-09-20 16:06:31 DEBUG PoolingHttpClientConnectionManager:255 - Connection request: [route: {s}->https://businessnowdemo4.service-now.com:443][total kept alive: 0; route allocated: 0 of 2; total allocated: 0 of 20]
+2018-09-20 16:06:31 DEBUG PoolingHttpClientConnectionManager:288 - Connection leased: [id: 3][route: {s}->https://businessnowdemo4.service-now.com:443][total kept alive: 0; route allocated: 1 of 2; total allocated: 1 of 20]
+2018-09-20 16:06:31 DEBUG MainClientExec:235 - Opening connection {s}->https://businessnowdemo4.service-now.com:443
+2018-09-20 16:06:31 DEBUG DefaultManagedHttpClientConnection:96 - http-outgoing-3: Shutdown connection
+2018-09-20 16:06:31 DEBUG MainClientExec:129 - Connection discarded
+2018-09-20 16:06:31 DEBUG PoolingHttpClientConnectionManager:326 - Connection released: [id: 3][route: {s}->https://businessnowdemo4.service-now.com:443][total kept alive: 0; route allocated: 0 of 2; total allocated: 0 of 20]
+2018-09-20 16:06:31 ERROR APICallerImpl:148 - java.net.InetAddress.getAllByName0(InetAddress.java:1280)
+java.net.InetAddress.getAllByName(InetAddress.java:1192)
+java.net.InetAddress.getAllByName(InetAddress.java:1126)
+org.apache.http.impl.conn.SystemDefaultDnsResolver.resolve(SystemDefaultDnsResolver.java:45)
+org.apache.http.impl.conn.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:112)
+org.apache.http.impl.conn.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:359)
+org.apache.http.impl.execchain.MainClientExec.establishRoute(MainClientExec.java:381)
+org.apache.http.impl.execchain.MainClientExec.execute(MainClientExec.java:237)
+org.apache.http.impl.execchain.ProtocolExec.execute(ProtocolExec.java:185)
+org.apache.http.impl.execchain.RetryExec.execute(RetryExec.java:89)
+org.apache.http.impl.execchain.RedirectExec.execute(RedirectExec.java:111)
+org.apache.http.impl.client.InternalHttpClient.doExecute(InternalHttpClient.java:185)
+org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:83)
+org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:108)
+com.ieli.tieasy.service.restapi.impl.APICallerImpl.uploadFile(APICallerImpl.java:132)
+com.ieli.tieasy.ui.TEMainFrame$3.run(TEMainFrame.java:332)
+java.lang.Thread.run(Thread.java:748)
+
+2018-09-20 16:06:31 DEBUG PoolingHttpClientConnectionManager:394 - Connection manager is shutting down
+2018-09-20 16:06:31 DEBUG PoolingHttpClientConnectionManager:400 - Connection manager shut down
+2018-09-20 16:07:27 DEBUG RequestAddCookies:123 - CookieSpec selected: default
+2018-09-20 16:07:27 DEBUG RequestAuthCache:77 - Auth cache not set in the context
+2018-09-20 16:07:27 DEBUG PoolingHttpClientConnectionManager:255 - Connection request: [route: {s}->https://businessnowdemo4.service-now.com:443][total kept alive: 0; route allocated: 0 of 2; total allocated: 0 of 20]
+2018-09-20 16:07:27 DEBUG PoolingHttpClientConnectionManager:288 - Connection leased: [id: 4][route: {s}->https://businessnowdemo4.service-now.com:443][total kept alive: 0; route allocated: 1 of 2; total allocated: 1 of 20]
+2018-09-20 16:07:27 DEBUG MainClientExec:235 - Opening connection {s}->https://businessnowdemo4.service-now.com:443
+2018-09-20 16:07:27 DEBUG DefaultHttpClientConnectionOperator:139 - Connecting to businessnowdemo4.service-now.com/149.96.32.10:443
+2018-09-20 16:07:27 DEBUG SSLConnectionSocketFactory:337 - Connecting socket to businessnowdemo4.service-now.com/149.96.32.10:443 with timeout 0
+2018-09-20 16:07:27 DEBUG SSLConnectionSocketFactory:390 - Enabled protocols: [TLSv1, TLSv1.1, TLSv1.2]
+2018-09-20 16:07:27 DEBUG SSLConnectionSocketFactory:391 - Enabled cipher suites:[TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384, TLS_RSA_WITH_AES_256_CBC_SHA256, TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDH_RSA_WITH_AES_256_CBC_SHA384, TLS_DHE_RSA_WITH_AES_256_CBC_SHA256, TLS_DHE_DSS_WITH_AES_256_CBC_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_RSA_WITH_AES_256_CBC_SHA, TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDH_RSA_WITH_AES_256_CBC_SHA, TLS_DHE_RSA_WITH_AES_256_CBC_SHA, TLS_DHE_DSS_WITH_AES_256_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA256, TLS_ECDH_RSA_WITH_AES_128_CBC_SHA256, TLS_DHE_RSA_WITH_AES_128_CBC_SHA256, TLS_DHE_DSS_WITH_AES_128_CBC_SHA256, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA, TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDH_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_DSS_WITH_AES_128_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDH_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDH_RSA_WITH_AES_256_GCM_SHA384, TLS_DHE_RSA_WITH_AES_256_GCM_SHA384, TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDH_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256, TLS_DHE_RSA_WITH_AES_128_GCM_SHA256, TLS_DHE_DSS_WITH_AES_128_GCM_SHA256, TLS_EMPTY_RENEGOTIATION_INFO_SCSV]
+2018-09-20 16:07:27 DEBUG SSLConnectionSocketFactory:395 - Starting handshake
+2018-09-20 16:07:29 DEBUG SSLConnectionSocketFactory:425 - Secure session established
+2018-09-20 16:07:29 DEBUG SSLConnectionSocketFactory:426 -  negotiated protocol: TLSv1.2
+2018-09-20 16:07:29 DEBUG SSLConnectionSocketFactory:427 -  negotiated cipher suite: TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+2018-09-20 16:07:29 DEBUG SSLConnectionSocketFactory:435 -  peer principal: CN=*.service-now.com, O=ServiceNow, L=San Diego, ST=California, C=US
+2018-09-20 16:07:29 DEBUG SSLConnectionSocketFactory:444 -  peer alternative names: [*.service-now.com, service-now.com]
+2018-09-20 16:07:29 DEBUG SSLConnectionSocketFactory:448 -  issuer principal: CN=Entrust Certification Authority - L1K, OU="(c) 2012 Entrust, Inc. - for authorized use only", OU=See www.entrust.net/legal-terms, O="Entrust, Inc.", C=US
+2018-09-20 16:07:29 DEBUG DefaultHttpClientConnectionOperator:146 - Connection established 192.168.5.8:51013<->149.96.32.10:443
+2018-09-20 16:07:29 DEBUG MainClientExec:256 - Executing request POST /api/now/attachment/upload HTTP/1.1
+2018-09-20 16:07:29 DEBUG MainClientExec:261 - Target auth state: UNCHALLENGED
+2018-09-20 16:07:29 DEBUG MainClientExec:267 - Proxy auth state: UNCHALLENGED
+2018-09-20 16:07:29 DEBUG headers:133 - http-outgoing-4 >> POST /api/now/attachment/upload HTTP/1.1
+2018-09-20 16:07:29 DEBUG headers:136 - http-outgoing-4 >> Content-Length: 641
+2018-09-20 16:07:29 DEBUG headers:136 - http-outgoing-4 >> Content-Type: multipart/form-data; boundary=URzCZrNSmUpjF4Svw3AR9MKLCB73hKsNSfNM0
+2018-09-20 16:07:29 DEBUG headers:136 - http-outgoing-4 >> Host: businessnowdemo4.service-now.com
+2018-09-20 16:07:29 DEBUG headers:136 - http-outgoing-4 >> Connection: Keep-Alive
+2018-09-20 16:07:29 DEBUG headers:136 - http-outgoing-4 >> User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_181)
+2018-09-20 16:07:29 DEBUG headers:136 - http-outgoing-4 >> Accept-Encoding: gzip,deflate
+2018-09-20 16:07:29 DEBUG headers:122 - http-outgoing-4 << HTTP/1.1 401 Unauthorized
+2018-09-20 16:07:29 DEBUG headers:125 - http-outgoing-4 << Set-Cookie: JSESSIONID=24B29FEED22AA1906F72C6F60DAC87AE; Path=/; HttpOnly;Secure
+2018-09-20 16:07:29 DEBUG headers:125 - http-outgoing-4 << Content-Encoding: gzip
+2018-09-20 16:07:29 DEBUG headers:125 - http-outgoing-4 << WWW-Authenticate: BASIC realm="Service-now"
+2018-09-20 16:07:29 DEBUG headers:125 - http-outgoing-4 << Pragma: no-store,no-cache
+2018-09-20 16:07:29 DEBUG headers:125 - http-outgoing-4 << Cache-control: no-cache,no-store,must-revalidate,max-age=-1
+2018-09-20 16:07:29 DEBUG headers:125 - http-outgoing-4 << Expires: 0
+2018-09-20 16:07:29 DEBUG headers:125 - http-outgoing-4 << Content-Type: application/json;charset=UTF-8
+2018-09-20 16:07:29 DEBUG headers:125 - http-outgoing-4 << Transfer-Encoding: chunked
+2018-09-20 16:07:29 DEBUG headers:125 - http-outgoing-4 << Date: Thu, 20 Sep 2018 13:07:20 GMT
+2018-09-20 16:07:29 DEBUG headers:125 - http-outgoing-4 << Server: ServiceNow
+2018-09-20 16:07:29 DEBUG headers:125 - http-outgoing-4 << Set-Cookie: BIGipServerpool_businessnowdemo4=209789194.62016.0000; path=/; Httponly; Secure
+2018-09-20 16:07:29 DEBUG headers:125 - http-outgoing-4 << Strict-Transport-Security: max-age=63072000; includeSubDomains
+2018-09-20 16:07:29 DEBUG headers:125 - http-outgoing-4 << Connection: close
+2018-09-20 16:07:29 DEBUG HttpAuthenticator:77 - Authentication required
+2018-09-20 16:07:29 DEBUG HttpAuthenticator:107 - businessnowdemo4.service-now.com:443 requested authentication
+2018-09-20 16:07:29 DEBUG TargetAuthenticationStrategy:175 - Authentication schemes in the order of preference: [Negotiate, Kerberos, NTLM, Digest, Basic]
+2018-09-20 16:07:29 DEBUG TargetAuthenticationStrategy:204 - Challenge for Negotiate authentication scheme not available
+2018-09-20 16:07:29 DEBUG TargetAuthenticationStrategy:204 - Challenge for Kerberos authentication scheme not available
+2018-09-20 16:07:29 DEBUG TargetAuthenticationStrategy:204 - Challenge for NTLM authentication scheme not available
+2018-09-20 16:07:29 DEBUG TargetAuthenticationStrategy:204 - Challenge for Digest authentication scheme not available
+2018-09-20 16:07:29 DEBUG HttpAuthenticator:157 - Selected authentication options: [BASIC [complete=true]]
+2018-09-20 16:07:29 DEBUG DefaultManagedHttpClientConnection:79 - http-outgoing-4: Close connection
+2018-09-20 16:07:29 DEBUG MainClientExec:235 - Opening connection {s}->https://businessnowdemo4.service-now.com:443
+2018-09-20 16:07:29 DEBUG DefaultHttpClientConnectionOperator:139 - Connecting to businessnowdemo4.service-now.com/149.96.32.10:443
+2018-09-20 16:07:29 DEBUG SSLConnectionSocketFactory:337 - Connecting socket to businessnowdemo4.service-now.com/149.96.32.10:443 with timeout 0
+2018-09-20 16:07:29 DEBUG SSLConnectionSocketFactory:390 - Enabled protocols: [TLSv1, TLSv1.1, TLSv1.2]
+2018-09-20 16:07:29 DEBUG SSLConnectionSocketFactory:391 - Enabled cipher suites:[TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384, TLS_RSA_WITH_AES_256_CBC_SHA256, TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDH_RSA_WITH_AES_256_CBC_SHA384, TLS_DHE_RSA_WITH_AES_256_CBC_SHA256, TLS_DHE_DSS_WITH_AES_256_CBC_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_RSA_WITH_AES_256_CBC_SHA, TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDH_RSA_WITH_AES_256_CBC_SHA, TLS_DHE_RSA_WITH_AES_256_CBC_SHA, TLS_DHE_DSS_WITH_AES_256_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA256, TLS_ECDH_RSA_WITH_AES_128_CBC_SHA256, TLS_DHE_RSA_WITH_AES_128_CBC_SHA256, TLS_DHE_DSS_WITH_AES_128_CBC_SHA256, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA, TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDH_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_DSS_WITH_AES_128_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDH_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDH_RSA_WITH_AES_256_GCM_SHA384, TLS_DHE_RSA_WITH_AES_256_GCM_SHA384, TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDH_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256, TLS_DHE_RSA_WITH_AES_128_GCM_SHA256, TLS_DHE_DSS_WITH_AES_128_GCM_SHA256, TLS_EMPTY_RENEGOTIATION_INFO_SCSV]
+2018-09-20 16:07:29 DEBUG SSLConnectionSocketFactory:395 - Starting handshake
+2018-09-20 16:07:30 DEBUG SSLConnectionSocketFactory:425 - Secure session established
+2018-09-20 16:07:30 DEBUG SSLConnectionSocketFactory:426 -  negotiated protocol: TLSv1.2
+2018-09-20 16:07:30 DEBUG SSLConnectionSocketFactory:427 -  negotiated cipher suite: TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+2018-09-20 16:07:30 DEBUG SSLConnectionSocketFactory:435 -  peer principal: CN=*.service-now.com, O=ServiceNow, L=San Diego, ST=California, C=US
+2018-09-20 16:07:30 DEBUG SSLConnectionSocketFactory:444 -  peer alternative names: [*.service-now.com, service-now.com]
+2018-09-20 16:07:30 DEBUG SSLConnectionSocketFactory:448 -  issuer principal: CN=Entrust Certification Authority - L1K, OU="(c) 2012 Entrust, Inc. - for authorized use only", OU=See www.entrust.net/legal-terms, O="Entrust, Inc.", C=US
+2018-09-20 16:07:30 DEBUG DefaultHttpClientConnectionOperator:146 - Connection established 192.168.5.8:51014<->149.96.32.10:443
+2018-09-20 16:07:30 DEBUG MainClientExec:256 - Executing request POST /api/now/attachment/upload HTTP/1.1
+2018-09-20 16:07:30 DEBUG MainClientExec:261 - Target auth state: CHALLENGED
+2018-09-20 16:07:30 DEBUG HttpAuthenticator:198 - Generating response to an authentication challenge using basic scheme
+2018-09-20 16:07:30 DEBUG MainClientExec:267 - Proxy auth state: UNCHALLENGED
+2018-09-20 16:07:30 DEBUG headers:133 - http-outgoing-4 >> POST /api/now/attachment/upload HTTP/1.1
+2018-09-20 16:07:30 DEBUG headers:136 - http-outgoing-4 >> Content-Length: 641
+2018-09-20 16:07:30 DEBUG headers:136 - http-outgoing-4 >> Content-Type: multipart/form-data; boundary=URzCZrNSmUpjF4Svw3AR9MKLCB73hKsNSfNM0
+2018-09-20 16:07:30 DEBUG headers:136 - http-outgoing-4 >> Host: businessnowdemo4.service-now.com
+2018-09-20 16:07:30 DEBUG headers:136 - http-outgoing-4 >> Connection: Keep-Alive
+2018-09-20 16:07:30 DEBUG headers:136 - http-outgoing-4 >> User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_181)
+2018-09-20 16:07:30 DEBUG headers:136 - http-outgoing-4 >> Accept-Encoding: gzip,deflate
+2018-09-20 16:07:30 DEBUG headers:136 - http-outgoing-4 >> Authorization: Basic aGVscDpoZWxw
+2018-09-20 16:07:30 DEBUG headers:122 - http-outgoing-4 << HTTP/1.1 201 Created
+2018-09-20 16:07:30 DEBUG headers:125 - http-outgoing-4 << Set-Cookie: JSESSIONID=25E5EED4A441D024BF2F06F9EB90CDF5; Path=/; HttpOnly;Secure
+2018-09-20 16:07:30 DEBUG headers:125 - http-outgoing-4 << Content-Encoding: gzip
+2018-09-20 16:07:30 DEBUG headers:125 - http-outgoing-4 << Set-Cookie: glide_user=""; Expires=Thu, 01-Jan-1970 00:00:10 GMT; Path=/; HttpOnly;Secure
+2018-09-20 16:07:30 DEBUG headers:125 - http-outgoing-4 << Set-Cookie: glide_user_session=""; Expires=Thu, 01-Jan-1970 00:00:10 GMT; Path=/; HttpOnly;Secure
+2018-09-20 16:07:30 DEBUG headers:125 - http-outgoing-4 << Set-Cookie: glide_user_route=glide.8c07784000dd7d2785d44c0415e45c2c; Expires=Tue, 08-Oct-2086 16:21:29 GMT; Path=/; HttpOnly;Secure
+2018-09-20 16:07:30 DEBUG headers:125 - http-outgoing-4 << X-Is-Logged-In: true
+2018-09-20 16:07:30 DEBUG headers:125 - http-outgoing-4 << X-Transaction-ID: 32fd0427dbac
+2018-09-20 16:07:30 DEBUG headers:125 - http-outgoing-4 << Set-Cookie: glide_session_store=3AFD0427DBAC6BC06841F1351D961942; Expires=Thu, 20-Sep-2018 13:37:22 GMT; Path=/; HttpOnly;Secure
+2018-09-20 16:07:30 DEBUG headers:125 - http-outgoing-4 << Location: https://businessnowdemo4.service-now.com/api/now/attachment/3afdc4e3dbac6bc06841f1351d961918/file
+2018-09-20 16:07:30 DEBUG headers:125 - http-outgoing-4 << Pragma: no-store,no-cache
+2018-09-20 16:07:30 DEBUG headers:125 - http-outgoing-4 << Cache-control: no-cache,no-store,must-revalidate,max-age=-1
+2018-09-20 16:07:30 DEBUG headers:125 - http-outgoing-4 << Expires: 0
+2018-09-20 16:07:30 DEBUG headers:125 - http-outgoing-4 << Content-Type: application/json;charset=UTF-8
+2018-09-20 16:07:30 DEBUG headers:125 - http-outgoing-4 << Transfer-Encoding: chunked
+2018-09-20 16:07:30 DEBUG headers:125 - http-outgoing-4 << Date: Thu, 20 Sep 2018 13:07:22 GMT
+2018-09-20 16:07:30 DEBUG headers:125 - http-outgoing-4 << Server: ServiceNow
+2018-09-20 16:07:30 DEBUG headers:125 - http-outgoing-4 << Set-Cookie: BIGipServerpool_businessnowdemo4=209789194.62016.0000; path=/; Httponly; Secure
+2018-09-20 16:07:30 DEBUG headers:125 - http-outgoing-4 << Strict-Transport-Security: max-age=63072000; includeSubDomains
+2018-09-20 16:07:30 DEBUG MainClientExec:285 - Connection can be kept alive indefinitely
+2018-09-20 16:07:30 DEBUG HttpAuthenticator:86 - Authentication succeeded
+2018-09-20 16:07:30 DEBUG TargetAuthenticationStrategy:228 - Caching 'basic' auth scheme for https://businessnowdemo4.service-now.com:443
+2018-09-20 16:07:30 DEBUG ResponseProcessCookies:119 - Cookie accepted [JSESSIONID="25E5EED4A441D024BF2F06F9EB90CDF5", version:0, domain:businessnowdemo4.service-now.com, path:/, expiry:null]
+2018-09-20 16:07:30 DEBUG ResponseProcessCookies:119 - Cookie accepted [glide_user="""", version:0, domain:businessnowdemo4.service-now.com, path:/, expiry:Thu Jan 01 03:00:10 AST 1970]
+2018-09-20 16:07:30 DEBUG ResponseProcessCookies:119 - Cookie accepted [glide_user_session="""", version:0, domain:businessnowdemo4.service-now.com, path:/, expiry:Thu Jan 01 03:00:10 AST 1970]
+2018-09-20 16:07:30 DEBUG ResponseProcessCookies:119 - Cookie accepted [glide_user_route="glide.8c07784000dd7d2785d44c0415e45c2c", version:0, domain:businessnowdemo4.service-now.com, path:/, expiry:Tue Oct 08 19:21:29 AST 2086]
+2018-09-20 16:07:30 DEBUG ResponseProcessCookies:119 - Cookie accepted [glide_session_store="3AFD0427DBAC6BC06841F1351D961942", version:0, domain:businessnowdemo4.service-now.com, path:/, expiry:Thu Sep 20 16:37:22 AST 2018]
+2018-09-20 16:07:30 DEBUG ResponseProcessCookies:119 - Cookie accepted [BIGipServerpool_businessnowdemo4="209789194.62016.0000", version:0, domain:businessnowdemo4.service-now.com, path:/, expiry:null]
+2018-09-20 16:07:31 DEBUG PoolingHttpClientConnectionManager:320 - Connection [id: 4][route: {s}->https://businessnowdemo4.service-now.com:443] can be kept alive indefinitely
+2018-09-20 16:07:31 DEBUG PoolingHttpClientConnectionManager:326 - Connection released: [id: 4][route: {s}->https://businessnowdemo4.service-now.com:443][total kept alive: 1; route allocated: 1 of 2; total allocated: 1 of 20]
+2018-09-20 16:07:31 DEBUG PoolingHttpClientConnectionManager:394 - Connection manager is shutting down
+2018-09-20 16:07:31 DEBUG DefaultManagedHttpClientConnection:79 - http-outgoing-4: Close connection
+2018-09-20 16:07:31 DEBUG PoolingHttpClientConnectionManager:400 - Connection manager shut down
+2018-09-20 16:07:31 INFO  TEMainFrame:372 - Incident: null, created successfuly
+Error uploading image(image1.png)
+Error uploading archive(log_package1803988673862571633.zip)
+System Info(systemInfo5483706261132345357.txt) uploaded successfuly
+

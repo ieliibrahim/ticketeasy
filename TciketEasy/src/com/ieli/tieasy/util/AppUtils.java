@@ -11,6 +11,8 @@ import java.util.Calendar;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 
+import com.ieli.tieasy.util.StackTraceHandler;
+
 public class AppUtils {
 
 	final static Logger logger = Logger.getLogger(AppUtils.class);

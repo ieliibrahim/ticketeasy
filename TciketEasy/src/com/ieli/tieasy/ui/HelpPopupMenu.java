@@ -12,9 +12,9 @@ import javax.swing.JPopupMenu;
 
 import org.apache.log4j.Logger;
 
-import com.ieli.tieasy.util.AppUtils;
 import com.ieli.tieasy.util.StackTraceHandler;
 import com.ieli.tieasy.util.StaticData;
+import com.ieli.tieasy.util.AppUtils;
 
 public class HelpPopupMenu extends JPopupMenu {
 

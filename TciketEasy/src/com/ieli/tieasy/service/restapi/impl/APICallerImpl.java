@@ -34,9 +34,9 @@ import com.ieli.tieasy.model.api.Upload;
 import com.ieli.tieasy.service.restapi.IAPICaller;
 import com.ieli.tieasy.service.util.IUtilityService;
 import com.ieli.tieasy.service.util.impl.UtilityServiceImpl;
-import com.ieli.tieasy.util.AppUtils;
 import com.ieli.tieasy.util.ImportUtil;
 import com.ieli.tieasy.util.StackTraceHandler;
+import com.ieli.tieasy.util.AppUtils;
 
 public class APICallerImpl implements IAPICaller {
 
