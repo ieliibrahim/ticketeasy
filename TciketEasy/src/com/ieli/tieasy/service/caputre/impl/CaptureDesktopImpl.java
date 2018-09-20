@@ -10,7 +10,6 @@ import java.awt.Point;
 import java.awt.PointerInfo;
 import java.awt.Rectangle;
 import java.awt.Robot;
-import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -46,7 +45,7 @@ public class CaptureDesktopImpl implements ICaptureDesktop {
 			PointerInfo a = MouseInfo.getPointerInfo();
 			GraphicsDevice screen = getActiveScreen(a.getLocation());
 
-			Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
+			Rectangle screenRect = new Rectangle(screen.getDefaultConfiguration().getBounds());
 			BufferedImage capture = new Robot(screen).createScreenCapture(screenRect);
 
 			File dir = new File("drafts/");
@@ -95,21 +94,17 @@ public class CaptureDesktopImpl implements ICaptureDesktop {
 		}
 	}
 
-	/**
-	 * Indicates whether the given point is inside the screen boundaries.
-	 * 
-	 * @param p
-	 *            the point to verify.
-	 * @return <code>true</code> if the point is inside the screen boundaries;
-	 *         <code>false</code> otherwise.
-	 * @since 1.2
-	 */
 	public static GraphicsDevice getActiveScreen(Point p) {
-
 		GraphicsDevice activeScreen = null;
 		GraphicsDevice[] screens = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices();
-		for (GraphicsDevice device : screens) {
-			for (GraphicsConfiguration config : device.getConfigurations()) {
+		GraphicsDevice[] arrayOfGraphicsDevice1;
+		int j = (arrayOfGraphicsDevice1 = screens).length;
+		for (int i = 0; i < j; i++) {
+			GraphicsDevice device = arrayOfGraphicsDevice1[i];
+			GraphicsConfiguration[] arrayOfGraphicsConfiguration;
+			int m = (arrayOfGraphicsConfiguration = device.getConfigurations()).length;
+			for (int k = 0; k < m; k++) {
+				GraphicsConfiguration config = arrayOfGraphicsConfiguration[k];
 				if (config.getBounds().contains(p)) {
 					activeScreen = device;
 					break;

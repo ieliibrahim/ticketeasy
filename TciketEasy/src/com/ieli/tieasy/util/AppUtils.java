@@ -15,7 +15,7 @@ public class AppUtils {
 
 	final static Logger logger = Logger.getLogger(AppUtils.class);
 
-	public static final String NOW_TIME_PATTERN = "hh:mm:ss";
+	public static final String NOW_TIME_PATTERN = "HH:mm:ss";
 
 	private static boolean openWebpage(URI uri) {
 		Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;

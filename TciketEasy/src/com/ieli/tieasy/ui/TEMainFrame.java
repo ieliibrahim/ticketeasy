@@ -238,7 +238,7 @@ public class TEMainFrame extends JFrame {
 
 									res += "Incident: " + incident.getNumber() + ", created successfuly\n";
 
-									int imageIndex = 10;
+									int imageIndex = files.length;
 									for (File file : files) {
 										File newFile = new File(tempDir + "/image" + imageIndex + ".png");
 										file.renameTo(newFile);

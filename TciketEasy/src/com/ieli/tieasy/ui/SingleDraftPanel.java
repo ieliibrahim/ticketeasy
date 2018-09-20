@@ -149,14 +149,7 @@ public class SingleDraftPanel extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		g.drawImage(img, 0, 0, getWidth(), getHeight(), null);
-		//TODO:Remove
-		logger.info("Panel Width: " + getWidth() + " - " + "\t Panel Height: " + getHeight());
-		logger.error("Panel Width: " + getWidth() + " - " + "\t Panel Height: " + getHeight());
-		
-		logger.info("Image Width: " + img.getWidth() + " - " + "\t Image Height: " + img.getHeight());
-		logger.error("Image Width: " + img.getWidth() + " - " + "\t Image Height: " + img.getHeight());
-		
-		
+
 	}
 
 	public String getMainImagePathFile() {
