@@ -52,7 +52,9 @@ public class TextTool extends ToolAdapter {
 			g2d.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
 			if (this.listener != null) {
 				if (this.listener.getText() != null) {
-					g2d.drawString(this.listener.getText(), this.startPoint.x, this.startPoint.y);
+					if (this.startPoint != null) {
+						g2d.drawString(this.listener.getText(), this.startPoint.x, this.startPoint.y);
+					}
 				}
 			}
 			g2d.dispose();

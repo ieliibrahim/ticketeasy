@@ -2,6 +2,7 @@ package com.ieli.tieasy.util.ui;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -29,29 +30,18 @@ public class CusotmImageJButton extends JButton {
 		setBackground(Color.WHITE);
 		setCursor(StaticData.HAND_CURSOR);
 
-		addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				setBackground(Color.WHITE);
-				setBorder(BorderFactory.createCompoundBorder(
-						BorderFactory.createLineBorder(StaticData.THEME_ORANGE_COLOR, 2, true),
-						BorderFactory.createLineBorder(Color.WHITE, 5, true)));
-				setForeground(StaticData.THEME_ORANGE_COLOR);
-			}
-
+		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
+				super.mouseEntered(e);
+				MouseListener[] redPanelMListeners = getParent().getMouseListeners();
+				int x = e.getX() + getX();
+				int y = e.getY() + getY();
+				MouseEvent redPanelmEvt = new MouseEvent(getParent(), e.getID(), e.getWhen(), e.getModifiers(), x, y,
+						e.getClickCount(), e.isPopupTrigger());
+				for (MouseListener mouseListener : redPanelMListeners) {
+					mouseListener.mouseEntered(redPanelmEvt);
+				}
 				setForeground(Color.WHITE);
 				setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.WHITE, 2, true),
 						BorderFactory.createLineBorder(StaticData.THEME_ORANGE_COLOR, 5, true)));
@@ -59,7 +49,22 @@ public class CusotmImageJButton extends JButton {
 			}
 
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseExited(MouseEvent e) {
+				super.mouseEntered(e);
+				MouseListener[] redPanelMListeners = getParent().getMouseListeners();
+				int x = e.getX() + getX();
+				int y = e.getY() + getY();
+				MouseEvent redPanelmEvt = new MouseEvent(getParent(), e.getID(), e.getWhen(), e.getModifiers(), x, y,
+						e.getClickCount(), e.isPopupTrigger());
+				for (MouseListener mouseListener : redPanelMListeners) {
+					mouseListener.mouseExited(redPanelmEvt);
+				}
+
+				setBackground(Color.WHITE);
+				setBorder(BorderFactory.createCompoundBorder(
+						BorderFactory.createLineBorder(StaticData.THEME_ORANGE_COLOR, 2, true),
+						BorderFactory.createLineBorder(Color.WHITE, 5, true)));
+				setForeground(StaticData.THEME_ORANGE_COLOR);
 
 			}
 		});

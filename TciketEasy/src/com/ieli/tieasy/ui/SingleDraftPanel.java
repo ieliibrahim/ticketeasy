@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -22,8 +24,8 @@ import org.apache.commons.io.comparator.LastModifiedFileComparator;
 import org.apache.log4j.Logger;
 
 import com.ieli.tieasy.ui.editor.EditDraftDlg;
-import com.ieli.tieasy.util.StackTraceHandler;
 import com.ieli.tieasy.util.AppUtils;
+import com.ieli.tieasy.util.StackTraceHandler;
 import com.ieli.tieasy.util.ui.CusotmImageJButton;
 import com.ieli.tieasy.util.ui.ScreenConfig;
 
@@ -46,6 +48,7 @@ public class SingleDraftPanel extends JPanel {
 		setLayout(new MigLayout("", "[grow]", "[grow][grow]"));
 
 		CusotmImageJButton btnEdit = new CusotmImageJButton("  Edit  ");
+		btnEdit.setVisible(false);
 		add(btnEdit, "cell 0 0,alignx center,aligny bottom");
 		btnEdit.addActionListener(new ActionListener() {
 
@@ -59,6 +62,7 @@ public class SingleDraftPanel extends JPanel {
 		});
 
 		CusotmImageJButton btnDelete = new CusotmImageJButton("Delete");
+		btnDelete.setVisible(false);
 
 		btnDelete.addActionListener(new ActionListener() {
 
@@ -83,6 +87,21 @@ public class SingleDraftPanel extends JPanel {
 		});
 
 		add(btnDelete, "cell 0 1,alignx center,aligny top");
+
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				btnEdit.setVisible(false);
+				btnDelete.setVisible(false);
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				btnEdit.setVisible(true);
+				btnDelete.setVisible(true);
+			}
+		});
 	}
 
 	private void updateTimeLine(JPanel ticketsCarouselPnl) throws IOException {
